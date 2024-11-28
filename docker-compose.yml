@@ -1,0 +1,46 @@
+services:
+  fiber:
+    # Dockerfile: https://github.com/Flouse/cfn-node/blob/develop/Dockerfile
+    # ghcr: https://github.com/Flouse/cfn-node/pkgs/container/cfn-node
+    container_name: fiber-testnet-node
+    # https://github.com/Flouse/cfn-node/pkgs/container/cfn-node/312873043?tag=develop-202411270816
+    image: ghcr.io/flouse/cfn-node:develop-202411270816
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+        reservations:
+          memory: 100M
+    volumes:
+    - cfn-data:/fiber/.fiber-node
+    - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
+    - ./current.key:/fiber/.fiber-node/ckb/key:ro
+    # TOOD: init CKB
+    # - ./ckb/key:/app/ckb/key
+    ports:
+    - 127.0.0.1:14227:8227
+    - 14228:8228
+    environment:
+    # Add any additional environment variables needed by CKB Fiber node
+    - RUST_LOG=info
+    # help: docker compose run --rm fiber -h 
+    command: [
+      "fnn",
+      "--dir",    "/fiber/.fiber-node",             # BASE_DIR
+      "--config", "/fiber/.fiber-node/config.yml",  # CONFIG_FILE
+    ]
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8227"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+
+# Temp logs
+# -c, --config <CONFIG_FILE> config file [default: "/root/.fiber-node/config.yml" or $BASE_DIR/config.yml]
+# -d, --dir <BASE_DIR> base directory for all [default: "/root/.fiber-node"]
+
+volumes:
+  cfn-data:
+    driver: local
