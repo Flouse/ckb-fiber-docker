@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ckb-fiber
+  IMAGE_NAME: ${{ github.repository_owner }}/ckb-fiber
 
 jobs:
   build-and-push-docker:
