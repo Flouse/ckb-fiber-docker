@@ -58,7 +58,7 @@ WORKDIR /fiber
 
 # Expose default fiber storage location
 RUN mkdir -p /fiber/.fiber-node
-ENV BASE_DIR /fiber/.fiber-node
+ENV BASE_DIR=/fiber/.fiber-node
 VOLUME ["/fiber/.fiber-node"]
 
 EXPOSE 8227 8228
