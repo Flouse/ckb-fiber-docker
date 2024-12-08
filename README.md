@@ -1,8 +1,12 @@
 ## RPC docs
 - RPC docs: https://github.com/nervosnetwork/fiber/blob/main/README.md
-- https://console-docs.apipost.cn/preview/a7647ba337fc1cc7/4476235d67efc530?target_id=18218677-5a3b-4e9d-a957-d81115c40d34
 
 ## Useful CMDs
+
+### Build
+```bash
+sudo docker build --memory=6G -t fnn . 
+```
 
 
 ### node_info
@@ -57,9 +61,9 @@ curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
 ### connect_peer
 ```bash
 curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
-  -d '{"jsonrpc": "2.0", "method": "connect_peer", "params": [{"address": "/ip4/52.45.221.66/tcp/18228/p2p/QmTGtRekmJLA8B3M7RXcNVN4DZzVDhf361b7dgFPNXzhNx"}, true], "id": 42}'
+  -d '{"jsonrpc": "2.0", "method": "connect_peer", "params": [{"address": "/ip4/52.45.221.66/tcp/18228/p2p/QmNMpmhch3FByx82ZGMBHEPNCvryjmkUDbhsp1rGcSbGoC"}, true], "id": 42}'
 curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
-  -d '{"jsonrpc": "2.0", "method": "connect_peer", "params": [{"address": "/ip4/52.45.221.66/tcp/28228/p2p/QmVugguZRcPUR9wjP5e74ss292RHciwaFBBEFZC4nXYnBr"}, true], "id": 42}'
+  -d '{"jsonrpc": "2.0", "method": "connect_peer", "params": [{"address": "/ip4/52.45.221.66/tcp/28228/p2p/QmSJRWSN4tieP87dXrAkSWx6vY5wz3PBAU3osVLZnCftZh"}, true], "id": 42}'
 curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
   -d '{"jsonrpc": "2.0", "method": "connect_peer", "params": [{"address": "/ip4/13.212.140.156/tcp/38228/p2p/QmTFf1FoSPTiVMvBJzPjydYcK2LNBquoVBpCGuJ6oMtutC"}, true], "id": 42}'
 curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
@@ -71,13 +75,3 @@ curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
 
 
 ## CKB
-```yaml
-address:
-  mainnet: ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq2svm8n3vgwgguncsjyfhk0mgdu5c8qw0smqh9xw
-  testnet: ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq2svm8n3vgwgguncsjyfhk0mgdu5c8qw0s4ju2vk
-address(deprecated):
-  mainnet: ckb1qyq9qek08zcsus3e83pygn0vlksmefswqulqeq5mqv
-  testnet: ckt1qyq9qek08zcsus3e83pygn0vlksmefswqulqy92yvs
-lock_arg: 0x5066cf38b10e42393c42444decfda1bca60e073e
-lock_hash: 0x43fec449efb9349dc58657bca9292866a409558c08231c913afb1755e19305ed
-```
