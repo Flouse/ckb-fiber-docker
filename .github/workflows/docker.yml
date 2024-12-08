@@ -36,7 +36,7 @@ jobs:
       - id: get_fiber_latest_tag
         name: Get the latest tag of fiber
         run: |
-          tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
+          tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name // "main"')
           echo "tag=${tag}" >> $GITHUB_OUTPUT
 
   build-and-push-docker:
