@@ -4,10 +4,10 @@ on:
   push:
     branches: [ dev, docker ]
     tags: [ 'v*' ]
-  # schedule:
-  #   # Run every day in midnight
-  #   # https://crontab.guru/#0_0_*_*_*
-  #   - cron: '0 0 * * *'
+  # Build new image every day at midnight
+  schedule:
+    # https://crontab.guru/#0_6_*_*_*
+    - cron: '0 6 * * *'
   # TODO: add inputs
   workflow_dispatch:
 
