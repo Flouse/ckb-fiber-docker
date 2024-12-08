@@ -71,7 +71,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
-            latest=auto
+            latest=true
           tags: |
             type=raw,value=fiber-commit-${{ matrix.FIBER_VERSION }}
             type=raw,value=fiber-commit-${{ matrix.FIBER_VERSION }}-ckb-cli-${{ env.CKB_CLI_VERSION }}
