@@ -4,8 +4,8 @@ FROM rust:1.76-bookworm AS builder
 RUN apt-get update && \
     apt-get install -y clang
 
-# Set variables necessary for download and verification of fiber node
-ARG FIBER_VERSION=feefe59ba06731ba3b9881f20a16cdb0c34c3739
+# Set FIBER_VERSION to the version you want to build
+ARG FIBER_VERSION=main
 
 # clone from https://github.com/nervosnetwork/fiber and build
 RUN git clone --single-branch https://github.com/nervosnetwork/fiber.git /fiber
@@ -52,12 +52,13 @@ RUN cd /tmp \
 COPY --from=builder /fiber/target/release/fnn /bin/fnn
 
 # System accounts (-r flag) are specifically designed for running services/daemons
-RUN useradd -r fiber --home /fiber
+RUN useradd -r fiber --create-home --home-dir /fiber
 USER fiber
 WORKDIR /fiber
-ENV BASE_DIR /fiber/.fiber-node
 
-# VOLUME /fiber-data
+# Expose default fiber storage location
+RUN mkdir -p /fiber/.fiber-node
+ENV BASE_DIR /fiber/.fiber-node
 VOLUME ["/fiber/.fiber-node"]
 
 EXPOSE 8227 8228

@@ -56,7 +56,8 @@ fiber:
 
 # RPC service configuration
 rpc:
-  # Local RPC server listening address
+  # RPC server listening address
+  # Since this config is used in a docker container, we allow all machines to access the RPC port.
   listening_addr: "0.0.0.0:8227"
 
 

@@ -2,17 +2,50 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ dev ]
     tags: [ 'v*' ]
-  pull_request:
-    branches: [ main, dev ]
+  # TODO: 
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/ckb-fiber
 
 jobs:
+  get-fiber-versions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      fiber_latest_commit: ${{ steps.get_fiber_latest_commit.outputs.commit_sha }}
+      fiber_latest_tag: ${{ steps.get_fiber_latest_tag.outputs.tag || main }}
+    env:
+      REPO: nervosnetwork/fiber
+    steps:
+      - id: get_fiber_latest_commit
+        name: Get the latest commmits and tags of fiber
+        env:
+          BRANCH: main
+        run: |
+          commit_sha=$(curl -s https://api.github.com/repos/$REPO/commits/$BRANCH | jq -r .sha)
+          echo "commit_sha=${commit_sha}" >> $GITHUB_OUTPUT
+      
+      - id: get_fiber_latest_tag
+        name: Get the latest tag of fiber
+        run: |
+          tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
+
   build-and-push-docker:
+    needs: get-fiber-versions
+    strategy:
+      fail-fast: false
+      matrix:
+        FIBER_VERSION: [
+          ${{ needs.get-fiber-versions.outputs.fiber_latest_commit }},
+          ${{ needs.get-fiber-versions.outputs.fiber_latest_tag }}
+        ]
+    env:
+      CKB_CLI_VERSION: v1.12.0
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -37,12 +70,11 @@ jobs:
           flavor: |
             latest=auto
           tags: |
-            type=ref,event=branch
+            type=raw,value=fiber-commit-${{ matrix.FIBER_VERSION }}
+            type=raw,value=fiber-commit-${{ matrix.FIBER_VERSION }}-ckb-cli-${{ env.CKB_CLI_VERSION }}
+            type=raw,value=${{ matrix.FIBER_VERSION }}
+            type=raw,value=${{ matrix.FIBER_VERSION }}-ckb-cli-${{ env.CKB_CLI_VERSION }}
             type=ref,event=branch,suffix=-{{date 'YYYYMMDDHHmm'}}
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha,enable=true,prefix=sha-,format=short
           labels: |
             org.opencontainers.image.source=https://github.com/nervosnetwork/fiber
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
@@ -54,6 +86,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          build-args: |
+            FIBER_VERSION=${{ matrix.FIBER_VERSION }}
+            CKB_CLI_VERSION=${{ env.CKB_CLI_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           push: ${{ github.event_name != 'pull_request' }}
