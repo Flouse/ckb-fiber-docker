@@ -4,8 +4,7 @@ services:
     # ghcr: https://github.com/Flouse/cfn-node/pkgs/container/cfn-node
     container_name: fiber-testnet-node
     # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
-    # image: ghcr.io/flouse/ckb-fiber:dev
-    image: fnn:latest
+    image: ghcr.io/flouse/ckb-fiber:v0.0.1
     restart: unless-stopped
     deploy:
       resources:
@@ -14,11 +13,9 @@ services:
         reservations:
           memory: 100M
     volumes:
-    - cfn-data:/fiber
+    - cfn-data-20241229:/fiber
     - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
     - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
-    # TOOD: init CKB
-    # - ./ckb/key:/app/ckb/key
     ports:
     - 14228:8228
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
@@ -37,5 +34,5 @@ services:
 # -d, --dir <BASE_DIR> base directory for all [default: "/root/.fiber-node"]
 
 volumes:
-  cfn-data:
+  cfn-data-20241229:
     driver: local
