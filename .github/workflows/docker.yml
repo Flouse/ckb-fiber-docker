@@ -20,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
-      fiber_latest_commit: ${{ steps.get_fiber_latest_commit.outputs.commit_sha }}
-      fiber_latest_tag: ${{ steps.get_fiber_latest_tag.outputs.tag }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     env:
       REPO: nervosnetwork/fiber
     steps:
@@ -36,17 +35,41 @@ jobs:
       - id: get_fiber_latest_tag
         name: Get the latest tag of fiber
         run: |
-          tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name // "main"')
+          echo "Get latest tag of $REPO"
+
+          tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
           echo "tag=${tag}" >> $GITHUB_OUTPUT
+
+          repository=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          echo "repository=${repository}" >> $GITHUB_OUTPUT
+
+      - name: Check if Docker tag exists
+        id: check-tag
+        uses: tyriis/docker-image-tag-exists@v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          repository: ${{ steps.get_fiber_latest_tag.outputs.repository }}
+          tag: ${{ steps.get_fiber_latest_tag.outputs.tag }}
+
+      - id: set-matrix
+        name: Set up matrix
+        run: |
+          matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
+          if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
+            matrix[${#matrix[@]}]="${{ steps.get_fiber_latest_tag.outputs.tag }}"
+          fi
+
+          joined=$(printf '"%s",' "${matrix[@]}" | sed 's/,$//')
+          formatted_array="[ ${joined} ]"
+          echo "$formatted_array"
+          echo matrix="$formatted_array" >> $GITHUB_OUTPUT
 
   build-and-push-docker:
     needs: get-fiber-versions
     strategy:
       fail-fast: false
       matrix:
-        FIBER_VERSION:
-        - ${{ needs.get-fiber-versions.outputs.fiber_latest_commit }}
-        - ${{ needs.get-fiber-versions.outputs.fiber_latest_tag }}
+        FIBER_VERSION: ${{ fromJSON(needs.get-fiber-versions.outputs.matrix) }}
     env:
       CKB_CLI_VERSION: v1.12.0
     runs-on: ubuntu-latest
