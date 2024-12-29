@@ -20,8 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
-      fiber_latest_commit: ${{ steps.get_fiber_latest_commit.outputs.commit_sha }}
-      fiber_latest_tag: ${{ steps.get_fiber_latest_tag.outputs.tag }}
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     env:
       REPO: nervosnetwork/fiber
@@ -38,24 +36,26 @@ jobs:
         name: Get the latest tag of fiber
         run: |
           echo "Get latest tag of $REPO"
+
           tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
 
-          echo "Try to pull the image with tag $tag"
-          image=$(echo "${REGISTRY}/${IMAGE_NAME}:${tag}" | tr '[:upper:]' '[:lower:]')
-          docker pull "${image}" || true
+          repository=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          echo "repository=${repository}" >> $GITHUB_OUTPUT
 
-          echo "Check image existence and set output"
-          if [ -z "$(docker images -q $REGISTRY/$IMAGE_NAME:$tag)" ]; then
-            echo "tag=${tag}" >> $GITHUB_OUTPUT
-          else
-            echo "tag=${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" >> $GITHUB_OUTPUT
-          fi
+      - name: Check if Docker tag exists
+        id: check-tag
+        uses: tyriis/docker-image-tag-exists@v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          repository: ${{ steps.get_fiber_latest_tag.outputs.repository }}
+          tag: ${{ steps.get_fiber_latest_tag.outputs.tag }}
 
       - id: set-matrix
         name: Set up matrix
         run: |
           matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
-          if [[ "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" != "${{ steps.get_fiber_latest_tag.outputs.tag }}" ]]; then
+          if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
             matrix[${#matrix[@]}]="${{ steps.get_fiber_latest_tag.outputs.tag }}"
           fi
 
