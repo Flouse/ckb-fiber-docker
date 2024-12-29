@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y clang
 
 # Set FIBER_VERSION to the version you want to build
-ARG FIBER_VERSION=main
+ARG FIBER_VERSION=c963248301b11e6de9ac33617181e1ea7d26bf93
 
 # clone from https://github.com/nervosnetwork/fiber and build
 RUN git clone --single-branch https://github.com/nervosnetwork/fiber.git /fiber
