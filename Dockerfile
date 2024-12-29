@@ -57,7 +57,7 @@ USER fiber
 WORKDIR /fiber
 
 # Expose default fiber storage location
-RUN mkdir -p /fiber/.fiber-node
+RUN mkdir -p /fiber/.fiber-node/ckb
 ENV BASE_DIR=/fiber/.fiber-node
 VOLUME ["/fiber/.fiber-node"]
 
