@@ -41,7 +41,8 @@ jobs:
           tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
 
           echo "Try to pull the image with tag $tag"
-          docker pull "${REGISTRY}/${IMAGE_NAME}:${tag}" || true
+          image=$(echo "${REGISTRY}/${IMAGE_NAME}:${tag}" | tr '[:upper:]' '[:lower:]')
+          docker pull "${image}" || true
 
           echo "Check image existence and set output"
           if [ -z "$(docker images -q $REGISTRY/$IMAGE_NAME:$tag)" ]; then
