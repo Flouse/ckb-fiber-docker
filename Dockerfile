@@ -1,11 +1,11 @@
-# https://github.com/nervosnetwork/fiber/blob/main/rust-toolchain.toml is using rust 1.76
-FROM rust:1.76-bookworm AS builder
+# https://github.com/nervosnetwork/fiber/blob/ace6ed0bf5da72bc6495e51d1e6cea901796e6f3/rust-toolchain.toml#L2 is using rust 1.81.0
+FROM rust:1.81-bookworm AS builder
 
 RUN apt-get update && \
     apt-get install -y clang
 
 # Set FIBER_VERSION to the version you want to build
-ARG FIBER_VERSION=c963248301b11e6de9ac33617181e1ea7d26bf93
+ARG FIBER_VERSION=v0.3.0
 
 # clone from https://github.com/nervosnetwork/fiber and build
 RUN git clone --single-branch https://github.com/nervosnetwork/fiber.git /fiber
