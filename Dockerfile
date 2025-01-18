@@ -8,7 +8,7 @@ RUN apt-get update && \
 ARG FIBER_VERSION=v0.3.0
 
 # clone from https://github.com/nervosnetwork/fiber and build
-RUN git clone --single-branch https://github.com/nervosnetwork/fiber.git /fiber
+RUN git clone -b main https://github.com/nervosnetwork/fiber.git /fiber
 WORKDIR /fiber
 
 # Build the application
