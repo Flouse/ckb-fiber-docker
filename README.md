@@ -26,18 +26,7 @@ See https://github.com/nervosnetwork/fiber?tab=readme-ov-file#build-and-run-a-te
 
 
 ## RPC docs of Fiber Network Node
-
-See https://github.com/nervosnetwork/fiber/blob/main/README.md
-
-<!--
-## Useful CMDs
-
-### node_info
-```bash
-curl -X POST http://localhost:14227 -H 'Content-Type: application/json' \
- -d '{"jsonrpc": "2.0", "method": "node_info", "params": [], "id": 1}'
-```
--->
+See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 
 
 [GHCR]: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
