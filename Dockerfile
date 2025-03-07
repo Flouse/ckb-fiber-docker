@@ -29,7 +29,10 @@ RUN apt-get update && apt-get upgrade -y \
     tini \
     curl \
     gnupg \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    gosu \
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+ # verify that the binary works
+ && gosu nobody true
 
 # add ckb-cli into the docker image
 # https://github.com/nervosnetwork/ckb-cli/releases/tag/v1.12.0
@@ -55,11 +58,11 @@ COPY entrypoint.sh /usr/local/bin/
 
 # System accounts (-r flag) are specifically designed for running services/daemons
 RUN useradd -r fiber --create-home --home-dir /fiber
-WORKDIR /fiber
 
 # Setup default fiber storage location
 ENV BASE_DIR=/fiber/.fiber-node
 VOLUME ["${BASE_DIR}"]
+WORKDIR /fiber
 
 EXPOSE 8227 8228
 STOPSIGNAL SIGINT
@@ -72,5 +75,6 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
       || exit 1
 
 # Set the entrypoint to https://github.com/krallin/tini
+# ENTRYPOINT ["tini", "--", "entrypoint.sh"]
 ENTRYPOINT ["tini", "--", "/usr/local/bin/entrypoint.sh"]
-CMD [ "/bin/fnn", "--version" ]
+CMD [ "fnn", "--version" ]

@@ -29,7 +29,6 @@ services:
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
     # Please strictly limit the access to only trusted machines.
     - 127.0.0.1:58227:8227
-    user: fiber
 
 volumes:
   cfn-data:
