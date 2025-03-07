@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y clang
 
 # Set FIBER_VERSION to the version you want to build
-ARG FIBER_VERSION=v0.3.0
+ARG FIBER_VERSION=v0.4.0
 
 # clone from https://github.com/nervosnetwork/fiber and build
 RUN git clone -b main https://github.com/nervosnetwork/fiber.git /fiber
@@ -22,14 +22,14 @@ FROM debian:bookworm-slim
 LABEL maintainer="Flouse" \
       description="Fiber Network Node"
 
-# Upgrade all packages and install dependencies
+# Install dependencies
 RUN apt-get update && apt-get upgrade -y \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
     ca-certificates \
     tini \
     curl \
     gnupg \
- && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # add ckb-cli into the docker image
 # https://github.com/nervosnetwork/ckb-cli/releases/tag/v1.12.0
@@ -45,30 +45,32 @@ RUN cd /tmp \
     | grep -C1 "using RSA key ${Nervos_CI_SIGNATURE}" \
  && echo "Found the signature of bot@nervos.org" \
  && tar xzf ckb-cli_${CKB_CLI_VERSION}_x86_64-unknown-linux-gnu.tar.gz \
- && cp ckb-cli_${CKB_CLI_VERSION}_x86_64-unknown-linux-gnu/ckb-cli /bin/ckb-cli \
+ && cp ckb-cli_${CKB_CLI_VERSION}_x86_64-unknown-linux-gnu/ckb-cli /usr/local/bin/ckb-cli \
  && rm -rf /tmp \
- && chmod 755 /bin/ckb-cli
- 
-COPY --from=builder /fiber/target/release/fnn /bin/fnn
+ && chmod 755 /usr/local/bin/ckb-cli
+
+# Copy application binary amd entrypoint script
+COPY --from=builder /fiber/target/release/fnn /usr/local/bin/fnn
+COPY entrypoint.sh /usr/local/bin/
 
 # System accounts (-r flag) are specifically designed for running services/daemons
 RUN useradd -r fiber --create-home --home-dir /fiber
-USER fiber
 WORKDIR /fiber
 
-# Expose default fiber storage location
-RUN mkdir -p /fiber/.fiber-node/ckb
+# Setup default fiber storage location
 ENV BASE_DIR=/fiber/.fiber-node
-VOLUME ["/fiber/.fiber-node"]
+VOLUME ["${BASE_DIR}"]
 
 EXPOSE 8227 8228
 STOPSIGNAL SIGINT
 
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD curl -s -X POST -H "Content-Type: application/json" \
+      --data '{"id":2,"jsonrpc":"2.0","method":"local_node_info","params":[]}' \
+      http://localhost:8227 > /dev/null \
+      || exit 1
+
 # Set the entrypoint to https://github.com/krallin/tini
-ENTRYPOINT [ "tini", "--" ]
+ENTRYPOINT ["tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD [ "/bin/fnn", "--version" ]
-
-
-# TODO: Add Healthcheck script
-# HEALTHCHECK --interval=30s --timeout=3s \
-#   CMD curl -f http://localhost:8227/ || exit 1
