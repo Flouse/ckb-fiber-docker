@@ -2,8 +2,6 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ dev, docker ]
-    tags: [ 'v*' ]
   # Build new image every day at midnight
   schedule:
     # https://crontab.guru/#0_6_*_*_*
@@ -117,6 +115,6 @@ jobs:
             CKB_CLI_VERSION=${{ env.CKB_CLI_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/tags/v') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
