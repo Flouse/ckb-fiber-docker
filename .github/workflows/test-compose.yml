@@ -1,0 +1,44 @@
+name: Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Start containers
+      run: docker compose up -d
+
+    - name: Wait for services to be healthy
+      run: |
+        for i in $(seq 1 30); do # Timeout after 30 * 10 = 300 seconds (5 minutes)
+          if [[ $(docker compose ps --services --filter "status=running" | wc -l) -eq 1 ]]; then
+            echo "Services are running"
+            break
+          fi
+          echo "Waiting for services to start..."
+          sleep 10
+        done
+        docker compose ps
+
+    # FIXME:
+    # - name: Test node connectivity (P2P)
+    #   run: |
+    #     docker exec fiber-testnet-node nc -vz localhost 8228
+
+    # - name: Test RPC endpoint
+    #   run: |
+    #     docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" --data '{"id":2, "jsonrpc":"2.0", "method":"local_node_info", "params":[]}' http://localhost:8227 | jq .
+
+    - name: Stop containers
+      if: always()
+      run: docker compose down -v

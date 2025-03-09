@@ -1,10 +1,16 @@
 services:
   fiber:
-    # Dockerfile: https://github.com/Flouse/cfn-node/blob/develop/Dockerfile
-    # ghcr: https://github.com/Flouse/cfn-node/pkgs/container/cfn-node
     container_name: fiber-testnet-node
-    # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
-    image: ghcr.io/flouse/ckb-fiber:v0.0.1
+    # Build the image locally, or use the pre-built image from GitHub Container Registry (ghcr)
+    # ghcr: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
+    #
+    # image: ghcr.io/flouse/ckb-fiber:v0.4.0-ckb-cli-v1.12.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FIBER_VERSION: v0.4.0
+        CKB_CLI_VERSION: v1.12.0
     restart: unless-stopped
     deploy:
       resources:
@@ -12,27 +18,23 @@ services:
           memory: 1000M
         reservations:
           memory: 100M
-    volumes:
-    - cfn-data-20241229:/fiber
-    - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
-    - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
-    ports:
-    - 14228:8228
-    # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
-    # Please strictly limit the access to only trusted machines.
-    - 127.0.0.1:14227:8227
     environment:
     # Add any additional environment variables needed by CKB Fiber node
     - RUST_LOG=info
+    volumes:
+    - cfn-data:/fiber/.fiber-node
+    - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
+    # If the key is not provided, entrypoint.sh will generate one.
+    # - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
+    ports:
+    - 58228:8228
+    # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
+    # Please strictly limit the access to only trusted machines.
+    - 127.0.0.1:58227:8227
     command: [
-      # TODO: init ckb wallet if it doesn't exist
       "fnn"
     ]
 
-# Temp logs
-# -c, --config <CONFIG_FILE> config file [default: "/root/.fiber-node/config.yml" or $BASE_DIR/config.yml]
-# -d, --dir <BASE_DIR> base directory for all [default: "/root/.fiber-node"]
-
 volumes:
-  cfn-data-20241229:
+  cfn-data:
     driver: local
