@@ -32,27 +32,26 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 
 ### TODO Checklist
 
-#### Faucet Testing Section
+#### Faucet Testing
 
 - [x] Add balance check before faucet request
-- [ ] Implement faucet request using the nervos-functions API
+- [ ] Faucet request if necessary
 - [ ] Verify balance increase after faucet receipt
 
-#### Peer Connection Section
+#### Peer Connection
 
 - [ ] Fetch peer list from testnet explorer
 - [ ] Implement connection to known peers
 - [ ] Verify successful peer connections
 
-#### Channel Operations Section
+#### Channel Operations
 
 - [ ] Test channel opening functionality
 - [ ] Implement channel listing
 - [ ] Verify channel states
 
-#### Payment Testing Section
+#### Payment Testing
 
 - [ ] Setup key_send payment test
 - [ ] Execute payment transactions
 - [ ] Verify payment success
-
