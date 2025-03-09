@@ -5,9 +5,12 @@ echo "$(whoami) command: $0 $@"
 
 # Ensure proper ownership - will only succeed if we have permissions
 if [ "$(id -u)" = '0' ]; then
+  echo "Changing ownership of /fiber and current_workspace_dir to user fiber"
+
   # chown -R fiber for /fiber and current_workspace_dir
   find /fiber \! -user fiber -exec chown fiber '{}' + || true
   find . \! -user fiber -exec chown fiber '{}' + || true
+
   # similar to: exec su -c "$0 $@" fiber
   exec gosu fiber "$0" "$@"
 fi
@@ -22,12 +25,12 @@ fi
 
 # Initialize CKB wallet if it doesn't exist
 if [ ! -f "${BASE_DIR}/ckb/key" ]; then
-  echo "Initializing new CKB wallet..."
+  echo "\nInitializing new CKB wallet..."
   mkdir --mode=700 -p ${BASE_DIR}/ckb
   gpg --gen-random 2 32 | od -An -tx1 | tr -d ' \n' > ${BASE_DIR}/ckb/key
   chmod 400 ${BASE_DIR}/ckb/key
 fi
 
-echo "Current working directory: $(pwd), umask: $(umask)"
-echo "Starting Fiber Network Node as user $(id -u):$(id -g)..."
+echo "\nCurrent working directory: $(pwd), umask: $(umask)"
+echo "Starting as user fiber $(id -u):$(id -g)... \n"
 exec "$@"
