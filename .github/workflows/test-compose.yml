@@ -68,7 +68,6 @@ jobs:
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
 
     - name: Get Testnet Address
-      id: get_address
       run: |
         # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
         TESTNET_ADDRESS=$(echo -e "\n" \
@@ -77,12 +76,22 @@ jobs:
         echo "Testnet address: $TESTNET_ADDRESS"
         echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
 
-    - name: Get Balance
-      id: get_balance
+    - name: Get Balance and get faucet if the balance is less than 10000 CKB
+      env:
+        MINIMUM_CKB: 10000
       run: |
-        docker compose exec fiber ckb-cli --url "${{ env.CKB_RPC_URL }}" \
-          wallet get-capacity --address "${{ env.CKB_TESTNET_ADDRESS }}"
-        echo "CKB_BALANCE=$?"
+        balance=$(docker compose exec fiber ckb-cli --url "${{ env.CKB_RPC_URL }}" \
+          wallet get-capacity --address "${{ env.CKB_TESTNET_ADDRESS }}")
+
+        # Extract the numeric part of the balance and convert to shannons (1 CKB = 100,000,000 shannons)
+        balance_ckb=$(echo "$balance" | grep -oP '\d+\.\d+')
+
+        if [[ "$balance_ckb" -lt ${{ env.MINIMUM_CKB }} ]]; then
+          echo "Balance is less than ${{ env.MINIMUM_CKB }} CKB, requesting faucet..."
+          # TODO: Implement the faucet request logic here
+        else
+          echo "Balance $balance_ckb CKB is sufficient."
+        fi
 
     - name: Monitor memory usage
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
