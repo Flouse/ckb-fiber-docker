@@ -4,13 +4,13 @@ services:
     # Build the image locally, or use the pre-built image from GitHub Container Registry (ghcr)
     # ghcr: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
     #
-    # image: ghcr.io/flouse/ckb-fiber:v0.4.0-ckb-cli-v1.12.0
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        FIBER_VERSION: v0.4.0
-        CKB_CLI_VERSION: v1.12.0
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   args:
+    #     FIBER_VERSION: v0.4.0
+    #     CKB_CLI_VERSION: v1.12.0
+    image: ghcr.io/flouse/ckb-fiber:fiber-commit-3c405c126a10527090f06c74abc318334dd4ed32
     restart: unless-stopped
     deploy:
       resources:
