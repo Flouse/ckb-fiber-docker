@@ -6,8 +6,12 @@ on:
   schedule:
     # https://crontab.guru/#0_6_*_*_*
     - cron: '0 6 * * *'
-  # TODO: add inputs
   workflow_dispatch:
+    inputs:
+      FIBER_VERSION:
+        description: 'Version of Fiber to build'
+        required: false
+        default: 'v0.4.0'
 
 env:
   REGISTRY: ghcr.io
@@ -52,9 +56,19 @@ jobs:
       - id: set-matrix
         name: Set up matrix
         run: |
-          matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
-          if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
-            matrix[${#matrix[@]}]="${{ steps.get_fiber_latest_tag.outputs.tag }}"
+          matrix=()
+
+          if [[ "${{ github.event.inputs.FIBER_VERSION }}" != "" ]]; then
+            echo "FIBER_VERSION=${{ github.event.inputs.FIBER_VERSION }}"
+            matrix[${#matrix[@]}]="${{ github.event.inputs.FIBER_VERSION }}"
+          else 
+            echo "commit_sha=${{ steps.get_fiber_latest_commit.outputs.commit_sha }}"
+            matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
+
+            if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
+              echo "FIBER_LATEST_TAG=${{ steps.get_fiber_latest_tag.outputs.tag }}"
+              matrix[${#matrix[@]}]="${{ steps.get_fiber_latest_tag.outputs.tag }}"
+            fi
           fi
 
           joined=$(printf '"%s",' "${matrix[@]}" | sed 's/,$//')
