@@ -61,13 +61,28 @@ jobs:
           exit 1
         fi
 
-    # - name: Get Testnet Address
-    #   id: get_address
-    #   if: ${{ secrets.CKB_TESTNET_KEY != '' }}
-    #   run: |
-    #     ADDRESS=$(ckb-cli wallet import --private-key ${{ secrets.CKB_TESTNET_KEY }} | awk '/^ *address:/{print $2}')
-    #     echo "Testnet address: $ADDRESS"
-    #     echo "address=$ADDRESS" >> $GITHUB_OUTPUT
+    - name: Read ckb_rpc_url from testnet-config.yml
+      run: |
+        ckb_rpc_url=$(yq eval '.ckb.rpc_url' testnet-config.yml)
+        echo "CKB_RPC_URL: $ckb_rpc_url"
+        echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
+
+    - name: Get Testnet Address
+      id: get_address
+      run: |
+        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
+        TESTNET_ADDRESS=$(echo -e "\n" \
+          | docker compose exec fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
+          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
+        echo "Testnet address: $TESTNET_ADDRESS"
+        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
+
+    - name: Get Balance
+      id: get_balance
+      run: |
+        docker compose exec fiber ckb-cli --url "${{ env.CKB_RPC_URL }}" \
+          wallet get-capacity --address "${{ env.CKB_TESTNET_ADDRESS }}"
+        echo "CKB_BALANCE=$?"
 
     - name: Monitor memory usage
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
