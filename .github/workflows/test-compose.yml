@@ -51,6 +51,9 @@ jobs:
       run: |
         response=$(curl -s -X POST -H "Content-Type: application/json" \
           --data '{"id":2, "jsonrpc":"2.0", "method":"node_info", "params":[]}' http://localhost:58227)
+        echo "node info: $response"
+
+        # Check if the response contains the expected version
         if echo "$response" | jq -e '.result.version' > /dev/null; then
           echo "RPC test passed: Version found"
         else
@@ -58,39 +61,16 @@ jobs:
           exit 1
         fi
 
+    # - name: Get Testnet Address
+    #   id: get_address
+    #   if: ${{ secrets.CKB_TESTNET_KEY != '' }}
+    #   run: |
+    #     ADDRESS=$(ckb-cli wallet import --private-key ${{ secrets.CKB_TESTNET_KEY }} | awk '/^ *address:/{print $2}')
+    #     echo "Testnet address: $ADDRESS"
+    #     echo "address=$ADDRESS" >> $GITHUB_OUTPUT
+
     - name: Monitor memory usage
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
-
-    # - name: Test additional RPC methods
-    #   run: |
-    #     response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
-    #     --data '{"id":2, "jsonrpc":"2.0", "method":"get_peers", "params":[]}' http://localhost:58227)
-    #     if echo "$response" | jq -e '.result' > /dev/null; then
-    #       echo "get_peers RPC test passed"
-    #     else
-    #       echo "get_peers RPC test failed"
-    #       exit 1
-    #     fi
-
-    #     response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
-    #     --data '{"id":2, "jsonrpc":"2.0", "method":"get_tip_header", "params":[]}' http://localhost:58227)
-    #     if echo "$response" | jq -e '.result.hash' > /dev/null; then
-    #       echo "get_tip_header RPC test passed"
-    #     else
-    #       echo "get_tip_header RPC test failed"
-    #       exit 1
-    #     fi
-
-    # - name: Test RPC error handling
-    #   run: |
-    #   response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
-    #   --data '{"id":2, "jsonrpc":"2.0", "method":"invalid_method", "params":[]}' http://localhost:58227)
-    #   if echo "$response" | jq -e '.error' > /dev/null; then
-    #     echo "Invalid method RPC test passed (error returned)"
-    #   else
-    #     echo "Invalid method RPC test failed (no error returned)"
-    #     exit 1
-    #   fi
 
     - name: Stop containers
       if: always()
