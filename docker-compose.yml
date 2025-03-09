@@ -1,8 +1,10 @@
 services:
   fiber:
-    # Dockerfile: https://github.com/Flouse/cfn-node/blob/develop/Dockerfile
-    # ghcr: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
     container_name: fiber-testnet-node
+    # Build the image locally, or use the pre-built image from GitHub Container Registry (ghcr)
+    # ghcr: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
+    #
+    # image: ghcr.io/flouse/ckb-fiber:v0.4.0-ckb-cli-v1.12.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,13 +24,16 @@ services:
     volumes:
     - cfn-data:/fiber/.fiber-node
     - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
-    # If the key is not provided, entrypoint will generate one.
+    # If the key is not provided, entrypoint.sh will generate one.
     # - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
     ports:
     - 58228:8228
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
     # Please strictly limit the access to only trusted machines.
     - 127.0.0.1:58227:8227
+    command: [
+      "fnn"
+    ]
 
 volumes:
   cfn-data:
