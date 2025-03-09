@@ -27,10 +27,10 @@ services:
     # If the key is not provided, entrypoint.sh will generate one.
     # - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
     ports:
-    - 58228:8228
+    - 58228:8228            # P2P port
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
     # Please strictly limit the access to only trusted machines.
-    - 127.0.0.1:58227:8227
+    - 127.0.0.1:58227:8227  # JSON-RPC port
     command: [
       "fnn"
     ]
