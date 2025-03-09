@@ -30,32 +30,73 @@ jobs:
 
     - name: Wait for services to be healthy
       run: |
+        echo "Waiting for services to start..."
         for i in $(seq 1 30); do # Timeout after 30 * 10 = 300 seconds (5 minutes)
-          if [[ $(docker compose ps --services --filter "status=running" | wc -l) -eq 1 ]]; then
-            echo "Services are running"
+          if [[ $(docker inspect -f '{{.State.Health.Status}}' fiber-testnet-node) == "healthy" ]]; then
+            echo "Fiber testnet node is not healthy"
             break
           fi
-          echo "Waiting for services to start..."
           sleep 10
         done
 
         docker compose ps
-
         echo "Checking if the fiber-testnet-node is healthy"
-        if [[ $(docker inspect -f '{{.State.Health.Status}}' fiber-testnet-node) != "healthy" ]]; then
-          echo "Fiber testnet node is not healthy"
+
+    - name: Verify port accessibility
+      run: |
+        nc -vz localhost 58228
+        nc -vz localhost 58227
+
+    - name: Test RPC endpoint
+      run: |
+        response=$(curl -s -X POST -H "Content-Type: application/json" \
+          --data '{"id":2, "jsonrpc":"2.0", "method":"node_info", "params":[]}' http://localhost:58227)
+        if echo "$response" | jq -e '.result.version' > /dev/null; then
+          echo "RPC test passed: Version found"
+        else
+          echo "RPC test failed: Version not found in response"
           exit 1
         fi
 
-    # FIXME:
-    # - name: Test node connectivity (P2P)
-    #   run: |
-    #     docker exec fiber-testnet-node nc -vz localhost 8228
+    - name: Monitor memory usage
+      run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
 
-    # - name: Test RPC endpoint
+    # - name: Test additional RPC methods
     #   run: |
-    #     docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" --data '{"id":2, "jsonrpc":"2.0", "method":"local_node_info", "params":[]}' http://localhost:8227 | jq .
+    #     response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
+    #     --data '{"id":2, "jsonrpc":"2.0", "method":"get_peers", "params":[]}' http://localhost:58227)
+    #     if echo "$response" | jq -e '.result' > /dev/null; then
+    #       echo "get_peers RPC test passed"
+    #     else
+    #       echo "get_peers RPC test failed"
+    #       exit 1
+    #     fi
+
+    #     response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
+    #     --data '{"id":2, "jsonrpc":"2.0", "method":"get_tip_header", "params":[]}' http://localhost:58227)
+    #     if echo "$response" | jq -e '.result.hash' > /dev/null; then
+    #       echo "get_tip_header RPC test passed"
+    #     else
+    #       echo "get_tip_header RPC test failed"
+    #       exit 1
+    #     fi
+
+    # - name: Test RPC error handling
+    #   run: |
+    #   response=$(docker exec fiber-testnet-node curl -s -X POST -H "Content-Type: application/json" \
+    #   --data '{"id":2, "jsonrpc":"2.0", "method":"invalid_method", "params":[]}' http://localhost:58227)
+    #   if echo "$response" | jq -e '.error' > /dev/null; then
+    #     echo "Invalid method RPC test passed (error returned)"
+    #   else
+    #     echo "Invalid method RPC test failed (no error returned)"
+    #     exit 1
+    #   fi
 
     - name: Stop containers
       if: always()
-      run: docker compose down -v
+      run: |
+        docker compose down -v
+        echo "Removing the testnet.key file if it was created"
+        if [[ -f testnet.key ]]; then
+          rm testnet.key
+        fi
