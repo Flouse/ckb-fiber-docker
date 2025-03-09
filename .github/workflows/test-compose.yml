@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    environment: testnet
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +17,16 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Start containers
-      run: docker compose up -d
+      run: |
+        # Check if the testnet.key is available in GitHub secrets
+        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
+          echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
+          echo "Uncommenting the line for testnet.key in docker-compose.yml"
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key:ro|- ./testnet.key:/fiber/.fiber-node/ckb/key:ro|' docker-compose.yml
+        fi
+
+        # Start the Docker containers in detached mode
+        docker compose up -d
 
     - name: Wait for services to be healthy
       run: |
@@ -28,7 +38,14 @@ jobs:
           echo "Waiting for services to start..."
           sleep 10
         done
+
         docker compose ps
+
+        echo "Checking if the fiber-testnet-node is healthy"
+        if [[ $(docker inspect -f '{{.State.Health.Status}}' fiber-testnet-node) != "healthy" ]]; then
+          echo "Fiber testnet node is not healthy"
+          exit 1
+        fi
 
     # FIXME:
     # - name: Test node connectivity (P2P)
