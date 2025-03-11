@@ -13,6 +13,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - uses: oven-sh/setup-bun@v2
+    - run: bun install
+  
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -102,6 +105,8 @@ jobs:
         node_list=$(curl -s https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes)
         echo "Node List:"
         echo "$node_list" | jq .
+
+    - run: bun test
 
     - name: Monitor memory usage
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"

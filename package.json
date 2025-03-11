@@ -1,0 +1,8 @@
+{
+  "name": "ckb-fiber-test",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.5"
+  }
+}
