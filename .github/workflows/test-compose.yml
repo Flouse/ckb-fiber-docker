@@ -51,7 +51,8 @@ jobs:
       run: |
         response=$(curl -s -X POST -H "Content-Type: application/json" \
           --data '{"id":2, "jsonrpc":"2.0", "method":"node_info", "params":[]}' http://localhost:58227)
-        echo "node info: $response"
+        echo "Fiber Node info:"
+        echo "$response" | jq .
 
         # Check if the response contains the expected version
         if echo "$response" | jq -e '.result.version' > /dev/null; then
