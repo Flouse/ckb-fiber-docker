@@ -22,5 +22,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true,
+
+    // TODO: Jest and Node types
+    // "types": ["jest", "node"]
   },
 }

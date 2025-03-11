@@ -1,4 +1,3 @@
-import { $ } from "bun";
 import { describe, expect, test } from "bun:test";
 
 describe("Docker Compose Setup", () => {
