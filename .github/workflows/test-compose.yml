@@ -90,12 +90,18 @@ jobs:
         echo "Balance in CKB: $balance_ckb"
 
         if [[ "$balance_ckb" -lt ${{ env.MINIMUM_CKB }} ]]; then
-          echo "Balance is less than ${{ env.MINIMUM_CKB }} CKB, requesting faucet..."
+          echo "Balance $balance_ckb CKB is less than ${{ env.MINIMUM_CKB }} CKB, requesting faucet"
           response=$(curl -s "https://nervos-functions.vercel.app/api/faucet?target_ckt_address=${{ env.CKB_TESTNET_ADDRESS }}")
           echo "$response" | jq .
         else
           echo "Balance $balance_ckb CKB is sufficient."
         fi
+
+    - name: Fetch Public Fiber Nodes from https://testnet.explorer.nervos.org/fiber/graph/nodes
+      run: |
+        node_list=$(curl -s https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes)
+        echo "Node List:"
+        echo "$node_list" | jq .
 
     - name: Monitor memory usage
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
