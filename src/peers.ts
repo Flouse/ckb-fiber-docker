@@ -2,9 +2,19 @@ import { FiberRPC } from "./rpc/client";
 import { parsePeerAddr } from "./utils";
 
 export async function getGraphNodes() {
-  const graphNodes = await fetch("https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes");
-  const nodes = await graphNodes.json();
-  return nodes;
+  let allNodes = [];
+  let page = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    const res = await fetch(`https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes?page=${page}`);
+    const json = await res.json();    
+    allNodes = allNodes.concat(json.data.fiber_graph_nodes);
+    hasMore = json.meta.page_size * page < json.meta.total;
+    page++;
+  }
+
+  return allNodes;
 }
 
 export async function connectToPeers(rpc: FiberRPC, knownPeers: string[]) {
