@@ -35,8 +35,7 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 #### Faucet Testing
 
 - [x] Add balance check before faucet request
-- [ ] Faucet request if necessary
-- [ ] Verify balance increase after faucet receipt
+- [x] Get CKB faucet if necessary
 
 #### Peer Connection
 
