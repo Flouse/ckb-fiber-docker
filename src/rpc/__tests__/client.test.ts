@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeAll, describe, expect, mock, test } from "bun:test";
 import { FiberRPC } from '../client';
 
 const mockNodeInfoResponse = {
@@ -64,27 +64,39 @@ const mockNodeInfoResponse = {
 
 describe('FiberRPC', () => {
   let rpc: FiberRPC;
-  
-  beforeEach(() => {
-    global.fetch = mock(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve(mockNodeInfoResponse),
-      } as Response)
-    );
 
-    rpc = new FiberRPC('http://localhost:8227');
+  beforeAll(() => {
+    if (process.env.GITHUB_ACTIONS) {
+      // Use real fetch in GitHub Actions
+      rpc = new FiberRPC('http://localhost:58227');
+    } else {
+      // Use mock fetch for local development
+      global.fetch = mock(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockNodeInfoResponse),
+        } as Response)
+      );
+      rpc = new FiberRPC('http://localhost:8227');
+    }
   });
 
   test('should get node info', async () => {
     const nodeInfo = await rpc.getNodeInfo();
-    expect(nodeInfo).toEqual(mockNodeInfoResponse.result);
-    expect(fetch).toHaveBeenCalledWith('http://localhost:8227', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: expect.stringContaining('"method":"node_info"'),
-    });
+    if (!process.env.GITHUB_ACTIONS) {
+      expect(nodeInfo).toEqual(mockNodeInfoResponse.result);
+      expect(fetch).toHaveBeenCalledWith('http://localhost:8227', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: expect.stringContaining('"method":"node_info"'),
+      });
+    } else {
+      expect(nodeInfo).toBeDefined();
+      expect(nodeInfo.version).toBe(mockNodeInfoResponse.result.version);
+      expect(nodeInfo.chain_hash).toBe("0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606");
+      expect(nodeInfo.node_id).toBeDefined();
+    }
   });
 });
