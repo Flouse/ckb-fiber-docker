@@ -1,5 +1,12 @@
-const figlet = require("figlet");
-
+// figlet the project name
 console.log(
-  figlet.textSync(require("../package.json").name)
+  require("figlet").textSync(require("../package.json").name)
 );
+
+
+import { FiberRPC } from "./rpc/client";
+const rpc = new FiberRPC("http://localhost:58227");
+
+// call get node info
+const nodeInfo = await rpc.getNodeInfo();
+console.log("Node Info:", nodeInfo);

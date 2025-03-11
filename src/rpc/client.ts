@@ -54,6 +54,10 @@ export class FiberRPC {
     return data.result as T;
   }
 
+  async getNodeInfo() {
+    return this.call<any>("node_info");
+  }
+
   /**
    * Retrieves the list of peers.
    * @returns {Promise<Array<string>>} A promise that resolves to an array of peer addresses.
@@ -61,7 +65,9 @@ export class FiberRPC {
    * Retrieves the list of peers.
    * @returns {Promise<Array<string>>} A promise that resolves to an array of peer addresses.
    */
-  async getPeers() {}
+  async getPeers() {
+    // TODO: Implement the logic to retrieve the list of peers
+  }
 
   // Fiber-specific methods
   /**

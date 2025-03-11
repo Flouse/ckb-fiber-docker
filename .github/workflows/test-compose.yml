@@ -106,6 +106,7 @@ jobs:
         echo "Node List:"
         echo "$node_list" | jq .
 
+    - run: bun start
     - run: bun test
 
     - name: Monitor memory usage
