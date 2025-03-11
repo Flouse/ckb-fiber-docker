@@ -54,3 +54,6 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 - [ ] Setup key_send payment test
 - [ ] Execute payment transactions
 - [ ] Verify payment success
+
+
+[GHCR]: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber
