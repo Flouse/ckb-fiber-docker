@@ -1,8 +1,14 @@
 {
   "name": "ckb-fiber-test",
-  "module": "src/index.ts",
   "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "^1.2.5"
+  },
+  "dependencies": {
+    "figlet": "^1.8.0"
   }
 }
