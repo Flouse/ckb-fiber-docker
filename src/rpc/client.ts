@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { TemporaryChannelData } from "fiber";
+import type { Script } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -75,8 +75,8 @@ export class FiberRPC {
    * @param {string} params.peer_id - The peer ID to open the channel with
    * @param {string} params.funding_amount - The funding amount (CKB or UDT)
    * @param {boolean} [params.public] - Whether this is a public channel (default: true)
-   * @param {Object} [params.funding_udt_type_script] - The type script of the UDT to fund the channel
-   * @param {Object} [params.shutdown_script] - The script used to receive the channel balance
+   * @param {Script} [params.funding_udt_type_script] - The type script of the UDT to fund the channel
+   * @param {Script} [params.shutdown_script] - The script used to receive the channel balance
    * @param {string} [params.commitment_delay_epoch] - The delay time for commitment transaction in u64 format
    * @param {number} [params.commitment_fee_rate] - The fee rate for commitment transaction
    * @param {number} [params.funding_fee_rate] - The fee rate for funding transaction
@@ -91,8 +91,8 @@ export class FiberRPC {
     peer_id: string;
     funding_amount: string;
     public?: boolean;
-    funding_udt_type_script?: Record<string, unknown>;
-    shutdown_script?: Record<string, unknown>;
+    funding_udt_type_script?: Script;
+    shutdown_script?: Script;
     commitment_delay_epoch?: string;
     commitment_fee_rate?: number;
     funding_fee_rate?: number;

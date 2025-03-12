@@ -106,8 +106,13 @@ jobs:
         echo "Node List:"
         echo "$node_list" | jq .
 
-    - run: bun start
     - run: bun test
+    - run: bun start
+    
+    - name: Open channel
+      run: |
+        bun run script/open-channel.ts \
+          --peer_id 03623b6095f393af50226b4451441fc0a6446dd63e0a833a85b621f994e0e323f9
 
     - name: Monitor memory usage
       if: always()

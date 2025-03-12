@@ -22,7 +22,7 @@ for (const node of graphNodes) {
   for (const addr of node.addresses) {
     totalAttempts++;
     try {
-      await rpc.connect_peer(addr, true);
+      await rpc.connectPeer(addr, true);
       successCount++;
       console.log(`Connected to peer ${addr}`);
     } catch (error: unknown) {
