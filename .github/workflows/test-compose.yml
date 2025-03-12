@@ -110,6 +110,7 @@ jobs:
     - run: bun test
 
     - name: Monitor memory usage
+      if: always()
       run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
 
     - name: Stop containers
