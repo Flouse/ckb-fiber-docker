@@ -112,7 +112,7 @@ jobs:
     - name: Open channel
       run: |
         bun run script/open-channel.ts \
-          --peer_id 03623b6095f393af50226b4451441fc0a6446dd63e0a833a85b621f994e0e323f9
+          --peer_id QmYNRycD59ACRmh5mQWhsPr3XpXpSdkmgKf4v8fUXH6VNa
 
     - name: Monitor memory usage
       if: always()
