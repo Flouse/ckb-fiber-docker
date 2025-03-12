@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import type { TemporaryChannelData } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -59,23 +60,48 @@ export class FiberRPC {
   }
 
   /**
-   * Retrieves the list of peers.
-   * @returns {Promise<Array<string>>} A promise that resolves to an array of peer addresses.
-   *
-   * Retrieves the list of peers.
-   * @returns {Promise<Array<string>>} A promise that resolves to an array of peer addresses.
-   */
-  async getPeers() {
-    // TODO: Implement the logic to retrieve the list of peers
-  }
-
-  /**
    * Connect to a peer.
    * @param {string} address - The address of the peer to connect to.
    * @param {boolean} [save=false] - Whether to save the peer address to the peer store.
    * @returns {Promise<void>}
    */
-  async connect_peer(address: string, save: boolean = false): Promise<void> { // Using string for MultiAddr
+  async connectPeer(address: string, save: boolean = false): Promise<void> { // Using string for MultiAddr
     return this.call<void>("connect_peer", [{ address, save }]);
+  }
+
+  /**
+   * Opens a Fiber channel with a peer.
+   * @param {Object} params - The parameters for opening the channel
+   * @param {string} params.peer_id - The peer ID to open the channel with
+   * @param {string} params.funding_amount - The funding amount (CKB or UDT)
+   * @param {boolean} [params.public] - Whether this is a public channel (default: true)
+   * @param {Object} [params.funding_udt_type_script] - The type script of the UDT to fund the channel
+   * @param {Object} [params.shutdown_script] - The script used to receive the channel balance
+   * @param {string} [params.commitment_delay_epoch] - The delay time for commitment transaction in u64 format
+   * @param {number} [params.commitment_fee_rate] - The fee rate for commitment transaction
+   * @param {number} [params.funding_fee_rate] - The fee rate for funding transaction
+   * @param {number} [params.tlc_expiry_delta] - The expiry delta for TLC in milliseconds
+   * @param {string} [params.tlc_min_value] - The minimum value for a TLC
+   * @param {string} [params.tlc_fee_proportional_millionths] - The fee proportional millionths for TLC
+   * @param {string} [params.max_tlc_value_in_flight] - Maximum value in flight for TLCs
+   * @param {number} [params.max_tlc_number_in_flight] - Maximum number of TLCs in flight
+   * @returns {Promise<{ temporary_channel_id: string }>} The temporary channel ID
+   */
+  async openChannel(params: {
+    peer_id: string;
+    funding_amount: string;
+    public?: boolean;
+    funding_udt_type_script?: Record<string, unknown>;
+    shutdown_script?: Record<string, unknown>;
+    commitment_delay_epoch?: string;
+    commitment_fee_rate?: number;
+    funding_fee_rate?: number;
+    tlc_expiry_delta?: number;
+    tlc_min_value?: string;
+    tlc_fee_proportional_millionths?: string;
+    max_tlc_value_in_flight?: string;
+    max_tlc_number_in_flight?: number;
+  }): Promise<{ temporary_channel_id: string }> {
+    return this.call<{ temporary_channel_id: string }>("open_channel", [params]);
   }
 }
