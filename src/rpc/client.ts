@@ -76,6 +76,6 @@ export class FiberRPC {
    * @returns {Promise<void>}
    */
   async connect_peer(address: string, save: boolean = false): Promise<void> { // Using string for MultiAddr
-    return this.call<void>("connect_peer", [address, save]);
+    return this.call<void>("connect_peer", [{ address, save }]);
   }
 }
