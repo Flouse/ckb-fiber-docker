@@ -1,0 +1,367 @@
+{
+  "data": {
+    "fiber_graph_nodes": [
+      {
+        "node_name": "",
+        "node_id": "03ddfc9be57ac88ec168c682b4d82a135a623d8bb7196c3737c25f7b60a3d19615",
+        "addresses": [
+          "/ip4/221.187.61.162/tcp/28228/p2p/QmcrifSeXFBGSYV3y7jPVh3Uo3ERAvEX1yeJvjezSTfxFi"
+        ],
+        "peer_id": "QmcrifSeXFBGSYV3y7jPVh3Uo3ERAvEX1yeJvjezSTfxFi",
+        "timestamp": "1737466378621",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [],
+        "open_channels_count": 0,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "",
+        "node_id": "03781a50829680593cd47edccb646e62625212cf9aea83ef4be421a2b2c0887210",
+        "addresses": [
+          "/ip4/221.187.61.162/tcp/18228/p2p/QmSr3bkMcG9Fy3PAf3HdrxttAE6EiLxHitKJW6HmiV9o6U"
+        ],
+        "peer_id": "QmSr3bkMcG9Fy3PAf3HdrxttAE6EiLxHitKJW6HmiV9o6U",
+        "timestamp": "1737954477668",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [],
+        "open_channels_count": 0,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "ipn-test",
+        "node_id": "0375b97375e3e7911175cca9c5065dee4b3f316108c07f545df76d3b7a937a0cd0",
+        "addresses": [
+          "/ip4/188.188.188.188/tcp/8228/p2p/QmevPMEjhYXKNUejFqG8NCd5FdTqDYZi8kKMq6fDTWAn4Q"
+        ],
+        "peer_id": "QmevPMEjhYXKNUejFqG8NCd5FdTqDYZi8kKMq6fDTWAn4Q",
+        "timestamp": "1739517371055",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [],
+        "open_channels_count": 0,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+            "hash_type": "type",
+            "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f",
+            "full_name": "USDI",
+            "symbol": "USDI",
+            "decimal": 6,
+            "icon_file": "data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0IiBmaWxsPSIjMDUxRjQ0Ii8+CjxwYXRoIGQ9Ik0xNS4zOTc0IDI5LjkzMjFDMTQuMTU5NCAyOS45MzIxIDEzLjA1OSAyOS4yOTYzIDEyLjQ0ODMgMjguMjI5M0MxMS44Mzc2IDI3LjE2MjMgMTEuODUxMyAyNS44OTYxIDEyLjQ4NjggMjQuODQyOEwyMy4wNjE3IDcuMjc0MzhMMjMuMDc1NCA3LjI1NTI4QzIzLjYyMjkgNi40NTU3MiAyNC40Nzg0IDYgMjUuNDIyIDZDMjYuMjgzMSA2IDI3LjEyNzcgNi4zODc1IDI3LjY4MDYgNy4wMzY5N0MyOC4yMTk4IDcuNjcyNzkgMjguNDM3MSA4LjQ5MTQ1IDI4LjI4ODYgOS4zNDI4NUwyNi4wNDkzIDIyLjIyODVMMjEuODY3NyAyNC4zMjdMMjMuNzI3NCAxMy41MTUzTDE2LjQyOSAyNS45OTQ0SDIwLjM2NTdMMTkuNjIwMiAyOS45MzIxSDE1LjQwMDFIMTUuMzk3NFoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3KSIvPgo8cGF0aCBkPSJNMjIuNDQ4NCA0MS45OTk1QzIxLjU4NzMgNDEuOTk5NSAyMC43NDI3IDQxLjYxMiAyMC4xODk4IDQwLjk2MjVDMTkuNjUwNiA0MC4zMjY3IDE5LjQzMzMgMzkuNTA4IDE5LjU4MTggMzguNjU2NkwyMS44MjExIDI1Ljc3MUwyNi4wMDI3IDIzLjY3MjVMMjQuMTQzIDM0LjQ4NDJMMzEuNDQxNCAyMi4wMDUxSDI3LjUwNDdMMjguMjUwMiAxOC4wNjc0SDMyLjQ3MDNDMzMuNzA4MiAxOC4wNjc0IDM0LjgwODYgMTguNzAzMiAzNS40MTk0IDE5Ljc3MDJDMzYuMDMwMSAyMC44MzcyIDM2LjAxNjMgMjIuMTAzNCAzNS4zODA5IDIzLjE1NjdMMjQuODA2IDQwLjcyNTFMMjQuNzkyMiA0MC43NDQyQzI0LjI0NDggNDEuNTQzOCAyMy4zODkyIDQxLjk5OTUgMjIuNDQ1NiA0MS45OTk1SDIyLjQ0ODRaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMzMzMzlfOTMxNykiLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTE5Ljk5OTkgMjcuOTE2OEgxNS42MjNDMTQuMjc1IDI3LjkxNjggMTMuNDUyNSAyNi40NDg2IDE0LjE2MjMgMjUuMzEzNEwyNC40MzE4IDguODYzODdDMjQuOTM4IDguMDUwNjcgMjYuMjA2MiA4LjUwOTExIDI2LjA2ODYgOS40NTMzTDI0LjA2NTkgMjMuMjE3N0wyMS44Njc4IDI0LjMyMjlMMjMuNzI3NSAxMy41MTExTDE2LjQyOTEgMjUuOTkwMkgyMC4zNjU4TDIwLjAwMjcgMjcuOTE0TDE5Ljk5OTkgMjcuOTE2OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yNy44ODQzIDIwLjA2MjVIMzIuMjYxMUMzMy42MDkxIDIwLjA2MjUgMzQuNDMxNyAyMS41MzA2IDMzLjcyMTkgMjIuNjY1OEwyMy40NDk2IDM5LjExNTRDMjIuOTQzNSAzOS45Mjg2IDIxLjY3NTIgMzkuNDcwMSAyMS44MTI4IDM4LjUyNkwyMy44MTU1IDI0Ljc2MTZMMjYuMDEzNiAyMy42NTY0TDI0LjE1MzkgMzQuNDY4MUwzMS40NTIzIDIxLjk4OTFIMjcuNTE1NkwyNy44Nzg4IDIwLjA2NTJMMjcuODg0MyAyMC4wNjI1WiIgZmlsbD0id2hpdGUiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3IiB4MT0iMjAuMTY0OSIgeTE9IjI1LjYzNDEiIHgyPSIyMC4xNjQ5IiB5Mj0iMS43MDIwNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDA1OEYxIi8+CjxzdG9wIG9mZnNldD0iMC41MyIgc3RvcC1jb2xvcj0iIzAwQjFGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwM0E5RkQiLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDFfbGluZWFyXzMzMzM5XzkzMTciIHgxPSIyNy43MDI4IiB5MT0iNDEuOTk5NSIgeDI9IjI3LjcwMjgiIHkyPSIxOC4wNjc0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkFCMTEiLz4KPHN0b3Agb2Zmc2V0PSIwLjA5IiBzdG9wLWNvbG9yPSIjRkRBNDFBIi8+CjxzdG9wIG9mZnNldD0iMC4yNCIgc3RvcC1jb2xvcj0iI0ZBOTIzMiIvPgo8c3RvcCBvZmZzZXQ9IjAuNDMiIHN0b3AtY29sb3I9IiNGNDc0NUIiLz4KPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdG9wLWNvbG9yPSIjRUQ0QjkyIi8+CjxzdG9wIG9mZnNldD0iMC45IiBzdG9wLWNvbG9yPSIjRTMxN0Q5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0RGMDBGOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=",
+            "auto_accept_amount": "1000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "ipn-test2",
+        "node_id": "03142d0d011697f4b593880767efbae6fd7994c838a8102bc32039b2f096dc4995",
+        "addresses": [
+          "/ip4/64.176.36.137/tcp/8228/p2p/QmSnVsd6cazNNchSVhSfGbS6JcAJBXXuvePnELJwM9yqP5"
+        ],
+        "peer_id": "QmSnVsd6cazNNchSVhSfGbS6JcAJBXXuvePnELJwM9yqP5",
+        "timestamp": "1739521956738",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [],
+        "open_channels_count": 0,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+            "hash_type": "type",
+            "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f",
+            "full_name": "USDI",
+            "symbol": "USDI",
+            "decimal": 6,
+            "icon_file": "data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0IiBmaWxsPSIjMDUxRjQ0Ii8+CjxwYXRoIGQ9Ik0xNS4zOTc0IDI5LjkzMjFDMTQuMTU5NCAyOS45MzIxIDEzLjA1OSAyOS4yOTYzIDEyLjQ0ODMgMjguMjI5M0MxMS44Mzc2IDI3LjE2MjMgMTEuODUxMyAyNS44OTYxIDEyLjQ4NjggMjQuODQyOEwyMy4wNjE3IDcuMjc0MzhMMjMuMDc1NCA3LjI1NTI4QzIzLjYyMjkgNi40NTU3MiAyNC40Nzg0IDYgMjUuNDIyIDZDMjYuMjgzMSA2IDI3LjEyNzcgNi4zODc1IDI3LjY4MDYgNy4wMzY5N0MyOC4yMTk4IDcuNjcyNzkgMjguNDM3MSA4LjQ5MTQ1IDI4LjI4ODYgOS4zNDI4NUwyNi4wNDkzIDIyLjIyODVMMjEuODY3NyAyNC4zMjdMMjMuNzI3NCAxMy41MTUzTDE2LjQyOSAyNS45OTQ0SDIwLjM2NTdMMTkuNjIwMiAyOS45MzIxSDE1LjQwMDFIMTUuMzk3NFoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3KSIvPgo8cGF0aCBkPSJNMjIuNDQ4NCA0MS45OTk1QzIxLjU4NzMgNDEuOTk5NSAyMC43NDI3IDQxLjYxMiAyMC4xODk4IDQwLjk2MjVDMTkuNjUwNiA0MC4zMjY3IDE5LjQzMzMgMzkuNTA4IDE5LjU4MTggMzguNjU2NkwyMS44MjExIDI1Ljc3MUwyNi4wMDI3IDIzLjY3MjVMMjQuMTQzIDM0LjQ4NDJMMzEuNDQxNCAyMi4wMDUxSDI3LjUwNDdMMjguMjUwMiAxOC4wNjc0SDMyLjQ3MDNDMzMuNzA4MiAxOC4wNjc0IDM0LjgwODYgMTguNzAzMiAzNS40MTk0IDE5Ljc3MDJDMzYuMDMwMSAyMC44MzcyIDM2LjAxNjMgMjIuMTAzNCAzNS4zODA5IDIzLjE1NjdMMjQuODA2IDQwLjcyNTFMMjQuNzkyMiA0MC43NDQyQzI0LjI0NDggNDEuNTQzOCAyMy4zODkyIDQxLjk5OTUgMjIuNDQ1NiA0MS45OTk1SDIyLjQ0ODRaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMzMzMzlfOTMxNykiLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTE5Ljk5OTkgMjcuOTE2OEgxNS42MjNDMTQuMjc1IDI3LjkxNjggMTMuNDUyNSAyNi40NDg2IDE0LjE2MjMgMjUuMzEzNEwyNC40MzE4IDguODYzODdDMjQuOTM4IDguMDUwNjcgMjYuMjA2MiA4LjUwOTExIDI2LjA2ODYgOS40NTMzTDI0LjA2NTkgMjMuMjE3N0wyMS44Njc4IDI0LjMyMjlMMjMuNzI3NSAxMy41MTExTDE2LjQyOTEgMjUuOTkwMkgyMC4zNjU4TDIwLjAwMjcgMjcuOTE0TDE5Ljk5OTkgMjcuOTE2OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yNy44ODQzIDIwLjA2MjVIMzIuMjYxMUMzMy42MDkxIDIwLjA2MjUgMzQuNDMxNyAyMS41MzA2IDMzLjcyMTkgMjIuNjY1OEwyMy40NDk2IDM5LjExNTRDMjIuOTQzNSAzOS45Mjg2IDIxLjY3NTIgMzkuNDcwMSAyMS44MTI4IDM4LjUyNkwyMy44MTU1IDI0Ljc2MTZMMjYuMDEzNiAyMy42NTY0TDI0LjE1MzkgMzQuNDY4MUwzMS40NTIzIDIxLjk4OTFIMjcuNTE1NkwyNy44Nzg4IDIwLjA2NTJMMjcuODg0MyAyMC4wNjI1WiIgZmlsbD0id2hpdGUiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3IiB4MT0iMjAuMTY0OSIgeTE9IjI1LjYzNDEiIHgyPSIyMC4xNjQ5IiB5Mj0iMS43MDIwNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDA1OEYxIi8+CjxzdG9wIG9mZnNldD0iMC41MyIgc3RvcC1jb2xvcj0iIzAwQjFGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwM0E5RkQiLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDFfbGluZWFyXzMzMzM5XzkzMTciIHgxPSIyNy43MDI4IiB5MT0iNDEuOTk5NSIgeDI9IjI3LjcwMjgiIHkyPSIxOC4wNjc0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkFCMTEiLz4KPHN0b3Agb2Zmc2V0PSIwLjA5IiBzdG9wLWNvbG9yPSIjRkRBNDFBIi8+CjxzdG9wIG9mZnNldD0iMC4yNCIgc3RvcC1jb2xvcj0iI0ZBOTIzMiIvPgo8c3RvcCBvZmZzZXQ9IjAuNDMiIHN0b3AtY29sb3I9IiNGNDc0NUIiLz4KPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdG9wLWNvbG9yPSIjRUQ0QjkyIi8+CjxzdG9wIG9mZnNldD0iMC45IiBzdG9wLWNvbG9yPSIjRTMxN0Q5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0RGMDBGOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo="
+          }
+        ]
+      },
+      {
+        "node_name": "ipn-test2",
+        "node_id": "03fcf7ae698a7f71d29a71f89b98fe9cf9af50524b0d9a2660c84e29ffd739b8ca",
+        "addresses": [
+          "/ip4/64.176.36.137/tcp/8228/p2p/QmVVu6eQUQv67QTVmK7A8TtMLkFR87QcWTsUZs3RZb1AKN"
+        ],
+        "peer_id": "QmVVu6eQUQv67QTVmK7A8TtMLkFR87QcWTsUZs3RZb1AKN",
+        "timestamp": "1739528341117",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "02b6d4e3ab86a2ca2fad6fae0ecb2e1e559e0b911939872a90abdda6d20302be71"
+        ],
+        "open_channels_count": 1,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "212600000000.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+            "hash_type": "type",
+            "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f",
+            "full_name": "USDI",
+            "symbol": "USDI",
+            "decimal": 6,
+            "icon_file": "data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0IiBmaWxsPSIjMDUxRjQ0Ii8+CjxwYXRoIGQ9Ik0xNS4zOTc0IDI5LjkzMjFDMTQuMTU5NCAyOS45MzIxIDEzLjA1OSAyOS4yOTYzIDEyLjQ0ODMgMjguMjI5M0MxMS44Mzc2IDI3LjE2MjMgMTEuODUxMyAyNS44OTYxIDEyLjQ4NjggMjQuODQyOEwyMy4wNjE3IDcuMjc0MzhMMjMuMDc1NCA3LjI1NTI4QzIzLjYyMjkgNi40NTU3MiAyNC40Nzg0IDYgMjUuNDIyIDZDMjYuMjgzMSA2IDI3LjEyNzcgNi4zODc1IDI3LjY4MDYgNy4wMzY5N0MyOC4yMTk4IDcuNjcyNzkgMjguNDM3MSA4LjQ5MTQ1IDI4LjI4ODYgOS4zNDI4NUwyNi4wNDkzIDIyLjIyODVMMjEuODY3NyAyNC4zMjdMMjMuNzI3NCAxMy41MTUzTDE2LjQyOSAyNS45OTQ0SDIwLjM2NTdMMTkuNjIwMiAyOS45MzIxSDE1LjQwMDFIMTUuMzk3NFoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3KSIvPgo8cGF0aCBkPSJNMjIuNDQ4NCA0MS45OTk1QzIxLjU4NzMgNDEuOTk5NSAyMC43NDI3IDQxLjYxMiAyMC4xODk4IDQwLjk2MjVDMTkuNjUwNiA0MC4zMjY3IDE5LjQzMzMgMzkuNTA4IDE5LjU4MTggMzguNjU2NkwyMS44MjExIDI1Ljc3MUwyNi4wMDI3IDIzLjY3MjVMMjQuMTQzIDM0LjQ4NDJMMzEuNDQxNCAyMi4wMDUxSDI3LjUwNDdMMjguMjUwMiAxOC4wNjc0SDMyLjQ3MDNDMzMuNzA4MiAxOC4wNjc0IDM0LjgwODYgMTguNzAzMiAzNS40MTk0IDE5Ljc3MDJDMzYuMDMwMSAyMC44MzcyIDM2LjAxNjMgMjIuMTAzNCAzNS4zODA9IDIzLjE1NjdMMjQuODA2IDQwLjcyNTFMMjQuNzkyMiA0MC43NDQyQzI0LjI0NDggNDEuNTQzOCAyMy4zODkyIDQxLjk5OTUgMjIuNDQ1NiA0MS45OTk1SDIyLjQ0ODRaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMzMzMzlfOTMxNykiLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTE5Ljk5OTkgMjcuOTE2OEgxNS42MjNDMTQuMjc1IDI3LjkxNjggMTMuNDUyNSAyNi40NDg2IDE0LjE2MjMgMjUuMzEzNEwyNC40MzE4IDguODYzODdDMjQuOTM4IDguMDUwNjcgMjYuMjA2MiA4LjUwOTExIDI2LjA2ODYgOS40NTMzTDI0LjA2NTkgMjMuMjE3N0wyMS44Njc4IDI0LjMyMjlMMjMuNzI3NSAxMy41MTExTDE2LjQyOTEgMjUuOTkwMkgyMC4zNjU4TDIwLjAwMjcgMjcuOTE0TDE5Ljk5OTkgMjcuOTE2OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yNy44ODQzIDIwLjA2MjVIMzIuMjYxMUMzMy42MDkxIDIwLjA2MjUgMzQuNDMxNyAyMS41MzA2IDMzLjcyMTkgMjIuNjY1OEwyMy40NDk2IDM5LjExNTRDMjIuOTQzNSAzOS45Mjg2IDIxLjY3NTIgMzkuNDcwMSAyMS44MTI4IDM4LjUyNkwyMy44MTU1IDI0Ljc2MTZMMjYuMDEzNiAyMy42NTY0TDI0LjE1MzkgMzQuNDY4MUwzMS40NTIzIDIxLjk4OTFIMjcuNTE1NkwyNy44Nzg4IDIwLjA2NTJMMjcuODg0MyAyMC4wNjI1WiIgZmlsbD0id2hpdGUiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3IiB4MT0iMjAuMTY0OSIgeTE9IjI1LjYzNDEiIHgyPSIyMC4xNjQ5IiB5Mj0iMS43MDIwNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDA1OEYxIi8+CjxzdG9wIG9mZnNldD0iMC41MyIgc3RvcC1jb2xvcj0iIzAwQjFGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwM0E5RkQiLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDFfbGluZWFyXzMzMzM5XzkzMTciIHgxPSIyNy43MDI4IiB5MT0iNDEuOTk5NSIgeDI9IjI3LjcwMjgiIHkyPSIxOC4wNjc0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkFCMTEiLz4KPHN0b3Agb2Zmc2V0PSIwLjA5IiBzdG9wLWNvbG9yPSIjRkRBNDFBIi8+CjxzdG9wIG9mZnNldD0iMC4yNCIgc3RvcC1jb2xvcj0iI0ZBOTIzMiIvPgo8c3RvcCBvZmZzZXQ9IjAuNDMiIHN0b3AtY29sb3I9IiNGNDc0NUIiLz4KPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdG9wLWNvbG9yPSIjRUQ0QjkyIi8+CjxzdG9wIG9mZnNldD0iMC45IiBzdG9wLWNvbG9yPSIjRTMxN0Q5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0RGMDBGOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo="
+          }
+        ]
+      },
+      {
+        "node_name": "gp",
+        "node_id": "0268847a4791595d7d4ddaa853163839abc08f97b6950280f0dcf758cf36fb513f",
+        "addresses": [
+          "/ip4/16.162.99.28/tcp/8119/p2p/QmPQ1BpLXmD4HpF9ed9oqkhd4yGyQogGYfeEVA83fR9MVJ"
+        ],
+        "peer_id": "QmPQ1BpLXmD4HpF9ed9oqkhd4yGyQogGYfeEVA83fR9MVJ",
+        "timestamp": "1740358521237",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "02991d13269dd0f601dd676bc3f7dcb9dacfdd5a926fdccfbd5ca171f624dcf817",
+          "02d0ab8ceb40e5f076519c2c00049abee8fa750b507bdd7e382ddf822825996a71",
+          "03fd9c297ace6212bff9ce1b6c67e3ecbdbc3c96e42fa70545276f5eaeb6398a2f"
+        ],
+        "open_channels_count": 8,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "688000000000.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "10000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "",
+        "node_id": "03f91c90e9fd1a295930701ccc2a405d9e5e0b946f2cac1376396ebb1622ef9162",
+        "addresses": [
+          "/ip4/43.198.254.225/tcp/8226/p2p/QmZYvLyimRawQdnac3aETmuQHhz8uakE5LVtqgyvFkiVLT"
+        ],
+        "peer_id": "QmZYvLyimRawQdnac3aETmuQHhz8uakE5LVtqgyvFkiVLT",
+        "timestamp": "1741479569173",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "03a14d995d6eeea39f457f2f013304540c5de1d32c672c8f9a6b8efeb1dc323d4a",
+          "02bf27a89601ae76dfacca01ea052d96601ab6d556ed99db8d7b95a67f2a5b83fc",
+          "034bb2e0c96126b99b9efec33b07b29ae97593074985973c0a85a875c11ef6e17e",
+          "02631bb496e6597c06ace282857183154f65d921ed49076a93fb1ac0a64595d875",
+          "0264804f739b32526c1d15c6db019296f243eb5fa01fd017851720aa7daa242a98",
+          "0291a6576bd5a94bd74b27080a48340875338fff9f6d6361fe6b8db8d0d1912fcc",
+          "03d8735fa4bac3ebbfd8b7bb73054e0a3b1ef31855a3306fa55672e5adfdb4b3b2",
+          "02b6d4e3ab86a2ca2fad6fae0ecb2e1e559e0b911939872a90abdda6d20302be71"
+        ],
+        "open_channels_count": 9,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "801800000000.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "utxostack-hub-1",
+        "node_id": "03623b6095f393af50226b4451441fc0a6446dd63e0a833a85b621f994e0e323f9",
+        "addresses": [
+          "/ip4/52.45.221.66/tcp/18228/p2p/QmYNRycD59ACRmh5mQWhsPr3XpXpSdkmgKf4v8fUXH6VNa"
+        ],
+        "peer_id": "QmYNRycD59ACRmh5mQWhsPr3XpXpSdkmgKf4v8fUXH6VNa",
+        "timestamp": "1741676731585",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "02484fb6ecd5ebbdb119c2ed1cf05296a59f4ef9337efd3183067732ceccbfbdf5",
+          "02f2bd6c271a7072bbf63296cf3010f651812fd30a68f21615447c0a7f38f90385",
+          "03e4ee65d5bcd71adfc5fd3e3a44b022f0009f34d5441807cbf22e2edb87104fa9",
+          "03e7eb5bb09b3c97f64aad5aed5f77d7588fd8278a98f8e8dfc6ecf742856b15dd",
+          "035f3df0c78092c24ea71e8e6538c8e45ac998e074a1a640d881eb58e2ea975131",
+          "0344b39c343751206d091950f7ad2e7e2744fbc127e300d00f1194d0a770ee1cfe",
+          "03076a8a3db3f17277035b33cd1f83ade64bae4377ce402eef124d49e70d953f95",
+          "0227d67ea78a5a1784e4c5210e5194dcc99b0fc4227b20b83826fa13c3b9f4adc0",
+          "0301f9f439e3490272acad7dbf9bd57fccfb1f780f9c6b0b90cc6f7447983d12fc",
+          "02d67cda161f8c2395e17aac5b790b258bd9e1366934a9b4375abda6db9bea0487"
+        ],
+        "open_channels_count": 25,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "40942250000004.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+            "hash_type": "type",
+            "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f",
+            "full_name": "USDI",
+            "symbol": "USDI",
+            "decimal": 6,
+            "icon_file": "data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0IiBmaWxsPSIjMDUxRjQ0Ii8+CjxwYXRoIGQ9Ik0xNS4zOTc0IDI5LjkzMjFDMTQuMTU5NCAyOS45MzIxIDEzLjA1OSAyOS4yOTYzIDEyLjQ0ODMgMjguMjI5M0MxMS44Mzc2IDI3LjE2MjMgMTEuODUxMyAyNS44OTYxIDEyLjQ4NjggMjQuODQyOEwyMy4wNjE3IDcuMjc0MzhMMjMuMDc1NCA3LjI1NTI4QzIzLjYyMjkgNi40NTU3MiAyNC40Nzg0IDYgMjUuNDIyIDZDMjYuMjgzMSA2IDI3LjEyNzcgNi4zODc1IDI3LjY4MDYgNy4wMzY5N0MyOC4yMTk4IDcuNjcyNzkgMjguNDM3MSA4LjQ5MTQ1IDI4LjI4ODYgOS4zNDI4NUwyNi4wNDkzIDIyLjIyODVMMjEuODY3NyAyNC4zMjdMMjMuNzI3NCAxMy41MTUzTDE2LjQyOSAyNS45OTQ0SDIwLjM2NTdMMTkuNjIwMiAyOS45MzIxSDE1LjQwMDFIMTUuMzk3NFoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3KSIvPgo8cGF0aCBkPSJNMjIuNDQ4NCA0MS45OTk1QzIxLjU4NzMgNDEuOTk5NSAyMC43NDI3IDQxLjYxMiAyMC4xODk4IDQwLjk2MjVDMTkuNjUwNiA0MC4zMjY3IDE5LjQzMzMgMzkuNTA4IDE5LjU4MTggMzguNjU2NkwyMS44MjExIDI1Ljc3MUwyNi4wMDI3IDIzLjY3MjVMMjQuMTQzIDM0LjQ4NDJMMzEuNDQxNCAyMi4wMDUxSDI3LjUwNDdMMjguMjUwMiAxOC4wNjc0SDMyLjQ3MDNDMzMuNzA4MiAxOC4wNjc0IDM0LjgwODYgMTguNzAzMiAzNS40MTk0IDE5Ljc3MDJDMzYuMDMwMSAyMC44MzcyIDM2LjAxNjMgMjIuMTAzNCAzNS4zODA5IDIzLjE1NjdMMjQuODA2IDQwLjcyNTFMMjQuNzkyMiA0MC43NDQyQzI0LjI0NDggNDEuNTQzOCAyMy4zODkyIDQxLjk5OTUgMjIuNDQ1NiA0MS45OTk1SDIyLjQ0ODRaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMzMzMzlfOTMxNykiLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTE5Ljk5OTkgMjcuOTE2OEgxNS42MjNDMTQuMjc1IDI3LjkxNjggMTMuNDUyNSAyNi40NDg2IDE0LjE2MjMgMjUuMzEzNEwyNC40MzE4IDguODYzODdDMjQuOTM4IDguMDUwNjcgMjYuMjA2MiA4LjUwOTExIDI2LjA2ODYgOS40NTMzTDI0LjA2NTkgMjMuMjE3N0wyMS44Njc4IDI0LjMyMjlMMjMuNzI3NSAxMy41MTExTDE2LjQyOTEgMjUuOTkwMkgyMC4zNjU4TDIwLjAwMjcgMjcuOTE0TDE5Ljk5OTkgMjcuOTE2OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yNy44ODQzIDIwLjA2MjVIMzIuMjYxMUMzMy42MDkxIDIwLjA2MjUgMzQuNDMxNyAyMS41MzA2IDMzLjcyMTkgMjIuNjY1OEwyMy40NDk2IDM5LjExNTRDMjIuOTQzNSAzOS45Mjg2IDIxLjY3NTIgMzkuNDcwMSAyMS44MTI4IDM4LjUyNkwyMy44MTU1IDI0Ljc2MTZMMjYuMDEzNiAyMy42NTY0TDI0LjE1MzkgMzQuNDY4MUwzMS40NTIzIDIxLjk4OTFIMjcuNTE1NkwyNy44Nzg4IDIwLjA2NTJMMjcuODg0MyAyMC4wNjI1WiIgZmlsbD0id2hpdGUiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3IiB4MT0iMjAuMTY0OSIgeTE9IjI1LjYzNDEiIHgyPSIyMC4xNjQ5IiB5Mj0iMS43MDIwNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDA1OEYxIi8+CjxzdG9wIG9mZnNldD0iMC41MyIgc3RvcC1jb2xvcj0iIzAwQjFGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwM0E5RkQiLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDFfbGluZWFyXzMzMzM5XzkzMTciIHgxPSIyNy43MDI4IiB5MT0iNDEuOTk5NSIgeDI9IjI3LjcwMjgiIHkyPSIxOC4wNjc0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkFCMTEiLz4KPHN0b3Agb2Zmc2V0PSIwLjA5IiBzdG9wLWNvbG9yPSIjRkRBNDFBIi8+CjxzdG9wIG9mZnNldD0iMC4yNCIgc3RvcC1jb2xvcj0iI0ZBOTIzMiIvPgo8c3RvcCBvZmZzZXQ9IjAuNDMiIHN0b3AtY29sb3I9IiNGNDc0NUIiLz4KPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdG9wLWNvbG9yPSIjRUQ0QjkyIi8+CjxzdG9wIG9mZnNldD0iMC45IiBzdG9wLWNvbG9yPSIjRTMxN0Q5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0RGMDBGOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo="
+          },
+          {
+            "code_hash": "0x25c29dc317811a6f6f3985a7a9ebc4838bd388d19d0feeecf0bcd60f6c0975bb",
+            "hash_type": "type",
+            "args": "0x2879ad494a8b755f744dbbdc0e3dae691f235762ce1cb06320438e4e44052212",
+            "full_name": "CKB TEST Cion",
+            "symbol": "SU7",
+            "decimal": 8,
+            "icon_file": null,
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0x25c29dc317811a6f6f3985a7a9ebc4838bd388d19d0feeecf0bcd60f6c0975bb",
+            "hash_type": "type",
+            "args": "0x122ae563f351bcaffef58bb57d5f4f863034721b361c645099501039a51d5936",
+            "full_name": "Seal",
+            "symbol": "SEAL",
+            "decimal": 12,
+            "icon_file": null,
+            "auto_accept_amount": "10000000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "",
+        "node_id": "03d8735fa4bac3ebbfd8b7bb73054e0a3b1ef31855a3306fa55672e5adfdb4b3b2",
+        "addresses": [
+          "/ip4/43.199.108.57/tcp/8227/p2p/QmRNwu5cygmU4UNWMhMAYCL51duTmDewVC7sNJAxySHvq6"
+        ],
+        "peer_id": "QmRNwu5cygmU4UNWMhMAYCL51duTmDewVC7sNJAxySHvq6",
+        "timestamp": "1741677789426",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "03f91c90e9fd1a295930701ccc2a405d9e5e0b946f2cac1376396ebb1622ef9162",
+          "02a4951bc48975008f78fb2461c35d415106abee2f093c22884ee5a9ca8a5f1e38"
+        ],
+        "open_channels_count": 3,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "321400000000.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          }
+        ]
+      },
+      {
+        "node_name": "utxostack-hub-test",
+        "node_id": "0324bb481092b870a627b6c20a36b50cc5d62bbd0c2fd6b667a0ae2d0d4a8984b6",
+        "addresses": [
+          "/ip4/52.1.220.72/tcp/18228/p2p/QmNyXu2erQAMxy2BVhJ4gKgVfLCtZ8wYHT1iEsQ9Eyupg5"
+        ],
+        "peer_id": "QmNyXu2erQAMxy2BVhJ4gKgVfLCtZ8wYHT1iEsQ9Eyupg5",
+        "timestamp": "1741678945259",
+        "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+        "connected_node_ids": [
+          "02f2bd6c271a7072bbf63296cf3010f651812fd30a68f21615447c0a7f38f90385"
+        ],
+        "open_channels_count": 1,
+        "auto_accept_min_ckb_funding_amount": "0",
+        "total_capacity": "93800000000.0",
+        "udt_cfg_infos": [
+          {
+            "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+            "hash_type": "type",
+            "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b",
+            "full_name": "RUSD",
+            "symbol": "RUSD",
+            "decimal": 8,
+            "icon_file": "https://raw.githubusercontent.com/stablepp/media-kit/refs/heads/main/stablecoin-RUSD.svg",
+            "auto_accept_amount": "1000000000.0"
+          },
+          {
+            "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+            "hash_type": "type",
+            "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f",
+            "full_name": "USDI",
+            "symbol": "USDI",
+            "decimal": 6,
+            "icon_file": "data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0IiBmaWxsPSIjMDUxRjQ0Ii8+CjxwYXRoIGQ9Ik0xNS4zOTc0IDI5LjkzMjFDMTQuMTU5NCAyOS45MzIxIDEzLjA1OSAyOS4yOTYzIDEyLjQ0ODMgMjguMjI5M0MxMS44Mzc2IDI3LjE2MjMgMTEuODUxMyAyNS44OTYxIDEyLjQ4NjggMjQuODQyOEwyMy4wNjE3IDcuMjc0MzhMMjMuMDc1NCA3LjI1NTI4QzIzLjYyMjkgNi40NTU3MiAyNC40Nzg0IDYgMjUuNDIyIDZDMjYuMjgzMSA2IDI3LjEyNzcgNi4zODc1IDI3LjY4MDYgNy4wMzY5N0MyOC4yMTk4IDcuNjcyNzkgMjguNDM3MSA4LjQ5MTQ1IDI4LjI4ODYgOS4zNDI4NUwyNi4wNDkzIDIyLjIyODVMMjEuODY3NyAyNC4zMjdMMjMuNzI3NCAxMy41MTUzTDE2LjQyOSAyNS45OTQ0SDIwLjM2NTdMMTkuNjIwMiAyOS45MzIxSDE1LjQwMDFIMTUuMzk3NFoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3KSIvPgo8cGF0aCBkPSJNMjIuNDQ4NCA0MS45OTk1QzIxLjU4NzMgNDEuOTk5NSAyMC43NDI3IDQxLjYxMiAyMC4xODk4IDQwLjk2MjVDMTkuNjUwNiA0MC4zMjY3IDE5LjQzMzMgMzkuNTA4IDE5LjU4MTggMzguNjU2NkwyMS44MjExIDI1Ljc3MUwyNi4wMDI3IDIzLjY3MjVMMjQuMTQzIDM0LjQ4NDJMMzEuNDQxNCAyMi4wMDUxSDI3LjUwNDdMMjguMjUwMiAxOC4wNjc0SDMyLjQ3MDNDMzMuNzA4MiAxOC4wNjc0IDM0LjgwODYgMTguNzAzMiAzNS40MTk0IDE5Ljc3MDJDMzYuMDMwMSAyMC44MzcyIDM2LjAxNjMgMjIuMTAzNCAzNS4zODA5IDIzLjE1NjdMMjQuODA2IDQwLjcyNTFMMjQuNzkyMiA0MC43NDQyQzI0LjI0NDggNDEuNTQzOCAyMy4zODkyIDQxLjk5OTUgMjIuNDQ1NiA0MS45OTk1SDIyLjQ0ODRaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMzMzMzlfOTMxNykiLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTE5Ljk5OTkgMjcuOTE2OEgxNS42MjNDMTQuMjc1IDI3LjkxNjggMTMuNDUyNSAyNi40NDg2IDE0LjE2MjMgMjUuMzEzNEwyNC40MzE4IDguODYzODdDMjQuOTM4IDguMDUwNjcgMjYuMjA2MiA4LjUwOTExIDI2LjA2ODYgOS40NTMzTDI0LjA2NTkgMjMuMjE3N0wyMS44Njc4IDI0LjMyMjlMMjMuNzI3NSAxMy41MTExTDE2LjQyOTEgMjUuOTkwMkgyMC4zNjU8TDIwLjAwMjcgMjcuOTE0TDE5Ljk5OTkgMjcuOTE2OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yNy44ODQzIDIwLjA2MjVIMzIuMjYxMUMzMy42MDkxIDIwLjA2MjUgMzQuNDMxNyAyMS41MzA2IDMzLjcyMTkgMjIuNjY1OEwyMy40NDk2IDM5LjExNTRDMjIuOTQzNSAzOS45Mjg2IDIxLjY3NTIgMzkuNDcwMSAyMS44MTI4IDM4LjUyNkwyMy44MTU1IDI0Ljc2MTZMMjYuMDEzNiAyMy42NTY0TDI0LjE1MzkgMzQuNDY4MUwzMS40NTIzIDIxLjk4OTFIMjcuNTE1NkwyNy44Nzg4IDIwLjA2NTJMMjcuODg0MyAyMC4wNjI1WiIgZmlsbD0id2hpdGUiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8zMzMzOV85MzE3IiB4MT0iMjAuMTY0OSIgeTE9IjI1LjYzNDEiIHgyPSIyMC4xNjQ5IiB5Mj0iMS43MDIwNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDA1OEYxIi8+CjxzdG9wIG9mZnNldD0iMC41MyIgc3RvcC1jb2xvcj0iIzAwQjFGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwM0E5RkQiLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDFfbGluZWFyXzMzMzM5XzkzMTciIHgxPSIyNy43MDI4IiB5MT0iNDEuOTk5NSIgeDI9IjI3LjcwMjgiIHkyPSIxOC4wNjc0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkFCMTEiLz4KPHN0b3Agb2Zmc2V0PSIwLjA5IiBzdG9wLWNvbG9yPSIjRkRBNDFBIi8+CjxzdG9wIG9mZnNldD0iMC4yNCIgc3RvcC1jb2xvcj0iI0ZBOTIzMiIvPgo8c3RvcCBvZmZzZXQ9IjAuNDMiIHN0b3AtY29sb3I9IiNGNDc0NUIiLz4KPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdG9wLWNvbG9yPSIjRUQ0QjkyIi8+CjxzdG9wIG9mZnNldD0iMC45IiBzdG9wLWNvbG9yPSIjRTMxN0Q5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0RGMDBGOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo="
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "total": 23,
+    "page_size": 10
+  }
+}
