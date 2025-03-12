@@ -39,4 +39,32 @@ declare module 'fiber' {
     hash_type: CKBComponents.ScriptHashType
     args: string
   }
+
+  export interface Channel {
+    channel_id: string;
+    peer_id: string;
+    is_public: boolean;
+    channel_outpoint?: CKBComponents.OutPoint;
+    funding_udt_type_script?: Script;
+    state: ChannelState;
+    local_balance: string;
+    remote_balance: string;
+    offered_tlc_balance: string;
+    received_tlc_balance: string;
+    latest_commitment_transaction_hash?: string;
+    created_at: string;
+    enabled: boolean;
+    tlc_expiry_delta: string;
+    tlc_fee_proportional_millionths: string;
+  }
+
+  export type ChannelState =
+    | 'NegotiatingFunding'
+    | 'CollaboratingFundingTx'
+    | 'SigningCommitment'
+    | 'AwaitingTxSignatures'
+    | 'AwaitingChannelReady'
+    | 'ChannelReady'
+    | 'ShuttingDown'
+    | 'Closed';
 }

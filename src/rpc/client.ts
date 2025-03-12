@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { Script } from "fiber";
+import type { Script, Channel } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -103,5 +103,16 @@ export class FiberRPC {
     max_tlc_number_in_flight?: number;
   }): Promise<{ temporary_channel_id: string }> {
     return this.call<{ temporary_channel_id: string }>("open_channel", [params]);
+  }
+
+  /**
+   * Lists all channels.
+   * @param {Object} [params] - The parameters for listing channels
+   * @param {string} [params.peer_id] - The peer ID to list channels for
+   * @param {boolean} [params.include_closed=false] - Whether to include closed channels in the list
+   * @returns {Promise<Channel[]>} The list of channels
+   */
+  async listChannels(params?: { peer_id?: string; include_closed?: boolean }): Promise<Channel[]> {
+    return this.call<Channel[]>("list_channels", [params]);
   }
 }

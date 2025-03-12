@@ -29,4 +29,14 @@ const rpcUrl = process.env["FIBER_RPC_URL"] ?? "http://localhost:58227";
 const rpc = new FiberRPC(rpcUrl);
 const channel = await rpc.openChannel(channelParams);
 console.log("Open Channel:", channel);
-console.log("Temporary Channel ID:", channel.temporary_channel_id);
+// e.g.
+// Open Channel: {
+//   temporary_channel_id: "0xabdcd7e1fce10f3cd92af8c93d79a50a8da3379ad2bbc9e71bf506dce96b337b",
+// }
+
+// list channels
+const channels = await rpc.listChannels({
+  peer_id: values.peer_id,
+  include_closed: true,
+});
+console.log("Channels:", channels);
