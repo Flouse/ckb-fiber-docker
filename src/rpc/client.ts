@@ -69,13 +69,13 @@ export class FiberRPC {
     // TODO: Implement the logic to retrieve the list of peers
   }
 
-  // Fiber-specific methods
   /**
-   * Connects to a peer using the given peer address.
-   * @param peerAddress - The address of the peer to connect to.
-   * @returns A promise that resolves to a boolean indicating success.
+   * Connect to a peer.
+   * @param {string} address - The address of the peer to connect to.
+   * @param {boolean} [save=false] - Whether to save the peer address to the peer store.
+   * @returns {Promise<void>}
    */
-  async connect(peerAddress: string) {
-    return this.call<Array<string>>("peers");
+  async connect_peer(address: string, save: boolean = false): Promise<void> { // Using string for MultiAddr
+    return this.call<void>("connect_peer", [address, save]);
   }
 }

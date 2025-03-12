@@ -1,14 +1,23 @@
+import type { GraphNode } from "fiber";
 import { FiberRPC } from "./rpc/client";
 import { parsePeerAddr } from "./utils";
 
 export async function getGraphNodes() {
-  let allNodes = [];
+  let allNodes: GraphNode[] = [];
   let page = 1;
   let hasMore = true;
 
   while (hasMore) {
     const res = await fetch(`https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes?page=${page}`);
-    const json = await res.json();    
+    const json = await res.json() as {
+      data: {
+        fiber_graph_nodes: GraphNode[];
+      };
+      meta: {
+        page_size: number;
+        total: number;
+      };
+    };
     allNodes = allNodes.concat(json.data.fiber_graph_nodes);
     hasMore = json.meta.page_size * page < json.meta.total;
     page++;
@@ -17,35 +26,24 @@ export async function getGraphNodes() {
   return allNodes;
 }
 
-export async function connectToPeers(rpc: FiberRPC, knownPeers: string[]) {
-  const connectedPeers = await rpc.getPeers();
-  console.log("Currently connected peers:", connectedPeers);
+// TODO
+// export async function connectToPeers(rpc: FiberRPC, knownPeers: string[]) {
+//   const connectedPeers = await rpc.getPeers();
+//   console.log("Currently connected peers:", connectedPeers);
 
-  for (const peer of knownPeers) {
-    if (!connectedPeers.includes(peer)) {
-      try {
-        await rpc.connect(peer);
-        console.log(`Successfully connected to peer: ${peer}`);
-      } catch (error) {
-        console.error(`Failed to connect to peer ${peer}:`, error);
-      }
-    }
-  }
+//   for (const peer of knownPeers) {
+//     if (!connectedPeers.includes(peer)) {
+//       try {
+//         await rpc.connect(peer);
+//         console.log(`Successfully connected to peer: ${peer}`);
+//       } catch (error) {
+//         console.error(`Failed to connect to peer ${peer}:`, error);
+//       }
+//     }
+//   }
 
-  return await rpc.getPeers();
-}
-
-export async function connectToPeersByAddr(rpc: FiberRPC, peerAddrs: string[]) {
-  for (const addr of peerAddrs) {
-    try {
-      const { rpcAddr, peerId } = parsePeerAddr(addr);
-      console.log(`Attempting to connect to peer ${peerId} at ${rpcAddr}`);
-      await rpc.connect(addr);
-    } catch (error) {
-      console.error(`Failed to parse or connect to peer ${addr}:`, error);
-    }
-  }
-}
+//   return await rpc.getPeers();
+// }
 
 // Usage example:
 // const rpc = new FiberRPC("http://localhost:58227");
