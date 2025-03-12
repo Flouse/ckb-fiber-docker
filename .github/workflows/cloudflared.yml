@@ -1,0 +1,24 @@
+name: Install and Use Cloudflared
+
+on:
+  push:
+    branches: [ cloudflared ]
+
+jobs:
+  testc:
+    environment: testnet
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Cloudflared
+      run: |
+        curl -L --output cloudflared.deb \
+          https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && 
+        sudo dpkg -i cloudflared.deb && 
+        sudo cloudflared service install ${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
+        cloudflared --version
+
+    - name: Use Cloudflared
+      run: |
+        sleep 1h
+
+#     cloudflared tunnel --url http://localhost:3000
