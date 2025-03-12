@@ -17,12 +17,16 @@ console.log("Peers Count:", nodeInfo.peers_count);
 const graphNodes = await getGraphNodes();
 console.log("Graph Nodes:", graphNodes);
 
-graphNodes.forEach((node) => {
-  const multiAddr = node.addresses;
-  multiAddr.forEach((addr) => {
-    rpc.connect_peer(addr, true);
-  });
-});
+for (const node of graphNodes) {
+  for (const addr of node.addresses) {
+    try {
+      await rpc.connect_peer(addr, true);
+    } catch (error) {
+      console.error(`Failed to connect to peer ${addr}:`, error.message);
+    }
+    console.log(`Connected to peer ${addr}`);
+  }
+}
 
 // check peers count again
 const updatedNodeInfo = await rpc.getNodeInfo();

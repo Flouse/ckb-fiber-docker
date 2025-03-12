@@ -39,8 +39,8 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 
 #### Peer Connection
 
-- [ ] Fetch peer list from testnet explorer
-- [ ] Implement connection to known peers
+- [x] Fetch peer list from testnet explorer
+- [x] Implement connection to known peers
 - [ ] Verify successful peer connections
 
 #### Channel Operations
