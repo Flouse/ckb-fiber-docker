@@ -46,7 +46,7 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 #### Channel Operations
 
 - [ ] Test channel opening functionality
-  - [ ] CKB channel
+  - [x] CKB channel
   - [ ] USDI channel
 - [ ] Implement channel listing
 - [ ] Verify channel states
