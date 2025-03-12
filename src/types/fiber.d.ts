@@ -33,4 +33,10 @@ declare module 'fiber' {
     auto_accept_min_ckb_funding_amount: string
     udt_cfg_info: Array<UdtCfgInfo>
   }
+
+  export interface Script {
+    code_hash: string
+    hash_type: CKBComponents.ScriptHashType
+    args: string
+  }
 }
