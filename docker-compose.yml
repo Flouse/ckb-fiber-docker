@@ -23,9 +23,9 @@ services:
     - RUST_LOG=info
     volumes:
     - cfn-data:/fiber/.fiber-node
-    - ./testnet-config.yml:/fiber/.fiber-node/config.yml:ro
+    - ./testnet-config.yml:/fiber/.fiber-node/config.yml
     # If the key is not provided, entrypoint.sh will generate one.
-    # - ./testnet.key:/fiber/.fiber-node/ckb/key:ro
+    # - ./testnet.key:/fiber/.fiber-node/ckb/key
     ports:
     - 58228:8228            # P2P port
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
