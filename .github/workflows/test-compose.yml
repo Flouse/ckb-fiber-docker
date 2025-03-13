@@ -25,7 +25,7 @@ jobs:
         if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
           echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
           echo "Uncommenting the line for testnet.key in docker-compose.yml"
-          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key:ro|- ./testnet.key:/fiber/.fiber-node/ckb/key:ro|' docker-compose.yml
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
         fi
 
         # Start the Docker containers in detached mode
