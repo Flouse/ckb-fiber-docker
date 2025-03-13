@@ -1,3 +1,16 @@
+# Docker relies on networks for internal container communication. Containers that reside on the same
+# network will be able to reach each other using either the internal IP address or the name of the
+# service. Containers that need external visibility (from the host) will need to publish a port via
+# the docker-compose.yml file (Docker will automatically handle NAT, firewall, and port forwarding).
+networks:
+  default:
+    name: fiber-internal-network
+    ipam:
+      config:
+        - subnet: 172.32.21.0/24     # Static Range (172.32.21.2-127)
+          ip_range: 172.32.21.128/25 # Dynamic Range
+          gateway: 172.32.21.1
+
 services:
   fiber:
     container_name: fiber-testnet-node
@@ -28,6 +41,10 @@ services:
     - ./testnet-config.yml:/fiber/.fiber-node/config.yml
     # If the key is not provided, entrypoint.sh will generate one.
     # - ./testnet.key:/fiber/.fiber-node/ckb/key
+    networks:
+      default:
+        # The IPv4 address of the container.
+        ipv4_address: 172.32.21.2
     ports:
     - 58228:8228            # P2P port
     # Allowing arbitrary machines to access the JSON-RPC port is dangerous and strongly discouraged.
