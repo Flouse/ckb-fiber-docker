@@ -36,10 +36,9 @@ for (const node of graphNodes) {
 }
 
 
-// wait until the peers are connected, with 30s timeout
+// wait until the peers are connected
 const startTime = Date.now();
-const timeoutSeconds = 10; // 10 seconds
-while (Date.now() - startTime < timeoutSeconds * 1000 ) {
+while (Date.now() - startTime < 10 * 1000) {
   await new Promise(resolve => setTimeout(resolve, 3000));
   const latestPeerCount = BigInt((await rpc.getNodeInfo()).peers_count);
   console.log("Peers Count:", latestPeerCount);
