@@ -46,7 +46,7 @@ declare module 'fiber' {
     is_public: boolean;
     channel_outpoint?: CKBComponents.OutPoint; // TODO
     funding_udt_type_script?: Script;
-    state: ChannelState; // TODO: ChannelState: {state_name: "CHANNEL_READY",state_flags: []}
+    state: ChannelState;
     local_balance: string;
     remote_balance: string;
     offered_tlc_balance: string;
@@ -57,13 +57,58 @@ declare module 'fiber' {
     tlc_expiry_delta: string;
   }
 
+  export interface ChannelStateBase {
+    state_name: string;
+    state_flags: any[];
+  }
+
+  export interface NegotiatingFundingState extends ChannelStateBase {
+    state_name: 'NEGOTIATING_FUNDING';
+    state_flags: NegotiatingFundingFlags;
+  }
+
+  export interface CollaboratingFundingTxState extends ChannelStateBase {
+    state_name: 'COLLABORATING_FUNDING_TX';
+    state_flags: CollaboratingFundingTxFlags;
+  }
+
+  export interface SigningCommitmentState extends ChannelStateBase {
+    state_name: 'SIGNING_COMMITMENT';
+    state_flags: SigningCommitmentFlags;
+  }
+
+  export interface AwaitingTxSignaturesState extends ChannelStateBase {
+    state_name: 'AWAITING_TX_SIGNATURES';
+    state_flags: AwaitingTxSignaturesFlags;
+  }
+
+  export interface AwaitingChannelReadyState extends ChannelStateBase {
+    state_name: 'AWAITING_CHANNEL_READY';
+    state_flags: AwaitingChannelReadyFlags;
+  }
+
+  export interface ChannelReadyState extends ChannelStateBase {
+    state_name: 'CHANNEL_READY';
+    state_flags: never[];
+  }
+
+  export interface ShuttingDownState extends ChannelStateBase {
+    state_name: 'SHUTTING_DOWN';
+    state_flags: ShuttingDownFlags;
+  }
+
+  export interface ClosedState extends ChannelStateBase {
+    state_name: 'CLOSED';
+    state_flags: CloseFlags;
+  }
+
   export type ChannelState =
-    | 'NegotiatingFunding'
-    | 'CollaboratingFundingTx'
-    | 'SigningCommitment'
-    | 'AwaitingTxSignatures'
-    | 'AwaitingChannelReady'
-    | 'ChannelReady'
-    | 'ShuttingDown'
-    | 'Closed';
+    | NegotiatingFundingState
+    | CollaboratingFundingTxState
+    | SigningCommitmentState
+    | AwaitingTxSignaturesState
+    | AwaitingChannelReadyState
+    | ChannelReadyState
+    | ShuttingDownState
+    | ClosedState;
 }

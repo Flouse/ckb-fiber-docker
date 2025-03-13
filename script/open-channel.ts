@@ -1,5 +1,6 @@
 import { FiberRPC } from "../src/rpc/client";
 import { parseArgs } from "util";
+import { sleep } from "bun";
 
 console.log(require("figlet").textSync('Open Channel'));
 
@@ -33,14 +34,38 @@ const rpc = new FiberRPC(rpcUrl);
 // await rpc.connectPeer(addr, true);
 const channel = await rpc.openChannel(channelParams);
 console.log("Open Channel:", channel);
-// e.g.
-// Open Channel: {
-//   temporary_channel_id: "0xabdcd7e1fce10f3cd92af8c93d79a50a8da3379ad2bbc9e71bf506dce96b337b",
-// }
 
-// list channels
-const channels = await rpc.listChannels({
-  peer_id: values.peer_id,
-  include_closed: true,
-});
-console.log("Channels:", channels);
+const getChannelStatus = async (channelId: string) => {
+  const channels = await rpc.listChannels({
+    peer_id: values.peer_id,
+    include_closed: true,
+  });
+  const chanInfo = channels.findLast(chan => chan.channel_id === channelId);
+
+  if (chanInfo === undefined) {
+    console.log("Channel not found");
+    return;
+  }
+
+  console.debug("Channel Status:", chanInfo);
+  return chanInfo.state;
+}
+
+
+// wait until the channel is ready
+const startTime = Date.now();
+while (Date.now() - startTime < 10 * 1000) {
+  console.log("Waiting for channel to be ready...");
+  await sleep(5000);
+
+  const chanState = await getChannelStatus(channel.temporary_channel_id);
+  if (!chanState) {
+    console.log("Channel state not found");
+    continue;
+  }
+
+  if (chanState.state_name === "CHANNEL_READY") {
+    console.log("Channel is ready");
+    break;
+  }
+}
