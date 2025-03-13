@@ -44,9 +44,9 @@ declare module 'fiber' {
     channel_id: string;
     peer_id: string;
     is_public: boolean;
-    channel_outpoint?: CKBComponents.OutPoint;
+    channel_outpoint?: CKBComponents.OutPoint; // TODO
     funding_udt_type_script?: Script;
-    state: ChannelState;
+    state: ChannelState; // TODO: ChannelState: {state_name: "CHANNEL_READY",state_flags: []}
     local_balance: string;
     remote_balance: string;
     offered_tlc_balance: string;
@@ -55,7 +55,6 @@ declare module 'fiber' {
     created_at: string;
     enabled: boolean;
     tlc_expiry_delta: string;
-    tlc_fee_proportional_millionths: string;
   }
 
   export type ChannelState =
