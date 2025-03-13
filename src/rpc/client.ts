@@ -16,7 +16,7 @@ export class FiberRPC {
    * Creates an instance of FiberRPC.
    * @param {string} uri - The URI of the RPC server.
    */
-  constructor(private readonly uri: string) {}
+  constructor(private readonly uri: string) { }
 
   /**
    * Makes an RPC call to the specified method with the given parameters.
@@ -45,7 +45,7 @@ export class FiberRPC {
       throw new Error(`HTTP error status: ${res.status}`);
     }
     const data: RPCResponse<T> = await res.json();
-    
+
     if (data.error) {
       throw new Error(`RPC call "${method}" failed due to error: ${data.error.message}`)
     }
@@ -113,6 +113,24 @@ export class FiberRPC {
    * @returns {Promise<Channel[]>} The list of channels
    */
   async listChannels(params?: { peer_id?: string; include_closed?: boolean }): Promise<Channel[]> {
-    return this.call<Channel[]>("list_channels", [params]);
+    return (await this.call<{ channels: Channel[] }>("list_channels", [params])).channels;
+  }
+
+  /**
+   * Shuts down a channel.
+   * @param {Object} params - The parameters for shutting down the channel
+   * @param {string} params.channel_id - The channel ID of the channel to shut down
+   * @param {Script} params.close_script - The script used to receive the channel balance
+   * @param {boolean} [params.force] - Whether to force the channel to close
+   * @param {string} [params.fee_rate] - The fee rate for the closing transaction
+   * @returns {Promise<void>}
+   */
+  async closeChannel(params: {
+    channel_id: string;
+    close_script: Script;
+    force?: boolean;
+    fee_rate?: string;
+  }): Promise<void> {
+    return this.call<void>("shutdown_channel", [params]);
   }
 }

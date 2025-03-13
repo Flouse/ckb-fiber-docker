@@ -12,7 +12,12 @@ const rpc = new FiberRPC(rpcUrl);
 // call get node info
 const nodeInfo = await rpc.getNodeInfo();
 console.log("Node Info:", nodeInfo);
-console.log("Peers Count:", nodeInfo.peers_count);
+const peerCount = BigInt(nodeInfo.peers_count);
+console.log("Peers Count:", peerCount);
+
+// list channels
+const channels = await rpc.listChannels({});
+console.log("Channels:", channels);
 
 // connect to all the peers from the graph
 const graphNodes = await getGraphNodes();
@@ -31,10 +36,19 @@ for (const node of graphNodes) {
     }
   }
 }
-
 const successRate = (successCount / totalAttempts) * 100;
 console.log(`Successfully connected to ${successRate.toFixed(2)}% of peers (${successCount}/${totalAttempts})`);
 
-// check peers count again
-const updatedNodeInfo = await rpc.getNodeInfo();
-console.log("Updated Peers Count:", updatedNodeInfo.peers_count);
+// wait until the peers are connected, with 30s timeout
+const startTime = Date.now();
+const timeoutSeconds = 10; // 10 seconds
+while (Date.now() - startTime < timeoutSeconds * 1000 ) {
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  const latestPeerCount = BigInt((await rpc.getNodeInfo()).peers_count);
+  console.log("Peers Count:", latestPeerCount);
+
+  if (latestPeerCount > peerCount) {
+    break;
+  }
+  console.log("Waiting for peers to be connected...");
+}

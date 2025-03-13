@@ -22,11 +22,15 @@ if (!values.peer_id) {
 
 const channelParams = {
   peer_id: values.peer_id,
-  funding_amount: "0x174876E806", // 1000.00000006 CKB
+  funding_amount: "0x174876E807", // 1000.00000007 CKB
 };
 
 const rpcUrl = process.env["FIBER_RPC_URL"] ?? "http://localhost:58227";
 const rpc = new FiberRPC(rpcUrl);
+
+// open channel
+// TODO: connect the peer first
+// await rpc.connectPeer(addr, true);
 const channel = await rpc.openChannel(channelParams);
 console.log("Open Channel:", channel);
 // e.g.
