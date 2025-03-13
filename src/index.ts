@@ -21,23 +21,20 @@ console.log("Channels:", channels);
 
 // connect to all the peers from the graph
 const graphNodes = await getGraphNodes();
-let successCount = 0;
 let totalAttempts = 0;
 for (const node of graphNodes) {
   for (const addr of node.addresses) {
     totalAttempts++;
     try {
       await rpc.connectPeer(addr, true);
-      successCount++;
-      console.log(`Connected to peer ${addr}`);
+      console.log(`Connecting to peer ${addr}`);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error(`Failed to connect to peer ${addr}:`, errorMessage);
     }
   }
 }
-const successRate = (successCount / totalAttempts) * 100;
-console.log(`Successfully connected to ${successRate.toFixed(2)}% of peers (${successCount}/${totalAttempts})`);
+
 
 // wait until the peers are connected, with 30s timeout
 const startTime = Date.now();
@@ -52,3 +49,6 @@ while (Date.now() - startTime < timeoutSeconds * 1000 ) {
   }
   console.log("Waiting for peers to be connected...");
 }
+
+const successCount = BigInt((await rpc.getNodeInfo()).peers_count) - peerCount;
+console.log(`New peers count: ${successCount}`);
