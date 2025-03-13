@@ -9,14 +9,13 @@ services:
 fiber:
   # Local P2P network listening address
   listening_addr: "/ip4/0.0.0.0/tcp/8228"
+  # Whether to announce your listening address to other peers
+  announce_listening_addr: true
 
   # Bootstrap nodes for initial network connection
   bootnode_addrs:
   - "/ip4/54.179.226.154/tcp/8228/p2p/Qmes1EBD4yNo9Ywkfe6eRw9tG1nVNGLDmMud1xJMsoYFKy"
   - "/ip4/54.179.226.154/tcp/18228/p2p/QmdyQWjPtbK4NWWsvy8s69NGJaQULwgeQDT5ZpNDrTNaeV"
-
-  # Whether to announce your listening address to other peers
-  announce_listening_addr: true
 
   # chain spec, can be mainnet | testnet | "path to chain spec file"
   chain: testnet

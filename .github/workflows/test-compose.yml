@@ -19,7 +19,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Start containers
+    - name: Start Fiber testnet node
       run: |
         # Check if the testnet.key is available in GitHub secrets
         if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
@@ -121,8 +121,19 @@ jobs:
     - name: Stop containers
       if: always()
       run: |
+        # Archive container logs before shutdown
+        docker compose logs | tee docker-compose.log
+
         docker compose down -v
+
         echo "Removing the testnet.key file if it was created"
         if [[ -f testnet.key ]]; then
           rm testnet.key
-        fi
+        fi        
+
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: docker-compose-logs
+        path: docker-compose.log
