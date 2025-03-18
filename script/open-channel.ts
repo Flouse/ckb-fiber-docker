@@ -1,6 +1,7 @@
 import { FiberRPC } from "../src/rpc/client";
 import { parseArgs } from "util";
 import { sleep } from "bun";
+import { ChannelStateName } from "fiber";
 
 console.log(require("figlet").textSync('Open Channel'));
 
@@ -54,7 +55,7 @@ const getChannelStatus = async (channelId: string) => {
 
 // wait until the channel is ready
 const startTime = Date.now();
-while (Date.now() - startTime < 10 * 1000) {
+while (Date.now() - startTime < 300 * 1000) {
   console.log("Waiting for channel to be ready...");
   await sleep(5000);
 
@@ -64,7 +65,7 @@ while (Date.now() - startTime < 10 * 1000) {
     continue;
   }
 
-  if (chanState.state_name === "CHANNEL_READY") {
+  if (chanState.state_name === ChannelStateName.CHANNEL_READY) {
     console.log("Channel is ready");
     break;
   }
