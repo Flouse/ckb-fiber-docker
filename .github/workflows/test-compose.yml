@@ -117,7 +117,14 @@ jobs:
 
     - name: Monitor memory usage
       if: always()
-      run: docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
+      run: |
+        echo "Monitoring memory usage every minute"
+        end=$((SECONDS+100))
+        while [ $SECONDS -lt $end ]; do
+          echo "Memory usage:"
+          docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
+          sleep 60
+        done
 
     - name: Stop containers
       if: always()
@@ -130,7 +137,7 @@ jobs:
         echo "Removing the testnet.key file if it was created"
         if [[ -f testnet.key ]]; then
           rm testnet.key
-        fi        
+        fi
 
     - name: Upload logs
       if: always()

@@ -15,22 +15,33 @@ docker run --rm ${FIBER_IMAGE} ckb-cli --version
 # Output: ckb-cli 1.12.0 (278c7be 2024-09-20)
 
 docker run --rm ${FIBER_IMAGE}
-# Ouptut: fnn 0.4.0
-
-# Usage
-docker run --rm ${FIBER_IMAGE} fnn --help
+# Ouptut: fnn 0.4.1
 ```
 
+## Usage
 
-## How to Run a testnet node
-See https://github.com/nervosnetwork/fiber?tab=readme-ov-file#build-and-run-a-testnet-node
+```bash
+# Fiber Help
+docker run --rm ${FIBER_IMAGE} fnn --help
+
+# Start a fiber node with ./testnet-config.yml
+docker compose up -d
+
+# Watch logs
+docker compose logs -f
+
+# Get node info
+curl -s -X POST http://localhost:58227 \
+  -H "Content-Type: application/json" \
+  --data '{"id":2, "jsonrpc":"2.0", "method":"node_info", "params":[]}' 
+```
 
 
 ## RPC docs of Fiber Network Node
 See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 
 
-### TODO Checklist
+### TODO
 
 #### Faucet Testing
 
