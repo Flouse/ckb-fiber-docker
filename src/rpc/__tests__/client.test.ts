@@ -4,7 +4,7 @@ import { FiberRPC } from '../client';
 const mockNodeInfoResponse = {
   jsonrpc: "2.0",
   result: {
-    version: "0.4.0",
+    version: "0.4.1",
     commit_hash: "3c405c1",
     node_id: "02e21c23828b03ca4dd0d891d1a2d5a431f4d9abae5faebd40b56df4b25ee3b2d9",
     node_name: null,
