@@ -13,6 +13,11 @@ const { values } = parseArgs({
       type: "string",
       short: "p",
     },
+    funding_amount: {
+      type: "string",
+      short: "a",
+      default: "0x3C5986200" // Default 16200000000 shannons
+    },
   },
   strict: true,
   allowPositionals: true,
@@ -25,9 +30,8 @@ if (!values.peer_id) {
 
 const channelParams = {
   peer_id: values.peer_id,
-  funding_amount: "0x174876E808", // 1000.00000008 CKB
+  funding_amount: values.funding_amount, // Use the provided funding amount or default
 };
-
 const rpc = new FiberRPC(FIBER_RPC_URL);
 
 // open channel
