@@ -1,8 +1,7 @@
+import type { Channel, Script } from "fiber";
 import { parseArgs } from "util";
-import { FiberRPC } from "../src/rpc/client";
-import type { Script, Channel } from "fiber";
-import { sleep } from "bun";
 import { FIBER_RPC_URL } from "../src/common/constants";
+import { FiberRPC } from "../src/rpc/client";
 
 console.log(require("figlet").textSync('Close Channel'));
 
@@ -15,8 +14,12 @@ const { values } = parseArgs({
     },
     fee_rate: {
       type: "string",
-      short: "f",
+      short: "r",
     },
+    force: {
+      type: "boolean",
+      short: "f",
+    }
   },
   strict: true,
   allowPositionals: true,
@@ -28,10 +31,9 @@ if (!values.channel_id) {
 }
 const channelId = values.channel_id;
 const feeRate = values.fee_rate ? Number(values.fee_rate) : 1000;
+const force = values.force;
 
-const rpcUrl = FIBER_RPC_URL;
-const rpc = new FiberRPC(rpcUrl);
-
+const rpc = new FiberRPC(FIBER_RPC_URL);
 
 /**
  * Retrieves a channel by its ID.
@@ -55,6 +57,7 @@ async function checkChannelBalance(channelId: string) {
   const channel: Channel | undefined = await getChannel(channelId);
 
   if (channel) {
+    console.log('Channel:', channel);
     const balances = {
       local_balance: BigInt(channel.local_balance),
       remote_balance: BigInt(channel.remote_balance),
@@ -72,45 +75,46 @@ async function checkChannelBalance(channelId: string) {
  *
  * @param {string} channelId - The ID of the channel to be closed.
  * @param {Script} [closeScript] - Optional. The script to be used for closing the channel.
- * If not provided, a default close script will be used.
  *
  * @returns {Promise<void>} - A promise that resolves when the channel is closed.
  */
-async function closeChannel(channelId: string, closeScript?: Script) {
+async function closeChannel(channelId: string, closeScript?: Script, force?: boolean) {
   // Get default_funding_lock_script from node info
   const nodeInfo = await rpc.getNodeInfo();
-  const defaultCloseScript: Script = nodeInfo.default_funding_lock_script
-    ?? {
-    // https://testnet.explorer.nervos.org/address/ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq2svm8n3vgwgguncsjyfhk0mgdu5c8qw0s4ju2vk
-    code_hash: "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
-    hash_type: "type",
-    args: "0x5066cf38b10e42393c42444decfda1bca60e073e"
-  };
-
-  console.log("Using the following default close script to close the channel:", defaultCloseScript);
+  const defaultCloseScript: Script = nodeInfo.default_funding_lock_script;
 
   await rpc.closeChannel({
     channel_id: channelId,
     close_script: closeScript ?? defaultCloseScript,
-    fee_rate: `0x${feeRate.toString(16)}`
+    fee_rate: `0x${feeRate.toString(16)}`,
+    force
   });
   console.log(`Closing channel ${channelId}`);
 }
 
 await checkChannelBalance(channelId);
-await closeChannel(channelId);
+await closeChannel(channelId, undefined, force)
+  .catch((err) => {
+    console.error("Error closing channel:", err);
+    closeChannel(channelId, undefined, true);
+  })
+
+const startTime = Date.now();
+const timeoutMs = 5 * 60 * 1000; // 5 minutes timeout
 
 const intervalId = setInterval(async () => {
-  await checkChannelBalance(channelId);
-
-  const channel = await getChannel(channelId);
-  console.log(channel);
+  const channel = await getChannel(channelId);  
+  console.log(`Channel state:`, channel?.state);
 
   if (channel?.state?.state_name === "CLOSED") {
     console.log("Channel is closed");
     clearInterval(intervalId);
   }
+
+  if (Date.now() - startTime > timeoutMs) {
+    clearInterval(intervalId);
+    console.log("Channel close timeout reached, attempting force close");
+    await closeChannel(channelId, undefined, true);
+  }
 }, 8000);
-
-
 // TODO: check on-chain balance

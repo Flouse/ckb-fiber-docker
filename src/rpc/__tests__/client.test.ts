@@ -71,17 +71,16 @@ describe('FiberRPC', () => {
       rpc = new FiberRPC('http://localhost:58227');
     } else {
       // Use mock fetch for local development
-      global.fetch = mock(() =>
+      const mockFetch = mock(() =>
         Promise.resolve({
           ok: true,
           json: () => Promise.resolve(mockNodeInfoResponse),
         } as Response)
       );
-      global.fetch.preconnect = () => {};
+      global.fetch = mockFetch as unknown as typeof fetch;
       rpc = new FiberRPC('http://localhost:8227');
     }
   });
-
   test('should get node info', async () => {
     const nodeInfo = await rpc.getNodeInfo();
     if (!process.env['GITHUB_ACTIONS']) {

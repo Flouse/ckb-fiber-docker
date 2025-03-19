@@ -11,12 +11,11 @@ import { debug } from "console";
  * @param channelId - The unique identifier of the channel
  * @returns The state of the specified channel, or undefined if not found
  */
-export async function getChannelStatus(rpc: FiberRPC, peerId: string, channelId: string) {
+export async function getChannelStatus(rpc: FiberRPC, channelId: string, peerId?: string) {
   const channels: Channel[] = await rpc.listChannels({
     peer_id: peerId,
     include_closed: true,
   });
-  debug("channels:", channels);
 
   const chanInfo = channels.find(chan => chan.channel_id === channelId);
   return chanInfo?.state;

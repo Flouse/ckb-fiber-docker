@@ -38,7 +38,6 @@ const newChannel = await rpc.openChannel(channelParams);
 console.log("Open Channel:", newChannel);
 
 
-
 // wait until the channel is ready
 const startTime = Date.now();
 while (Date.now() - startTime < 300 * 1000) {
