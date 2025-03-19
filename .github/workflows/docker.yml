@@ -11,7 +11,7 @@ on:
       FIBER_VERSION:
         description: 'Version of Fiber to build'
         required: false
-        default: 'v0.4.1'
+        default: 'v0.4.2'
 
 env:
   REGISTRY: ghcr.io

@@ -8,11 +8,11 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     #   args:
-    #     FIBER_VERSION: v0.4.1
+    #     FIBER_VERSION: v0.4.2
     #     CKB_CLI_VERSION: v1.12.0
     #
-    # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber/376256451?tag=v0.4.1
-    image: ghcr.io/flouse/ckb-fiber:v0.4.1
+    # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber/377140523?tag=v0.4.2
+    image: ghcr.io/flouse/ckb-fiber:v0.4.2
     restart: unless-stopped
     deploy:
       resources:
