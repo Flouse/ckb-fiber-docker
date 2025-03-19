@@ -40,10 +40,11 @@ const getChannelStatus = async (channelId: string) => {
     peer_id: values.peer_id,
     include_closed: true,
   });
+  console.info("Channels:", channels);
+
   const chanInfo = channels.findLast(chan => chan.channel_id === channelId);
 
   if (chanInfo === undefined) {
-    console.log("Channel not found");
     return;
   }
 
