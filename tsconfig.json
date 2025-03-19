@@ -23,7 +23,6 @@
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true,
 
-    // TODO: Jest and Node types
-    // "types": ["jest", "node"]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
 }

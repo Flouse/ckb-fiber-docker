@@ -1,13 +1,4 @@
 declare module 'fiber' {
-  // export interface IFiberApplication {
-  //   listen(port: number): void;
-  //   use(middleware: IMiddleware): void;
-  //   get(path: string, handler: IRouteHandler): void;
-  //   post(path: string, handler: IRouteHandler): void;
-  //   put(path: string, handler: IRouteHandler): void;
-  //   delete(path: string, handler: IRouteHandler): void;
-  // }
-
   export interface IContext {
     params: { [key: string]: string };
     query: { [key: string]: string };
@@ -57,48 +48,59 @@ declare module 'fiber' {
     tlc_expiry_delta: string;
   }
 
+  export enum ChannelStateName {
+    NEGOTIATING_FUNDING = 'NEGOTIATING_FUNDING',
+    COLLABORATING_FUNDING_TX = 'COLLABORATING_FUNDING_TX',
+    SIGNING_COMMITMENT = 'SIGNING_COMMITMENT',
+    AWAITING_TX_SIGNATURES = 'AWAITING_TX_SIGNATURES',
+    AWAITING_CHANNEL_READY = 'AWAITING_CHANNEL_READY',
+    CHANNEL_READY = 'CHANNEL_READY',
+    SHUTTING_DOWN = 'SHUTTING_DOWN',
+    CLOSED = 'CLOSED'
+  }
+
   export interface ChannelStateBase {
-    state_name: string;
+    state_name: ChannelStateName;
     state_flags: any[];
   }
 
   export interface NegotiatingFundingState extends ChannelStateBase {
-    state_name: 'NEGOTIATING_FUNDING';
+    state_name: ChannelStateName.NEGOTIATING_FUNDING;
     state_flags: NegotiatingFundingFlags;
   }
 
   export interface CollaboratingFundingTxState extends ChannelStateBase {
-    state_name: 'COLLABORATING_FUNDING_TX';
+    state_name: ChannelStateName.COLLABORATING_FUNDING_TX;
     state_flags: CollaboratingFundingTxFlags;
   }
 
   export interface SigningCommitmentState extends ChannelStateBase {
-    state_name: 'SIGNING_COMMITMENT';
+    state_name: ChannelStateName.SIGNING_COMMITMENT;
     state_flags: SigningCommitmentFlags;
   }
 
   export interface AwaitingTxSignaturesState extends ChannelStateBase {
-    state_name: 'AWAITING_TX_SIGNATURES';
+    state_name: ChannelStateName.AWAITING_TX_SIGNATURES;
     state_flags: AwaitingTxSignaturesFlags;
   }
 
   export interface AwaitingChannelReadyState extends ChannelStateBase {
-    state_name: 'AWAITING_CHANNEL_READY';
+    state_name: ChannelStateName.AWAITING_CHANNEL_READY;
     state_flags: AwaitingChannelReadyFlags;
   }
 
   export interface ChannelReadyState extends ChannelStateBase {
-    state_name: 'CHANNEL_READY';
+    state_name: ChannelStateName.CHANNEL_READY;
     state_flags: never[];
   }
 
   export interface ShuttingDownState extends ChannelStateBase {
-    state_name: 'SHUTTING_DOWN';
+    state_name: ChannelStateName.SHUTTING_DOWN;
     state_flags: ShuttingDownFlags;
   }
 
   export interface ClosedState extends ChannelStateBase {
-    state_name: 'CLOSED';
+    state_name: ChannelStateName.CLOSED;
     state_flags: CloseFlags;
   }
 

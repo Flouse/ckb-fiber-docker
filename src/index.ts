@@ -1,13 +1,12 @@
 // Figlet the project name
-console.log(
-  require("figlet").textSync(require("../package.json").name)
-);
+console.log(require("figlet").textSync(require("../package.json").name));
 
 
-import { getGraphNodes } from "./peers";
+import { FIBER_RPC_URL } from "./common/constants";
+import { connectKnowPeers } from "./peers";
 import { FiberRPC } from "./rpc/client";
-const rpcUrl = process.env["FIBER_RPC_URL"] ?? "http://localhost:58227";
-const rpc = new FiberRPC(rpcUrl);
+
+const rpc = new FiberRPC(FIBER_RPC_URL);
 
 // call get node info
 const nodeInfo = await rpc.getNodeInfo();
@@ -16,38 +15,7 @@ const peerCount = BigInt(nodeInfo.peers_count);
 console.log("Peers Count:", peerCount);
 
 // list channels
-const channels = await rpc.listChannels({});
+const channels = await rpc.listChannels({ include_closed: true });
 console.log("Channels:", channels);
 
-// connect to all the peers from the graph
-const graphNodes = await getGraphNodes();
-let totalAttempts = 0;
-for (const node of graphNodes) {
-  for (const addr of node.addresses) {
-    totalAttempts++;
-    try {
-      await rpc.connectPeer(addr, true);
-      console.log(`Connecting to peer ${addr}`);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error(`Failed to connect to peer ${addr}:`, errorMessage);
-    }
-  }
-}
-
-
-// wait until the peers are connected
-const startTime = Date.now();
-while (Date.now() - startTime < 10 * 1000) {
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  const latestPeerCount = BigInt((await rpc.getNodeInfo()).peers_count);
-  console.log("Peers Count:", latestPeerCount);
-
-  if (latestPeerCount > peerCount) {
-    break;
-  }
-  console.log("Waiting for peers to be connected...");
-}
-
-const successCount = BigInt((await rpc.getNodeInfo()).peers_count) - peerCount;
-console.log(`New peers count: ${successCount}`);
+await connectKnowPeers();

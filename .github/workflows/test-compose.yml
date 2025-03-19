@@ -110,10 +110,9 @@ jobs:
     - run: bun test
     - run: bun start
     
-    - name: Open channel
+    - name: Open channel to a testnet node FTN004
       run: |
-        bun run script/open-channel.ts \
-          --peer_id QmYNRycD59ACRmh5mQWhsPr3XpXpSdkmgKf4v8fUXH6VNa
+        bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
 
     - name: Monitor memory usage
       if: always()
