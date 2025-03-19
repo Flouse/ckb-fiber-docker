@@ -121,15 +121,15 @@ export class FiberRPC {
    * @param {Object} params - The parameters for shutting down the channel
    * @param {string} params.channel_id - The channel ID of the channel to shut down
    * @param {Script} params.close_script - The script used to receive the channel balance
-   * @param {boolean} [params.force] - Whether to force the channel to close
-   * @param {string} [params.fee_rate] - The fee rate for the closing transaction
+   * @param {U64Hex} params.fee_rate - The fee rate for the closing transaction
+   * @param {boolean} [params.force] - Whether to force the channel to close 
    * @returns {Promise<void>}
    */
   async closeChannel(params: {
     channel_id: string;
     close_script: Script;
+    fee_rate: string;
     force?: boolean;
-    fee_rate?: string;
   }): Promise<void> {
     return this.call<void>("shutdown_channel", [params]);
   }

@@ -10,7 +10,7 @@ export const FIBER_RPC_URL: string = process.env["FIBER_RPC_URL"] ?? "http://loc
  * 
  * @see {@link https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md}
  */
-export const testnetKnownPeers: string[] = [
+export const TESTNET_KNOWN_PEERS: string[] = [
   // https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
   "/ip4/18.162.235.225/tcp/8119/p2p/QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo",
   "/ip4/18.163.221.211/tcp/8119/p2p/QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89",
