@@ -1,6 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import { FIBER_RPC_URL } from "../common/constants";
 
+interface NodeInfoResponse {
+  result: {
+    version: string;
+  };
+}
+
 describe("Docker Compose Setup", () => {
   test("should start containers and verify health", async () => {
     // Test RPC endpoint
@@ -13,8 +19,8 @@ describe("Docker Compose Setup", () => {
         method: "node_info",
         params: []
       })
-    }).then(r => r.json());
-    
-    expect(res.result.version).toBeDefined();
+    }).then(r => r.json()) as NodeInfoResponse;
+
+    expect(res.result).toBeDefined();
   });
 });

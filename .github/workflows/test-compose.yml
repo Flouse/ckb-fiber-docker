@@ -113,6 +113,8 @@ jobs:
     - name: Open channel to a testnet node FTN004
       run: |
         bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
+    - name: Close all channels
+      run: bun run script/close-all-channels.ts
 
     - name: Monitor memory usage
       if: always()
@@ -125,12 +127,13 @@ jobs:
           sleep 60
         done
 
+    - name: Save container logs before shutdown
+      if: always()
+      run: docker compose logs | tee docker-compose.log
+
     - name: Stop containers
       if: always()
       run: |
-        # Archive container logs before shutdown
-        docker compose logs | tee docker-compose.log
-
         docker compose down -v
 
         echo "Removing the testnet.key file if it was created"

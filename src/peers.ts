@@ -1,6 +1,6 @@
 import type { GraphNode } from "fiber";
+import { FIBER_RPC_URL, TESTNET_KNOWN_PEERS } from "./common/constants";
 import { FiberRPC } from "./rpc/client";
-import { FIBER_RPC_URL, testnetKnownPeers } from "./common/constants";
 
 export async function getGraphNodes() {
   let allNodes: GraphNode[] = [];
@@ -62,7 +62,7 @@ export async function connectKnowPeers() {
   // all the peers from the graph
   const graphNodes = getGraphNodes();
 
-  const connectJobs = testnetKnownPeers.map(connectPeer);
+  const connectJobs = TESTNET_KNOWN_PEERS.map(connectPeer);
   for (const node of await graphNodes) {
     for (const addr of node.addresses) {
       connectJobs.push(connectPeer(addr));

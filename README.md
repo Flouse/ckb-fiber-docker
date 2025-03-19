@@ -59,7 +59,8 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 - [ ] Test channel opening functionality
   - [x] CKB channel
   - [ ] USDI channel
-- [ ] Implement channel listing
+- [x] Implement channel listing
+- [x] Close channels
 - [ ] Verify channel states
 
 #### Payment Testing
@@ -67,5 +68,10 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 - [ ] Setup key_send payment test
 - [ ] Verify balance after payment success
 
+#### Reuse the [tests of fiber](https://github.com/nervosnetwork/fiber/blob/f6aafb9423ef240385cc359e671095648774a7cb/tests/bruno/e2e/open-use-close-a-channel/README.md#L40)
+- [ ] Use [Bruno](https://github.com/usebruno/bruno)
+- [ ] implement the fiber E2E tests on CKB testnet
+     ![Fiber E2E Tests](fiber-e2e-tests.png)
+     
 
 [GHCR]: https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber

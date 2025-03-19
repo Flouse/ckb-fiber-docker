@@ -3,7 +3,8 @@
   "type": "module",
   "module": "src/index.ts",
   "scripts": {
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "close-channel": "bun run script/close-channel.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.2.5"
