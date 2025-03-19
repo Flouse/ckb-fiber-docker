@@ -48,7 +48,7 @@ declare module 'fiber' {
     tlc_expiry_delta: string;
   }
 
-  export const ChannelStateName = {
+  export enum ChannelStateName {
     NEGOTIATING_FUNDING = 'NEGOTIATING_FUNDING',
     COLLABORATING_FUNDING_TX = 'COLLABORATING_FUNDING_TX',
     SIGNING_COMMITMENT = 'SIGNING_COMMITMENT',
@@ -57,7 +57,7 @@ declare module 'fiber' {
     CHANNEL_READY = 'CHANNEL_READY',
     SHUTTING_DOWN = 'SHUTTING_DOWN',
     CLOSED = 'CLOSED'
-  } as const
+  }
 
   export interface ChannelStateBase {
     state_name: ChannelStateName;

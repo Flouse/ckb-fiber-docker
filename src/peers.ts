@@ -1,7 +1,6 @@
 import type { GraphNode } from "fiber";
 import { FiberRPC } from "./rpc/client";
-import { parsePeerAddr } from "./utils";
-import { FIBER_RPC_URL } from "./common/constants";
+import { FIBER_RPC_URL, testnetKnownPeers } from "./common/constants";
 
 export async function getGraphNodes() {
   let allNodes: GraphNode[] = [];
@@ -63,22 +62,13 @@ export async function connectKnowPeers() {
   // all the peers from the graph
   const graphNodes = getGraphNodes();
 
-  /**
-   * https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
-   */
-  const testnetPublicNodes = [
-    "/ip4/18.162.235.225/tcp/8119/p2p/QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo",
-    "/ip4/18.163.221.211/tcp/8119/p2p/QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89"
-  ];
-
-  const connectJobs = testnetPublicNodes.map(connectPeer);
+  const connectJobs = testnetKnownPeers.map(connectPeer);
   for (const node of await graphNodes) {
     for (const addr of node.addresses) {
       connectJobs.push(connectPeer(addr));
     }
   }
   await Promise.all(connectJobs);
-
 
   // wait until the peers are connected
   const peerCount = BigInt((await rpc.getNodeInfo()).peers_count)
