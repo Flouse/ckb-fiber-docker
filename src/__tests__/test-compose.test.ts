@@ -1,9 +1,10 @@
 import { describe, expect, test } from "bun:test";
+import { FIBER_RPC_URL } from "../common/constants";
 
 describe("Docker Compose Setup", () => {
   test("should start containers and verify health", async () => {
     // Test RPC endpoint
-    const response = await fetch("http://localhost:58227", {
+    const res = await fetch(FIBER_RPC_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -14,6 +15,6 @@ describe("Docker Compose Setup", () => {
       })
     }).then(r => r.json());
     
-    expect(response.result.version).toBeDefined();
+    expect(res.result.version).toBeDefined();
   });
 });
