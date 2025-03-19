@@ -66,7 +66,7 @@ describe('FiberRPC', () => {
   let rpc: FiberRPC;
 
   beforeAll(() => {
-    if (process.env.GITHUB_ACTIONS) {
+    if (process.env['GITHUB_ACTIONS']) {
       // Use real fetch in GitHub Actions
       rpc = new FiberRPC('http://localhost:58227');
     } else {
@@ -77,13 +77,14 @@ describe('FiberRPC', () => {
           json: () => Promise.resolve(mockNodeInfoResponse),
         } as Response)
       );
+      global.fetch.preconnect = () => {};
       rpc = new FiberRPC('http://localhost:8227');
     }
   });
 
   test('should get node info', async () => {
     const nodeInfo = await rpc.getNodeInfo();
-    if (!process.env.GITHUB_ACTIONS) {
+    if (!process.env['GITHUB_ACTIONS']) {
       expect(nodeInfo).toEqual(mockNodeInfoResponse.result);
       expect(fetch).toHaveBeenCalledWith('http://localhost:8227', {
         method: 'POST',
