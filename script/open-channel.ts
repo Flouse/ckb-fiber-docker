@@ -1,6 +1,6 @@
 import { sleep } from "bun";
-import type { Channel } from "fiber";
 import { parseArgs } from "util";
+import { getLatestChannel } from "../src/channel";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
 
@@ -34,33 +34,9 @@ const rpc = new FiberRPC(FIBER_RPC_URL);
 // TODO: connect the peer first
 // await rpc.connectPeer(addr, true);
 
-const channel = await rpc.openChannel(channelParams);
-console.log("Open Channel:", channel);
+const newChannel = await rpc.openChannel(channelParams);
+console.log("Open Channel:", newChannel);
 
-const channels: Channel[] = await rpc.listChannels({
-  peer_id: values.peer_id,
-  include_closed: true,
-});
-const latestChannel = channels.reduce((latest, channel) => {
-  return BigInt(channel.created_at) > BigInt(latest.created_at) ? channel : latest;
-}, channels[0]);
-console.log("Latest Channel:", latestChannel);
-
-
-const getChannelStatus = async (channelId: string) => {
-  const channels = await rpc.listChannels({
-    peer_id: values.peer_id,
-    include_closed: true,
-  });
-
-  const chanInfo = channels.findLast(chan => chan.channel_id === channelId);
-  if (chanInfo === undefined) {
-    return;
-  }
-
-  console.debug("Channel Status:", chanInfo);
-  return chanInfo.state;
-}
 
 
 // wait until the channel is ready
@@ -69,14 +45,11 @@ while (Date.now() - startTime < 300 * 1000) {
   console.log("Waiting for channel to be ready...");
   await sleep(5000);
 
-  const chanState = await getChannelStatus(latestChannel.channel_id);
-  if (!chanState) {
-    console.log("Channel state not found");
-    continue;
-  }
+  const channel = await getLatestChannel(rpc, values.peer_id);
+  if (!channel) continue;
 
-  console.log("The funding channel:", latestChannel);
-  if (chanState.state_name === 'CHANNEL_READY') {
+  console.debug("The funding channel:", channel);
+  if (channel.state.state_name === 'CHANNEL_READY') {
     console.log("Channel is ready");
     break;
   }
