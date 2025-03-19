@@ -59,7 +59,8 @@ See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
 - [ ] Test channel opening functionality
   - [x] CKB channel
   - [ ] USDI channel
-- [ ] Implement channel listing
+- [x] Implement channel listing
+- [x] Close channels
 - [ ] Verify channel states
 
 #### Payment Testing
