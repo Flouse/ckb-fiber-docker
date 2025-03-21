@@ -118,6 +118,7 @@ jobs:
         bun run script/open-channel.ts --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89
 
     - name: Close all channels
+      if: always()
       run: bun run script/close-all-channels.ts
 
     - name: Monitor memory usage
