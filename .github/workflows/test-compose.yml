@@ -8,6 +8,9 @@ jobs:
   test:
     environment: testnet
     runs-on: ubuntu-latest
+    concurrency: 
+      group: ${{ github.workflow }}-testnet
+      cancel-in-progress: false
 
     steps:
     - name: Checkout repository
