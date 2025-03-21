@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it, mock } from "bun:test";
-import { getLatestChannel } from "../../channel";
+import { getNewChannel } from "../../channel";
 import { FIBER_RPC_URL } from "../../common/constants";
 import { FiberRPC } from "../client";
 
@@ -54,7 +54,7 @@ describe("Channel", () => {
         }
       ])
     } as unknown as FiberRPC;
-    const channel = await getLatestChannel(mockRpc, "peer1");
+    const channel = await getNewChannel(mockRpc, "peer1");
     expect(channel?.channel_id).toEqual("0x20f4057f1e86f2e3df02b7a2fe168a45c3e24b149e9f6888fe41ccb5a99b5d6c");
   });
 
@@ -63,7 +63,7 @@ describe("Channel", () => {
       listChannels: mock(async () => [])
     } as unknown as FiberRPC;
 
-    const channel = await getLatestChannel(mockRpc, "peer1");
+    const channel = await getNewChannel(mockRpc, "peer1");
     expect(channel).toBeUndefined();
   });
 
@@ -74,6 +74,6 @@ describe("Channel", () => {
       })
     } as unknown as FiberRPC;
 
-    await expect(getLatestChannel(mockRpc, "peer1")).rejects.toThrow("RPC Failed");
+    await expect(getNewChannel(mockRpc, "peer1")).rejects.toThrow("RPC Failed");
   });
 });

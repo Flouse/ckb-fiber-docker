@@ -1,6 +1,6 @@
 import { sleep } from "bun";
 import { parseArgs } from "util";
-import { getLatestChannel } from "../src/channel";
+import { getNewChannel } from "../src/channel";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
 
@@ -48,7 +48,7 @@ while (Date.now() - startTime < 300 * 1000) {
   console.log("Waiting for channel to be ready...");
   await sleep(5000);
 
-  const channel = await getLatestChannel(rpc, values.peer_id);
+  const channel = await getNewChannel(rpc, values.peer_id);
   if (!channel) continue;
 
   console.debug("The funding channel:", channel);
