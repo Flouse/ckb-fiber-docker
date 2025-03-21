@@ -8,6 +8,9 @@ jobs:
   test:
     environment: testnet
     runs-on: ubuntu-latest
+    concurrency: 
+      group: ${{ github.workflow }}-testnet
+      cancel-in-progress: false
 
     steps:
     - name: Checkout repository
@@ -111,9 +114,14 @@ jobs:
     - run: bun start
     
     - name: Open channel to a testnet node FTN004
+      run: bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
+    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
       run: |
-        bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
+        bun run script/open-channel.ts --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo
+        bun run script/open-channel.ts --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89
+
     - name: Close all channels
+      if: always()
       run: bun run script/close-all-channels.ts
 
     - name: Monitor memory usage

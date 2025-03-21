@@ -36,7 +36,7 @@ services:
     command: [
       "fnn",
       # node name to be announced to fiber network [env: FIBER_ANNOUNCED_NODE_NAME]
-      "--fiber-announced-node-name", "FTN002",
+      "--fiber-announced-node-name", "FTN005",
       # addresses to be announced to fiber network [env: FIBER_ANNOUNCED_ADDRS=]
       # TODO: "--fiber-announced-addrs", "58228"
     ]
