@@ -146,10 +146,16 @@ jobs:
       digest: ${{ steps.build.outputs.digest }}
       metadata: ${{ steps.build.outputs.metadata }}
 
-  # TODO:
-  # call-reusable-test:
-  #   needs: build-and-push-docker
-  #   uses: ./.github/workflows/reusable-test.yml
-  #   with:
-  #     image_name: ghcr.io/${{ github.repository_owner }}/ckb-fiber
-  #     image_tag: ${{ needs.build-and-push-docker.outputs. }}
+  call-reusable-test:
+    needs: build-and-push-docker
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      # TODO: use ${{ github.repository_owner }}
+      image: ghcr.io/flouse/ckb-fiber:latest
+
+  call-reusable-test-digest:
+    needs: build-and-push-docker
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      # TODO: use ${{ github.repository_owner }}
+      image: ghcr.io/flouse/ckb-fiber@${{ needs.build-and-push-docker.outputs.digest}}

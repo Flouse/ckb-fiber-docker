@@ -4,14 +4,10 @@ on:
   push:
   workflow_call:
     inputs:
-      image_name:
+      image:
         required: false
         type: string
-        description: 'The name of the Docker image to test'
-      image_tag:
-        required: false
-        type: string
-        description: 'The tag of the Docker image to test'
+        description: 'The Fiber Docker image to test'
 
 jobs:
   test:
@@ -32,12 +28,10 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Start Fiber testnet node
-      env:
-        image: ${{ inputs.image_name }}/${{ inputs.image_tag }}
       run: |
         # Modify docker-compose to use the provided image tag
-        if [[ -n "${{ env.image }}" ]]; then
-          sed -i "s|image: .*|image: ${{ env.image }}|" docker-compose.yml
+        if [[ -n "${{ inputs.image }}" ]]; then
+          sed -i "s|image: .*|image: ${{ inputs.image }}|" docker-compose.yml
         fi
 
         # Check if the testnet.key is available in GitHub secrets
@@ -169,5 +163,5 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: docker-compose-logs-${{ inputs.image_tag }}
+        name: docker-compose-logs-${{ inputs.image }}
         path: docker-compose.log
