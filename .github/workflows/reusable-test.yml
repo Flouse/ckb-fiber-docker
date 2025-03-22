@@ -2,13 +2,22 @@ name: Test
 
 on:
   push:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      image_name:
+        required: false
+        type: string
+        description: 'The name of the Docker image to test'
+      image_tag:
+        required: false
+        type: string
+        description: 'The tag of the Docker image to test'
 
 jobs:
   test:
     environment: testnet
     runs-on: ubuntu-latest
-    concurrency: 
+    concurrency:
       group: ${{ github.workflow }}-testnet
       cancel-in-progress: false
 
@@ -18,12 +27,19 @@ jobs:
 
     - uses: oven-sh/setup-bun@v2
     - run: bun install
-  
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
     - name: Start Fiber testnet node
+      env:
+        image: ${{ inputs.image_name }}/${{ inputs.image_tag }}
       run: |
+        # Modify docker-compose to use the provided image tag
+        if [[ -n "${{ env.image }}" ]]; then
+          sed -i "s|image: .*|image: ${{ env.image }}|" docker-compose.yml
+        fi
+
         # Check if the testnet.key is available in GitHub secrets
         if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
           echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
@@ -38,9 +54,9 @@ jobs:
     - name: Wait for services to be healthy
       run: |
         echo "Waiting for services to start..."
-        for i in $(seq 1 30); do # Timeout after 30 * 10 = 300 seconds (5 minutes)
+        for i in $(seq 1 30); do  # Timeout after 30 * 10 = 300 seconds (5 minutes)
           if [[ $(docker inspect -f '{{.State.Health.Status}}' fiber-testnet-node) == "healthy" ]]; then
-            echo "Fiber testnet node is not healthy"
+            echo "Fiber testnet node is healthy"
             break
           fi
           sleep 10
@@ -112,7 +128,7 @@ jobs:
 
     - run: bun test
     - run: bun start
-    
+
     - name: Open channel to a testnet node FTN004
       run: bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
     - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
@@ -153,5 +169,5 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: docker-compose-logs
+        name: docker-compose-logs-${{ inputs.image_tag }}
         path: docker-compose.log
