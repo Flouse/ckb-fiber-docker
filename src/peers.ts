@@ -1,6 +1,7 @@
 import type { GraphNode } from "fiber";
 import { FIBER_RPC_URL, TESTNET_KNOWN_PEERS } from "./common/constants";
 import { FiberRPC } from "./rpc/client";
+import logger from "./utils/logger";
 
 export async function getGraphNodes() {
   let allNodes: GraphNode[] = [];
@@ -35,7 +36,7 @@ export async function getGraphNodes() {
  * @constant {BigInt} successCount - The number of new peers connected.
  */
 export async function connectKnowPeers() {
-  console.log(require("figlet").textSync("Connect Known Peers"));
+  console.info(require("figlet").textSync("Connect Known Peers"));
 
   const rpc = new FiberRPC(FIBER_RPC_URL);
 
@@ -52,10 +53,10 @@ export async function connectKnowPeers() {
     totalAttempts++;
     try {
       await rpc.connectPeer(addr, true);
-      console.log(`Connecting to testnet peer ${addr}`);
+      logger.info(`Connecting to testnet peer ${addr}`);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error(`Failed to connect to testnet peer ${addr}:`, errorMessage);
+      logger.error({ err: errorMessage }, `Failed to connect to testnet peer ${addr}`);
     }
   }
 
@@ -76,14 +77,14 @@ export async function connectKnowPeers() {
   while (Date.now() - startTime < 10 * 1000) {
     await new Promise(resolve => setTimeout(resolve, 3000));
     const latestPeerCount = BigInt((await rpc.getNodeInfo()).peers_count);
-    console.log("Peers Count:", latestPeerCount);
+    logger.info({ peerCount: latestPeerCount }, "Peers Count");
 
     if (latestPeerCount > peerCount) {
       break;
     }
-    console.log("Waiting for peers to be connected...");
+    logger.info("Waiting for peers to be connected...");
   }
 
   const successCount = BigInt((await rpc.getNodeInfo()).peers_count) - peerCount;
-  console.log(`New peers count: ${successCount}`);
+  logger.info({ successCount }, `New peers count`);
 }
