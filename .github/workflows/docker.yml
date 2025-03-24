@@ -93,6 +93,7 @@ jobs:
 
   build-and-push-docker:
     needs: get-fiber-versions
+    if: ${{ fromJSON(needs.get-fiber-versions.outputs.matrix).length > 0 }}
     strategy:
       fail-fast: false
       matrix:
@@ -159,6 +160,7 @@ jobs:
       imageid: ${{ steps.build.outputs.imageid }}
       digest: ${{ steps.build.outputs.digest }}
       metadata: ${{ steps.build.outputs.metadata }}
+
 
   call-reusable-test:
     needs: build-and-push-docker
