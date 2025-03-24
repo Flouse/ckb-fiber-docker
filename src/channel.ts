@@ -1,5 +1,5 @@
 
-import type { Channel } from "fiber";
+import type { Channel, ChannelState } from "fiber";
 import { FiberRPC } from "./rpc/client";
 
 /**
@@ -10,7 +10,9 @@ import { FiberRPC } from "./rpc/client";
  * @param channelId - The unique identifier of the channel
  * @returns The state of the specified channel, or undefined if not found
  */
-export async function getChannelStatus(rpc: FiberRPC, channelId: string, peerId?: string) {
+export async function getChannelStatus(rpc: FiberRPC, channelId: string, peerId?: string)
+  : Promise<ChannelState | undefined> {
+
   const channels: Channel[] = await rpc.listChannels({
     peer_id: peerId,
     include_closed: true,
@@ -27,7 +29,7 @@ export async function getChannelStatus(rpc: FiberRPC, channelId: string, peerId?
  * @param peerId - The unique identifier of the peer
  * @returns The most recently created channel, or undefined if no channels exist
  */
-export async function getNewChannel(rpc: FiberRPC, peerId: string) {
+export async function getNewChannel(rpc: FiberRPC, peerId: string): Promise<Channel | undefined> {
   const channels: Channel[] = await rpc.listChannels({
     peer_id: peerId,
     include_closed: true,
