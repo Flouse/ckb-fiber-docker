@@ -27,6 +27,12 @@ jobs:
       REPO: nervosnetwork/fiber
 
     steps:
+    - name: Set repository name
+      id: repo
+      run: |
+        repository=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+        echo "repository=${repository}" >> $GITHUB_OUTPUT
+
     - id: get_fiber_latest_commit
       name: Get the latest commmit on the main branch
       env:
@@ -34,7 +40,16 @@ jobs:
       run: |
         commit_sha=$(curl -s https://api.github.com/repos/$REPO/commits/$BRANCH | jq -r .sha)
         echo "commit_sha=${commit_sha}" >> $GITHUB_OUTPUT
-    
+
+    - name: Check if Docker commit tag exists
+      id: check-commit
+      # https://github.com/tyriis/docker-image-tag-exists/releases/tag/v2.1.0
+      uses: tyriis/docker-image-tag-exists@71a750a41aa78e4efb0842f538140c5df5b8166f
+      with:
+        registry: ${{ env.REGISTRY }}
+        repository: ${{ steps.repo.outputs.repository }}
+        tag: fiber-commit-${{ steps.get_fiber_latest_commit.outputs.commit_sha }}
+  
     - id: get_fiber_latest_tag
       name: Get the latest tag of fiber
       run: |
@@ -43,15 +58,12 @@ jobs:
         tag=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[0].name')
         echo "tag=${tag}" >> $GITHUB_OUTPUT
 
-        repository=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
-        echo "repository=${repository}" >> $GITHUB_OUTPUT
-
     - name: Check if Docker tag exists
       id: check-tag
-      uses: tyriis/docker-image-tag-exists@v2.1.0
+      uses: tyriis/docker-image-tag-exists@71a750a41aa78e4efb0842f538140c5df5b8166f
       with:
         registry: ${{ env.REGISTRY }}
-        repository: ${{ steps.get_fiber_latest_tag.outputs.repository }}
+        repository: ${{ steps.repo.outputs.repository }}
         tag: ${{ steps.get_fiber_latest_tag.outputs.tag }}
 
     - id: set-matrix
@@ -63,8 +75,10 @@ jobs:
           echo "FIBER_VERSION=${{ github.event.inputs.FIBER_VERSION }}"
           matrix[${#matrix[@]}]="${{ github.event.inputs.FIBER_VERSION }}"
         else 
-          echo "commit_sha=${{ steps.get_fiber_latest_commit.outputs.commit_sha }}"
-          matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
+          if [[ "${{ steps.check-commit.outputs.tag }}" != "found" ]]; then
+            echo "commit_sha=${{ steps.get_fiber_latest_commit.outputs.commit_sha }}"
+            matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
+          fi
 
           if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
             echo "FIBER_LATEST_TAG=${{ steps.get_fiber_latest_tag.outputs.tag }}"
