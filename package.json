@@ -4,13 +4,16 @@
   "module": "src/index.ts",
   "scripts": {
     "start": "bun run src/index.ts",
-    "close-channel": "bun run script/close-channel.ts"
+    "close-channel": "bun run script/close-channel.ts",
+    "close-all": "bun run script/close-all-channels.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.2.5"
   },
   "dependencies": {
     "@multiformats/multiaddr": "^12.4.0",
-    "figlet": "^1.8.0"
+    "figlet": "^1.8.0",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
   }
 }

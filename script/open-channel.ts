@@ -1,6 +1,6 @@
 import { sleep } from "bun";
 import { parseArgs } from "util";
-import { getNewChannel } from "../src/channel";
+import { getChannelStatus, getNewChannel } from "../src/channel";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
 
@@ -38,21 +38,41 @@ const rpc = new FiberRPC(FIBER_RPC_URL);
 // TODO: connect the peer first
 // await rpc.connectPeer(addr, true);
 
-const newChannel = await rpc.openChannel(channelParams);
-console.log("Open Channel:", newChannel);
+let tmpChannel = await rpc.openChannel(channelParams);
+console.log("Open Channel:", tmpChannel);
 
+const TIMEOUT = 120 * 1000; // 2 minute timeout
+const start = Date.now();
+
+// get the new channel
+let newChannel;
+while (!newChannel) {
+  if (Date.now() - start > TIMEOUT) {
+    console.error("Timeout while waiting for new channel");
+    process.exit(1);
+  }
+
+  newChannel = await getNewChannel(rpc, values.peer_id);
+  if (!newChannel) {
+    console.log("Waiting for new channel...");
+    await sleep(2000);
+  }
+}
+console.log("New Channel:", newChannel);
 
 // wait until the channel is ready
-const startTime = Date.now();
-while (Date.now() - startTime < 300 * 1000) {
+while (Date.now() - start < TIMEOUT) {
   console.log("Waiting for channel to be ready...");
-  await sleep(5000);
+  await sleep(8000);
 
-  const channel = await getNewChannel(rpc, values.peer_id);
-  if (!channel) continue;
+  const channelStatus = await getChannelStatus(rpc, newChannel.channel_id, values.peer_id);
 
-  console.debug("The funding channel:", channel);
-  if (channel.state.state_name === 'CHANNEL_READY') {
+  if (!channelStatus) {
+    console.log("Failed to get channel status");
+  }
+
+  console.log(`Channel Status:`, channelStatus);
+  if (channelStatus?.state_name === 'CHANNEL_READY') {
     console.log("Channel is ready");
     break;
   }

@@ -75,7 +75,7 @@ async function main() {
   const channels = await rpc.listChannels({ include_closed: false });
   console.log(`Found ${channels.length} open channels`);
 
-  for (const channel of channels) {
+  const closePromises = channels.map(async (channel) => {
     console.log(`Closing channel:`, channel);
     
     try {
@@ -85,7 +85,8 @@ async function main() {
       console.error(`Error closing channel ${channel.channel_id}:`, error);
       await closeChannel(channel.channel_id, undefined, true);
     }
-  }
+  });
+  await Promise.all(closePromises);
 }
 
 main().catch(console.error);
