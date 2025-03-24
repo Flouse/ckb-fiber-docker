@@ -71,8 +71,8 @@ while (Date.now() - start < TIMEOUT) {
     console.log("Failed to get channel status");
   }
 
-  console.log(`Channel Status: ${channelStatus?.state_name}`);
-  if (newChannel.state.state_name === 'CHANNEL_READY') {
+  console.log(`Channel Status:`, channelStatus);
+  if (channelStatus?.state_name === 'CHANNEL_READY') {
     console.log("Channel is ready");
     break;
   }
