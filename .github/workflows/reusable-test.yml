@@ -134,7 +134,7 @@ jobs:
 
     - name: Close all channels
       if: always()
-      run: bun run script/close-all-channels.ts
+      run: bun close-all
 
     - name: Monitor memory usage
       if: always()

@@ -87,5 +87,6 @@ async function main() {
     }
   });
   await Promise.all(closePromises);
+}
 
 main().catch(console.error);

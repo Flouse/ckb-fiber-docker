@@ -4,7 +4,8 @@
   "module": "src/index.ts",
   "scripts": {
     "start": "bun run src/index.ts",
-    "close-channel": "bun run script/close-channel.ts"
+    "close-channel": "bun run script/close-channel.ts",
+    "close-all": "bun run script/close-all-channels.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.2.5"

@@ -15,7 +15,7 @@ const peerCount = BigInt(nodeInfo.peers_count);
 console.log("Peers Count:", peerCount);
 
 // list channels
-const channels = await rpc.listChannels({ include_closed: true });
+const channels = await rpc.listChannels({});
 console.log("Channels:", channels);
 
 await connectKnowPeers();
