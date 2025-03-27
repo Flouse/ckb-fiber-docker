@@ -93,8 +93,7 @@ jobs:
 
   build-and-push-docker:
     needs: get-fiber-versions
-    # FIXME
-    # if: ${{ fromJSON(needs.get-fiber-versions.outputs.matrix).length > 0 }}
+    if: ${{ needs.get-fiber-versions.outputs.matrix != '[]' }}
     strategy:
       fail-fast: false
       matrix:
