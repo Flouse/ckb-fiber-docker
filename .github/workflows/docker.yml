@@ -69,27 +69,26 @@ jobs:
     - id: set-matrix
       name: Set up matrix
       run: |
-        matrix=()
+        declare -a matrix
 
-        if [[ "${{ github.event.inputs.FIBER_VERSION }}" != "" ]]; then
+        if [[ -n "${{ github.event.inputs.FIBER_VERSION }}" ]]; then
           echo "FIBER_VERSION=${{ github.event.inputs.FIBER_VERSION }}"
-          matrix[${#matrix[@]}]="${{ github.event.inputs.FIBER_VERSION }}"
+          matrix+=("${{ github.event.inputs.FIBER_VERSION }}")
         else 
           if [[ "${{ steps.check-commit.outputs.tag }}" != "found" ]]; then
             echo "commit_sha=${{ steps.get_fiber_latest_commit.outputs.commit_sha }}"
-            matrix=( "${{ steps.get_fiber_latest_commit.outputs.commit_sha }}" )
+            matrix+=("${{ steps.get_fiber_latest_commit.outputs.commit_sha }}")
           fi
 
           if [[ "${{ steps.check-tag.outputs.tag }}" != "found" ]]; then
             echo "FIBER_LATEST_TAG=${{ steps.get_fiber_latest_tag.outputs.tag }}"
-            matrix[${#matrix[@]}]="${{ steps.get_fiber_latest_tag.outputs.tag }}"
+            matrix+=("${{ steps.get_fiber_latest_tag.outputs.tag }}")
           fi
         fi
 
-        joined=$(printf '"%s",' "${matrix[@]}" | sed 's/,$//')
-        formatted_array="[ ${joined} ]"
-        echo "$formatted_array"
-        echo matrix="$formatted_array" >> $GITHUB_OUTPUT
+        matrix_json=$(jq -cn --args '$ARGS.positional' -- "${matrix[@]}")
+        echo "matrix=${matrix_json}" >> $GITHUB_OUTPUT
+
 
   build-and-push-docker:
     needs: get-fiber-versions
