@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { Script, Channel } from "fiber";
+import type { Script, Channel, NodeInfoResponse } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -44,7 +44,7 @@ export class FiberRPC {
     if (!res.ok) {
       throw new Error(`HTTP error status: ${res.status}`);
     }
-    const data: RPCResponse<T> = await res.json();
+    const data = await res.json() as RPCResponse<T>;
 
     if (data.error) {
       throw new Error(`RPC call "${method}" failed due to error: ${data.error.message}`)
@@ -55,8 +55,8 @@ export class FiberRPC {
     return data.result as T;
   }
 
-  async getNodeInfo() {
-    return this.call<any>("node_info");
+  async getNodeInfo(): Promise<NodeInfoResponse> {
+    return this.call<NodeInfoResponse>("node_info");
   }
 
   /**
@@ -117,12 +117,13 @@ export class FiberRPC {
   }
 
   /**
-   * Shuts down a channel.
+   * Shutdown a channel.
    * @param {Object} params - The parameters for shutting down the channel
    * @param {string} params.channel_id - The channel ID of the channel to shut down
    * @param {Script} params.close_script - The script used to receive the channel balance
    * @param {U64Hex} params.fee_rate - The fee rate for the closing transaction
-   * @param {boolean} [params.force] - Whether to force the channel to close 
+   * @param {boolean} [params.force] - Whether to force the channel to close
+   *
    * @returns {Promise<void>}
    */
   async closeChannel(params: {
@@ -131,6 +132,6 @@ export class FiberRPC {
     fee_rate: string;
     force?: boolean;
   }): Promise<void> {
-    return this.call<void>("shutdown_channel", [params]);
+    await this.call<void>("shutdown_channel", [params]);
   }
 }

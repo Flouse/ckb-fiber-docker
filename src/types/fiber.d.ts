@@ -1,4 +1,8 @@
 declare module 'fiber' {
+  export interface NodeInfoResponse {
+    version: string;
+    default_funding_lock_script?: Script;
+  }
   export interface IContext {
     params: { [key: string]: string };
     query: { [key: string]: string };
