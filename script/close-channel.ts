@@ -2,6 +2,7 @@ import type { Channel, Script } from "fiber";
 import { parseArgs } from "util";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
+import type { NodeInfoResponse } from "../src/types/fiber";
 
 console.log(require("figlet").textSync('Close Channel'));
 
@@ -80,8 +81,8 @@ async function checkChannelBalance(channelId: string) {
  */
 async function closeChannel(channelId: string, closeScript?: Script, force?: boolean) {
   // Get default_funding_lock_script from node info
-  const nodeInfo = await rpc.getNodeInfo();
-  const defaultCloseScript: Script = nodeInfo.default_funding_lock_script;
+  const nodeInfo: NodeInfoResponse = await rpc.getNodeInfo();
+  const defaultCloseScript: Script = nodeInfo.result.default_funding_lock_script;
 
   await rpc.closeChannel({
     channel_id: channelId,
