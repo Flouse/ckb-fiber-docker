@@ -47,16 +47,28 @@ if (values.address) {
   console.log(`Connecting to peer at address: ${values.address}`);
   await rpc.connectPeer(values.address, true);
 
-  // Verify peer connection
+  // Verify peer connection with retries
   console.log("Verifying peer connection...");
-  const peers = await rpc.listPeers();
-  const isConnected = peers.some(peer => peer.peer_id === values.peer_id);
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY = 2000; // 2 seconds
+  let isConnected = false;
+
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const peers = await rpc.listPeers();
+    isConnected = peers.some(peer => peer.peer_id === values.peer_id);
+
+    if (isConnected) {
+      console.log(`Successfully connected to peer ${values.peer_id}.`);
+      break;
+    } else {
+      console.log(`Peer not found in list_peers. Retry ${attempt}/${MAX_RETRIES}...`);
+      await sleep(RETRY_DELAY);
+    }
+  }
 
   if (!isConnected) {
-    console.error(`Failed to connect to peer ${values.peer_id}. Peer not found in list_peers.`);
+    console.error(`Failed to connect to peer ${values.peer_id}. Peer not found in list_peers after ${MAX_RETRIES} retries.`);
     process.exit(1);
-  } else {
-    console.log(`Successfully connected to peer ${values.peer_id}.`);
   }
 }
 
