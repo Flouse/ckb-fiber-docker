@@ -1,5 +1,5 @@
-# https://github.com/nervosnetwork/fiber/blob/ace6ed0bf5da72bc6495e51d1e6cea901796e6f3/rust-toolchain.toml#L2 is using rust 1.81.0
-FROM rust:1.81-bookworm AS builder
+# https://github.com/nervosnetwork/fiber/blob/73705222d2d7288d/rust-toolchain.toml#L2C12-L2C16
+FROM rust:1.84-bookworm AS builder
 
 RUN apt-get update && \
     apt-get install -y clang
