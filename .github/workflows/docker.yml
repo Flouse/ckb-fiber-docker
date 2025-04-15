@@ -161,13 +161,14 @@ jobs:
       metadata: ${{ steps.build.outputs.metadata }}
 
 
+  #24: FIXME
   call-reusable-test:
     needs: build-and-push-docker
     uses: ./.github/workflows/reusable-test.yml
     with:
       # TODO: use ${{ github.repository_owner }}
       image: ghcr.io/flouse/ckb-fiber:latest
-
+  #24: FIXME
   call-reusable-test-digest:
     needs: build-and-push-docker
     uses: ./.github/workflows/reusable-test.yml
