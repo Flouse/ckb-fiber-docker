@@ -29,10 +29,7 @@ RUN apt-get update && apt-get upgrade -y \
     tini \
     curl \
     gnupg \
-    gosu \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
- # verify that the binary works
- && gosu nobody true
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # add ckb-cli into the docker image
 # https://github.com/nervosnetwork/ckb-cli/releases/tag/v1.12.0

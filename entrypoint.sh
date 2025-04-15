@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+has_cap() {
+	/usr/bin/setpriv -d | grep -q 'Capability bounding set:.*\b'$1'\b'
+}
+
 echo "$(whoami) command: $0 $@"
 
 # Ensure proper ownership - will only succeed if we have permissions
@@ -11,10 +15,15 @@ if [ "$(id -u)" = '0' ]; then
   find /fiber \! -user fiber -exec chown fiber '{}' + || true
   find . \! -user fiber -exec chown fiber '{}' + || true
 
-  # similar to: exec su -c "$0 $@" fiber
-  exec gosu fiber "$0" "$@"
+  # enhance security by running processes with the least privilege necessary
+  exec setpriv \
+    --reuid fiber --regid fiber \
+    --clear-groups --nnp \
+		--inh-caps=-all \
+		--ambient-caps=-all \
+		--bounding-set=-all \
+    "$0" "$@"
 fi
-ls -la /fiber
 
 # set an appropriate umask (if one isn't set already)
 # - https://github.com/docker-library/redis/issues/305
