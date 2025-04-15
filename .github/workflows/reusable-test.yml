@@ -123,6 +123,18 @@ jobs:
     - run: bun test
     - run: bun start
 
+    - name: Open channel to utxostack-hub-1
+      run: bun run script/open-channel.ts --peer_id QmapgHFsZ6k8mk9gzzSxZekYUbneicrnafwTZZbydbfSYe
+    - name: Open channel to utxostack-hub-2
+      run: bun run script/open-channel.ts --peer_id QmdbU1YXxN9G7p3SAn4y8qBnGvisKU8ddh3ojEkWvuWEfW
+    - name: Open channel to utxostack-hub-3
+      run: bun run script/open-channel.ts --peer_id QmUjVWuqF7r3sh88izUtta8y4LUc3FgsGPBLJMZ4Co9Nxa
+    - name: Open channel to utxostack-hub-4
+      run: bun run script/open-channel.ts --peer_id QmYRNjy1sZVYiVotFBZUvvth9JH2kyNAabK2KBGYLFkhkD
+
+    - name: Open channel to explorer'node
+      run: bun run script/open-channel.ts --peer_id QmSqSsbjkQG6aMBNEkG6hMLKQpMjLW3eaBmUdCghpRWqwJ
+
     - name: Open channel to cipher_fiber
       run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
 
