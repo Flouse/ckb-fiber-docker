@@ -46,7 +46,18 @@ const rpc = new FiberRPC(FIBER_RPC_URL);
 if (values.address) {
   console.log(`Connecting to peer at address: ${values.address}`);
   await rpc.connectPeer(values.address, true);
-  console.log("Peer connected.");
+
+  // Verify peer connection
+  console.log("Verifying peer connection...");
+  const peers = await rpc.listPeers();
+  const isConnected = peers.some(peer => peer.peer_id === values.peer_id);
+
+  if (!isConnected) {
+    console.error(`Failed to connect to peer ${values.peer_id}. Peer not found in list_peers.`);
+    process.exit(1);
+  } else {
+    console.log(`Successfully connected to peer ${values.peer_id}.`);
+  }
 }
 
 console.log("Opening channel with params:", channelParams);

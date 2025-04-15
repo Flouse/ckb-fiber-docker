@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { Script, Channel, NodeInfoResponse } from "fiber";
+import type { Script, Channel, NodeInfoResponse, PeerInfo } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -114,6 +114,14 @@ export class FiberRPC {
    */
   async listChannels(params?: { peer_id?: string; include_closed?: boolean }): Promise<Channel[]> {
     return (await this.call<{ channels: Channel[] }>("list_channels", [params])).channels;
+  }
+
+  /**
+   * Lists all connected peers.
+   * @returns {Promise<PeerInfo[]>} The list of connected peers.
+   */
+  async listPeers(): Promise<PeerInfo[]> {
+    return (await this.call<{ peers: PeerInfo[] }>("list_peers")).peers;
   }
 
   /**

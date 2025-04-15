@@ -13,6 +13,12 @@ declare module 'fiber' {
     send(data: string): void;
   }
 
+  export interface PeerInfo {
+    pubkey: string; // Assuming Pubkey is a string representation
+    peer_id: string; // Assuming PeerId is a string representation
+    addresses: string[]; // Assuming Vec<MultiAddr> is represented as string[] for now
+  }
+
   export interface MultiAddr {
     id: string;
     protocol: string;
