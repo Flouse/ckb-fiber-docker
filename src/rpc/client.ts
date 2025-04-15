@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { Script, Channel } from "fiber";
+import type { Script, Channel, NodeInfoResponse, PeerInfo } from "fiber";
 
 export interface RPCResponse<T> {
   jsonrpc: "2.0";
@@ -44,7 +44,7 @@ export class FiberRPC {
     if (!res.ok) {
       throw new Error(`HTTP error status: ${res.status}`);
     }
-    const data: RPCResponse<T> = await res.json();
+    const data = await res.json() as RPCResponse<T>;
 
     if (data.error) {
       throw new Error(`RPC call "${method}" failed due to error: ${data.error.message}`)
@@ -55,17 +55,17 @@ export class FiberRPC {
     return data.result as T;
   }
 
-  async getNodeInfo() {
-    return this.call<any>("node_info");
+  async getNodeInfo(): Promise<NodeInfoResponse> {
+    return this.call<NodeInfoResponse>("node_info");
   }
 
   /**
    * Connect to a peer.
-   * @param {string} address - The address of the peer to connect to.
+   * @param {string} address - The MultiAddr of the peer to connect to.
    * @param {boolean} [save=false] - Whether to save the peer address to the peer store.
    * @returns {Promise<void>}
    */
-  async connectPeer(address: string, save: boolean = false): Promise<void> { // Using string for MultiAddr
+  async connectPeer(address: string, save: boolean = false): Promise<void> {
     return this.call<void>("connect_peer", [{ address, save }]);
   }
 
@@ -117,12 +117,21 @@ export class FiberRPC {
   }
 
   /**
-   * Shuts down a channel.
+   * Lists all connected peers.
+   * @returns {Promise<PeerInfo[]>} The list of connected peers.
+   */
+  async listPeers(): Promise<PeerInfo[]> {
+    return (await this.call<{ peers: PeerInfo[] }>("list_peers")).peers;
+  }
+
+  /**
+   * Shutdown a channel.
    * @param {Object} params - The parameters for shutting down the channel
    * @param {string} params.channel_id - The channel ID of the channel to shut down
    * @param {Script} params.close_script - The script used to receive the channel balance
    * @param {U64Hex} params.fee_rate - The fee rate for the closing transaction
-   * @param {boolean} [params.force] - Whether to force the channel to close 
+   * @param {boolean} [params.force] - Whether to force the channel to close
+   *
    * @returns {Promise<void>}
    */
   async closeChannel(params: {
@@ -131,6 +140,6 @@ export class FiberRPC {
     fee_rate: string;
     force?: boolean;
   }): Promise<void> {
-    return this.call<void>("shutdown_channel", [params]);
+    await this.call<void>("shutdown_channel", [params]);
   }
 }

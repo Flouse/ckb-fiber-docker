@@ -1,8 +1,10 @@
-export interface PeerInfo {
-  peerId: string;
-}
+import { multiaddr } from '@multiformats/multiaddr'
 
-export const parsePeerAddr = (addr: string): PeerInfo => {
-  const [, , ip, , port, , peerId] = addr.split('/')
-  return { peerId }
+export const parsePeerId = (addr: string): string => {
+  const ma = multiaddr(addr)
+  const peerId = ma.getPeerId()
+  if (!peerId) {
+    throw new Error('The multiaddr is missing peerId.')
+  }
+  return peerId
 }

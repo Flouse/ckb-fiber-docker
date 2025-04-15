@@ -1,4 +1,8 @@
 declare module 'fiber' {
+  export interface NodeInfoResponse {
+    version: string;
+    default_funding_lock_script: Script;
+  }
   export interface IContext {
     params: { [key: string]: string };
     query: { [key: string]: string };
@@ -7,6 +11,12 @@ declare module 'fiber' {
     status(code: number): IContext;
     json(data: any): void;
     send(data: string): void;
+  }
+
+  export interface PeerInfo {
+    pubkey: string; // Assuming Pubkey is a string representation
+    peer_id: string; // Assuming PeerId is a string representation
+    addresses: string[]; // Assuming Vec<MultiAddr> is represented as string[] for now
   }
 
   export interface MultiAddr {
