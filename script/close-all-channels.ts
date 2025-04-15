@@ -36,12 +36,14 @@ async function closeChannel(channelId: string, closeScript?: Script, force?: boo
   const nodeInfo = await rpc.getNodeInfo();
   const defaultCloseScript: Script = nodeInfo.default_funding_lock_script;
 
-  await rpc.closeChannel({
-    channel_id: channelId,
-    close_script: closeScript ?? defaultCloseScript,
-    fee_rate: `0x${feeRate.toString(16)}`,
-    force
-  });
+  const params: any = { channel_id: channelId, force };
+
+  if (!force) {
+    params.close_script = closeScript ?? defaultCloseScript;
+    params.fee_rate = `0x${feeRate.toString(16)}`;
+  }
+
+  await rpc.closeChannel(params);
   console.log(`Closing channel ${channelId}`);
 }
 
