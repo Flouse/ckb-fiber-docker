@@ -123,8 +123,9 @@ jobs:
     - run: bun test
     - run: bun start
 
-    - name: Open channel to a testnet node FTN004
-      run: bun run script/open-channel.ts --peer_id QmVxgZrgZESD5U3m2cq8qXpsGPXubERvZs3eXy9fpFeVtE
+    - name: Open channel to cipher_fiber
+      run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
+
     - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
       run: |
         bun run script/open-channel.ts \
