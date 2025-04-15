@@ -8,11 +8,11 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     #   args:
-    #     FIBER_VERSION: v0.4.2
+    #     FIBER_VERSION: v0.5.0
     #     CKB_CLI_VERSION: v1.12.0
     #
-    # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber/377140523?tag=v0.4.2
-    image: ghcr.io/flouse/ckb-fiber:v0.4.2
+    # https://github.com/Flouse/ckb-fiber-docker/pkgs/container/ckb-fiber/377140523?tag=v0.5.0
+    image: ghcr.io/flouse/ckb-fiber:v0.5.0
     restart: unless-stopped
     deploy:
       resources:
@@ -36,7 +36,7 @@ services:
     command: [
       "fnn",
       # node name to be announced to fiber network [env: FIBER_ANNOUNCED_NODE_NAME]
-      "--fiber-announced-node-name", "FTN005",
+      "--fiber-announced-node-name", "FTN20250415",
       # addresses to be announced to fiber network [env: FIBER_ANNOUNCED_ADDRS=]
       # TODO: "--fiber-announced-addrs", "58228"
     ]
