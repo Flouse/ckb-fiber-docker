@@ -38,8 +38,9 @@ const rpc = new FiberRPC(FIBER_RPC_URL);
 // TODO: connect the peer first
 // await rpc.connectPeer(addr, true);
 
+console.log("Opening channel with params:", channelParams);
 let tmpChannel = await rpc.openChannel(channelParams);
-console.log("Open Channel:", tmpChannel);
+console.log("Opening Channel:", tmpChannel);
 
 const TIMEOUT = 120 * 1000; // 2 minute timeout
 const start = Date.now();
