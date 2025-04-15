@@ -11,15 +11,20 @@ fiber:
   listening_addr: "/ip4/0.0.0.0/tcp/8228"
   # Whether to announce your listening address to other peers
   announce_listening_addr: true
+  # List of addresses to be announced (separated by `,`) [env: FIBER_ANNOUNCED_ADDRS=]
+  # If you want to announce your fiber node public address to the network, you need to add the
+  # address here, please change the ip to your public ip accordingly.
+  # announced_addrs:
+  # - "/ip4/YOUR-FIBER-NODE-PUBLIC-IP/tcp/8228"
+  #
+  # The interval to reannounce NodeAnnouncement, in seconds. 0 means never reannounce.
+  # [default: 3600 (1 hour)]
+  announce_node_interval_seconds: 360
 
   # Bootstrap nodes for initial network connection
   bootnode_addrs:
   - "/ip4/54.179.226.154/tcp/8228/p2p/Qmes1EBD4yNo9Ywkfe6eRw9tG1nVNGLDmMud1xJMsoYFKy"
   - "/ip4/54.179.226.154/tcp/18228/p2p/QmdyQWjPtbK4NWWsvy8s69NGJaQULwgeQDT5ZpNDrTNaeV"
-
-  # announced_addrs:
-  # If you want to announce your fiber node public address to the network, you need to add the address here, please change the ip to your public ip accordingly.
-  # - "/ip4/YOUR-FIBER-NODE-PUBLIC-IP/tcp/8228"
 
   # chain spec, can be mainnet | testnet | "path to chain spec file"
   chain: testnet
