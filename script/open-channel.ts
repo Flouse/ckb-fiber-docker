@@ -34,8 +34,7 @@ const channelParams = {
 };
 const rpc = new FiberRPC(FIBER_RPC_URL);
 
-// open channel
-// TODO: connect the peer first
+// TODO: connect the peer first beofre opening the channel
 // await rpc.connectPeer(addr, true);
 
 console.log("Opening channel with params:", channelParams);

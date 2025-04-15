@@ -129,10 +129,10 @@ jobs:
     - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
       run: |
         bun run script/open-channel.ts \
-          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000 &
-        sleep 10
-        bun run script/open-channel.ts \
-          --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
+          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
+      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
+      # bun run script/open-channel.ts \
+      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
 
     - name: Close all channels
       if: always()
