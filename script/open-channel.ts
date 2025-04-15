@@ -3,19 +3,24 @@ import { parseArgs } from "util";
 import { getChannelStatus, getNewChannel } from "../src/channel";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
+import { parsePeerId } from "../src/utils";
 
 console.log(require("figlet").textSync('Open Channel'));
 
 const { values } = parseArgs({
   args: Bun.argv,
   options: {
+    address: {
+      type: "string",
+      short: "a"
+    },
     peer_id: {
       type: "string",
       short: "p",
     },
     funding_amount: {
       type: "string",
-      short: "a",
+      short: "f",
       default: "0x3C5986200" // Default 16200000000 shannons
     },
   },
@@ -23,19 +28,26 @@ const { values } = parseArgs({
   allowPositionals: true,
 });
 
+if (values.address) {
+  values.peer_id = parsePeerId(values.address);
+}
 if (!values.peer_id) {
   console.error("Please specify a peer ID with --peer_id or -p");
   process.exit(1);
 }
-
 const channelParams = {
   peer_id: values.peer_id,
   funding_amount: values.funding_amount, // Use the provided funding amount or default
 };
+
 const rpc = new FiberRPC(FIBER_RPC_URL);
 
-// TODO: connect the peer first beofre opening the channel
-// await rpc.connectPeer(addr, true);
+// Connect the peer first before opening the channel if address is provided
+if (values.address) {
+  console.log(`Connecting to peer at address: ${values.address}`);
+  await rpc.connectPeer(values.address, true);
+  console.log("Peer connected.");
+}
 
 console.log("Opening channel with params:", channelParams);
 let tmpChannel = await rpc.openChannel(channelParams);
