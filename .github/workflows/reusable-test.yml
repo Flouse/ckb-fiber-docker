@@ -123,6 +123,9 @@ jobs:
     - run: bun test
     - run: bun start
 
+    - name: Open channel to FTN20250416
+      run: bun run script/open-channel.ts --peer_id QmRn7zHWwFk9AeU2zLmc4TsaxJfeni1frLNPPYnZ9znxHp
+
     - name: Open channel to utxostack-hub-1
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/18228/p2p/QmapgHFsZ6k8mk9gzzSxZekYUbneicrnafwTZZbydbfSYe
     - name: Open channel to utxostack-hub-2
