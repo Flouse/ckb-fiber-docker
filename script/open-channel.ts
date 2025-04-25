@@ -1,6 +1,6 @@
 import { sleep } from "bun";
 import { parseArgs } from "util";
-import { getChannelStatus, getNewChannel } from "../src/channel";
+import { getChannel, getChannelStatus, getNewChannel } from "../src/channel";
 import { FIBER_RPC_URL } from "../src/common/constants";
 import { FiberRPC } from "../src/rpc/client";
 import { parsePeerId } from "../src/utils";
@@ -109,6 +109,14 @@ while (Date.now() - start < TIMEOUT) {
   console.log(`Channel Status:`, channelStatus);
   if (channelStatus?.state_name === 'CHANNEL_READY') {
     console.log("Channel is ready");
+
+    const channel = await getChannel(rpc, newChannel.channel_id);
+    console.log("Channel:", channel);
     break;
   }
+}
+
+if (Date.now() - start >= TIMEOUT) {
+  console.error("Channel is not ready after 2 minutes");
+  console.error("Failed to open channel with peer:", values.address);
 }

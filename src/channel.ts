@@ -3,23 +3,36 @@ import type { Channel, ChannelState } from "fiber";
 import { FiberRPC } from "./rpc/client";
 
 /**
+ * Retrieves a specific channel by its ID and optionally filters by peer ID.
+ * 
+ * @param rpc - The FiberRPC client used to interact with the network
+ * @param channelId - The unique identifier of the channel
+ * @param peerId - The unique identifier of the peer
+ *
+ * @returns The channel object if found, or undefined if not found
+ */
+export async function getChannel(rpc: FiberRPC, channelId: string, peerId?: string): Promise<Channel | undefined> {
+  const channels: Channel[] = await rpc.listChannels({
+    peer_id: peerId,
+    include_closed: true,
+  });
+  return channels.find(channel => channel.channel_id === channelId);
+}
+
+/**
  * Retrieves the status of a specific channel for a given peer.
  * 
  * @param rpc - The FiberRPC client used to interact with the network
  * @param peerId - The unique identifier of the peer
  * @param channelId - The unique identifier of the channel
+ *
  * @returns The state of the specified channel, or undefined if not found
  */
 export async function getChannelStatus(rpc: FiberRPC, channelId: string, peerId?: string)
   : Promise<ChannelState | undefined> {
 
-  const channels: Channel[] = await rpc.listChannels({
-    peer_id: peerId,
-    include_closed: true,
-  });
-
-  const chanInfo = channels.find(chan => chan.channel_id === channelId);
-  return chanInfo?.state;
+  const channel = await getChannel(rpc, channelId, peerId);
+  return channel?.state;
 }
 
 /**

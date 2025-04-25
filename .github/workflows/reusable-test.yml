@@ -123,6 +123,14 @@ jobs:
     - run: bun test
     - run: bun start
 
+    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
+      run: |
+        bun run script/open-channel.ts \
+          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
+      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
+      # bun run script/open-channel.ts \
+      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
+
     - name: Open channel to FTN20250416
       run: bun run script/open-channel.ts --peer_id QmRn7zHWwFk9AeU2zLmc4TsaxJfeni1frLNPPYnZ9znxHp
 
@@ -135,19 +143,8 @@ jobs:
     - name: Open channel to utxostack-hub-4
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/48228/p2p/QmYRNjy1sZVYiVotFBZUvvth9JH2kyNAabK2KBGYLFkhkD
 
-    - name: Open channel to explorer'node
-      run: bun run script/open-channel.ts --address /ip4/43.198.162.23/tcp/8228/p2p/QmSqSsbjkQG6aMBNEkG6hMLKQpMjLW3eaBmUdCghpRWqwJ
-
     - name: Open channel to cipher_fiber
       run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
-
-    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
-      run: |
-        bun run script/open-channel.ts \
-          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
-      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
-      # bun run script/open-channel.ts \
-      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
 
     - name: Close all channels
       if: always()
