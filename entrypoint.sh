@@ -37,7 +37,7 @@ if [ ! -f "${BASE_DIR}/ckb/key" ]; then
   echo "Initializing new CKB wallet..."
   mkdir --mode=700 -p ${BASE_DIR}/ckb
   gpg --gen-random 2 32 | od -An -tx1 | tr -d ' \n' > ${BASE_DIR}/ckb/key
-  chmod 400 ${BASE_DIR}/ckb/key
+  chmod 600 ${BASE_DIR}/ckb/key
 fi
 
 echo "Current working directory: $(pwd), umask: $(umask)"

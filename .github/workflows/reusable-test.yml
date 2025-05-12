@@ -37,7 +37,7 @@ jobs:
         # Check if the testnet.key is available in GitHub secrets
         if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
           echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
-          chmod 400 testnet.key
+          chmod 600 testnet.key
           echo "Uncommenting the line for testnet.key in docker-compose.yml"
           sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
         fi
