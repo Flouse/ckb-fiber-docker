@@ -8,14 +8,14 @@ Docker image that contains the CKB [Fiber Network Node (FNN)](https://github.com
 
 ## Check the version
 ```bash
-# https://github.com/nervosnetwork/fiber/releases/tag/v0.5.0
-export FIBER_IMAGE=ghcr.io/flouse/ckb-fiber:v0.5.0
+# https://github.com/nervosnetwork/fiber/releases/tag/v0.5.1
+export FIBER_IMAGE=ghcr.io/flouse/ckb-fiber:v0.5.1
 
 docker run --rm ${FIBER_IMAGE} ckb-cli --version
 # Output: ckb-cli 1.12.0 (278c7be 2024-09-20)
 
 docker run --rm ${FIBER_IMAGE}
-# Ouptut: fnn 0.5.0
+# Ouptut: fnn 0.5.1
 ```
 
 ## Usage
