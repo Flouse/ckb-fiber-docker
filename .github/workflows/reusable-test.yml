@@ -157,11 +157,11 @@ jobs:
       if: always()
       run: |
         echo "Monitoring memory usage every minute"
-        end=$((SECONDS+100))
+        end=$((SECONDS+62))
         while [ $SECONDS -lt $end ]; do
           echo "Memory usage:"
           docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
-          sleep 60
+          sleep 30
         done
 
     - name: Save container logs before shutdown
