@@ -145,7 +145,7 @@ jobs:
           CKB_CLI_VERSION=${{ env.CKB_CLI_VERSION }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        push: ${{ github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/tags/v') }}
+        push: ${{ github.ref == 'refs/heads/dev' || github.event_name == 'workflow_dispatch' }}
         load: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
