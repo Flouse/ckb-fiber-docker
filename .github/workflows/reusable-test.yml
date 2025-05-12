@@ -42,6 +42,9 @@ jobs:
           sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
         fi
 
+        # Setup envs
+        echo "FIBER_SECRET_KEY_PASSWORD=${{ secrets.FIBER_SECRET_KEY_PASSWORD }}" >> .env
+
         # Start the Docker containers in detached mode
         docker compose up -d
 

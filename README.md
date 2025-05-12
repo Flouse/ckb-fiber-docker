@@ -24,11 +24,15 @@ docker run --rm ${FIBER_IMAGE}
 # Fiber Help
 docker run --rm ${FIBER_IMAGE} fnn --help
 
-# Start a fiber node with ./testnet-config.yml
+# Copy the example environment file and set your password
+cp example.env .env
+# Edit .env to set `FIBER_SECRET_KEY_PASSWORD` etc.
+
+# Start a Fiber node with custom configuration (./testnet-config.yml)
 docker compose up -d
 
 # Watch logs
-docker compose logs -f
+docker compose logs -f --tail 10
 
 # Get node info
 curl -s -X POST http://localhost:58227 \
