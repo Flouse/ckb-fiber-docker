@@ -23,6 +23,7 @@ services:
     environment:
     # Add any additional environment variables needed by CKB Fiber node
     - RUST_LOG=info
+    env_file: .env
     volumes:
     - cfn-data:/fiber/.fiber-node
     - ./testnet-config.yml:/fiber/.fiber-node/config.yml
@@ -35,6 +36,8 @@ services:
     - 127.0.0.1:58227:8227  # JSON-RPC port
     command: [
       "fnn",
+      # Setup BASE_DIR
+      "--dir", "/fiber/.fiber-node",
       # node name to be announced to fiber network [env: FIBER_ANNOUNCED_NODE_NAME]
       "--fiber-announced-node-name", "FTN20250415",
       # addresses to be announced to fiber network [env: FIBER_ANNOUNCED_ADDRS=]

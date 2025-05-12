@@ -19,9 +19,9 @@ if [ "$(id -u)" = '0' ]; then
   exec setpriv \
     --reuid fiber --regid fiber \
     --clear-groups --nnp \
-		--inh-caps=-all \
-		--ambient-caps=-all \
-		--bounding-set=-all \
+    --inh-caps=-all \
+    --ambient-caps=-all \
+    --bounding-set=-all \
     "$0" "$@"
 fi
 
@@ -34,12 +34,23 @@ fi
 
 # Initialize CKB wallet if it doesn't exist
 if [ ! -f "${BASE_DIR}/ckb/key" ]; then
-  echo "\nInitializing new CKB wallet..."
+  echo "Initializing new CKB wallet..."
   mkdir --mode=700 -p ${BASE_DIR}/ckb
   gpg --gen-random 2 32 | od -An -tx1 | tr -d ' \n' > ${BASE_DIR}/ckb/key
   chmod 400 ${BASE_DIR}/ckb/key
 fi
 
-echo "\nCurrent working directory: $(pwd), umask: $(umask)"
-echo "Starting as user fiber $(id -u):$(id -g)... \n"
+echo "Current working directory: $(pwd), umask: $(umask)"
+echo "Starting as user fiber $(id -u):$(id -g)... "
+
+# Export selected environment variables if they exist
+[ -n "${BASE_DIR}" ] && export BASE_DIR
+
+if [ -n "${FIBER_SECRET_KEY_PASSWORD}" ]; then
+  export FIBER_SECRET_KEY_PASSWORD
+else
+  echo "FIBER_SECRET_KEY_PASSWORD environment variable is required" >&2
+  exit 1
+fi
+
 exec "$@"
