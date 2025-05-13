@@ -36,12 +36,8 @@ jobs:
           echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
           chmod 600 testnet.key
           echo "Uncommenting the line for testnet.key in docker-compose.yml"
-          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/plain_key|' docker-compose.yml
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
         fi
-
-    - name: Setup tmate session for debugging (tmp)
-      if: ${{ always }}
-      uses: mxschmitt/action-tmate@v3
 
     - name: Start Fiber testnet node
       run: |
@@ -96,17 +92,13 @@ jobs:
         echo "CKB_RPC_URL: $ckb_rpc_url"
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
 
-    # TODO:
+    # TODO: test
     - name: Get Testnet Address
       run: |
-        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
-        TESTNET_ADDRESS=$(echo -e "\n" \
-          | docker compose run --rm fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
-          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
+        TESTNET_ADDRESS=$(docker compose exec fiber echo $CKB_TESTNET_ADDRESS)
         echo "Testnet address: $TESTNET_ADDRESS"
         echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
 
-    # TODO: get CKB_TESTNET_ADDRESS
     - name: Get Balance and get faucet if the balance is less than 10000 CKB
       env:
         MINIMUM_CKB: 10000
