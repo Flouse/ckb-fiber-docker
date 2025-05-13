@@ -50,21 +50,18 @@ else
   echo "FIBER_SECRET_KEY_PASSWORD environment variable is required" >&2
   exit 1
 fi
+export HOME=/fiber
 
 if [[ "$(tr -d ' \n\r\t' < "${BASE_DIR}/ckb/key")" =~ ^[0-9A-Fa-f]+$ ]]; then
   echo "Import the account to ckb-cli before the key is encrypted"
 
-  export HOME=/fiber
-
-  # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
   # TODO: use FIBER_SECRET_KEY_PASSWORD as ckb-cli wallet password
-  CKB_TESTNET_ADDRESS=$(echo -e "\n" \
-  | ckb-cli account import --privkey-path ${BASE_DIR}/ckb/key \
-  | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
-
-  echo "Imported testnet address: $CKB_TESTNET_ADDRESS"
-  export CKB_TESTNET_ADDRESS
+  echo -e "\n" \
+    | ckb-cli account import --privkey-path ${BASE_DIR}/ckb/key \
+    | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1
 fi
+
+ckb-cli account list
 
 echo "Starting as user fiber $(id -u):$(id -g)... "
 exec "$@"
