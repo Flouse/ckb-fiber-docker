@@ -4,56 +4,79 @@ import { FiberRPC } from '../client';
 const mockNodeInfoResponse = {
   jsonrpc: "2.0",
   result: {
-    version: "0.5.0",
-    commit_hash: "3c405c1",
-    node_id: "02e21c23828b03ca4dd0d891d1a2d5a431f4d9abae5faebd40b56df4b25ee3b2d9",
-    node_name: null,
-    addresses: [],
-    chain_hash: "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
-    open_channel_auto_accept_min_ckb_funding_amount: "0x2540be400",
-    auto_accept_channel_ckb_funding_amount: "0x1718c7e00",
-    default_funding_lock_script: {
-      code_hash: "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
-      hash_type: "type",
-      args: "0x5545ca1d997842dba3c28e15f7e89ac582c6f2ca"
+    "version": "0.5.1",
+    "commit_hash": "b11941a 2025-05-08",
+    "node_id": "034877ff5f91793ded678a0113d10f88e1959e4223c92ce71756e210d2deddeb25",
+    "node_name": "FTN20250512",
+    "addresses": [
+      "/ip4/52.45.221.66/tcp/50001/p2p/QmcWUnFXVikZh4sz14N9P729j5m9k8PTNiUacNBxjLw6VH"
+    ],
+    "chain_hash": "0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606",
+    "open_channel_auto_accept_min_ckb_funding_amount": "0x2540be400",
+    "auto_accept_channel_ckb_funding_amount": "0x1718c7e00",
+    "default_funding_lock_script": {
+      "code_hash": "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
+      "hash_type": "type",
+      "args": "0x5066cf38b10e42393c42444decfda1bca60e073e"
     },
-    tlc_expiry_delta: "0x5265c00",
-    tlc_min_value: "0x0",
-    tlc_max_value: "0x0",
-    tlc_fee_proportional_millionths: "0x3e8",
-    channel_count: "0x0",
-    pending_channel_count: "0x0",
-    peers_count: "0x2",
-    udt_cfg_infos: [
+    "tlc_expiry_delta": "0x5265c00",
+    "tlc_min_value": "0x0",
+    "tlc_fee_proportional_millionths": "0x3e8",
+    "channel_count": "0x0",
+    "pending_channel_count": "0x0",
+    "peers_count": "0x9",
+    "udt_cfg_infos": [
       {
-        name: "USDI",
-        script: {
-          code_hash: "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
-          hash_type: "type",
-          args: "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f"
+        "name": "USDI",
+        "script": {
+          "code_hash": "0xcc9dc33ef234e14bc788c43a4848556a5fb16401a04662fc55db9bb201987037",
+          "hash_type": "type",
+          "args": "0x71fd1985b2971a9903e4d8ed0d59e6710166985217ca0681437883837b86162f"
         },
-        auto_accept_amount: "0xa",
-        cell_deps: [
+        "auto_accept_amount": "0xa",
+        "cell_deps": [
           {
-            dep_type: "code",
-            tx_hash: "0xaec423c2af7fe844b476333190096b10fc5726e6d9ac58a9b71f71ffac204fee",
-            index: "0x0"
+            "type_id": {
+              "code_hash": "0x00000000000000000000000000000000000000000000000000545950455f4944",
+              "hash_type": "type",
+              "args": "0xf0bad0541211603bf14946e09ceac920dd7ed4f862f0ffd53d0d477d6e1d0f0b"
+            }
           }
         ]
       },
       {
-        name: "RUSD",
-        script: {
-          code_hash: "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
-          hash_type: "type",
-          args: "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"
+        "name": "RUSD",
+        "script": {
+          "code_hash": "0x1142755a044bf2ee358cba9f2da187ce928c91cd4dc8692ded0337efa677d21a",
+          "hash_type": "type",
+          "args": "0x878fcc6f1f08d48e87bb1c3b3d5083f23f8a39c5d5c764f253b55b998526439b"
         },
-        auto_accept_amount: "0x3b9aca00",
-        cell_deps: [
+        "auto_accept_amount": "0x3b9aca00",
+        "cell_deps": [
           {
-            dep_type: "code",
-            tx_hash: "0xed7d65b9ad3d99657e37c4285d585fea8a5fcaf58165d54dacf90243f911548b",
-            index: "0x0"
+            "type_id": {
+              "code_hash": "0x00000000000000000000000000000000000000000000000000545950455f4944",
+              "hash_type": "type",
+              "args": "0x97d30b723c0b2c66e9cb8d4d0df4ab5d7222cbb00d4a9a2055ce2e5d7f0d8b0f"
+            }
+          }
+        ]
+      },
+      {
+        "name": "SEAL",
+        "script": {
+          "code_hash": "0x25c29dc317811a6f6f3985a7a9ebc4838bd388d19d0feeecf0bcd60f6c0975bb",
+          "hash_type": "type",
+          "args": "0x122ae563f351bcaffef58bb57d5f4f863034721b361c645099501039a51d5936"
+        },
+        "auto_accept_amount": "0x9184e72a000",
+        "cell_deps": [
+          {
+            "type_id": {
+              "code_hash": "0x00000000000000000000000000000000000000000000000000545950455f4944",
+              "hash_type": "type",
+              "args": "0x44ec8b96663e06cc94c8c468a4d46d7d9af69eaf418f6390c9f11bb763dda0ae"
+            }
           }
         ]
       }
