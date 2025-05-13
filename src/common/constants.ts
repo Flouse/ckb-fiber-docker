@@ -1,4 +1,10 @@
 /**
+ * Public JSON RPC nodes
+ * See https://github.com/nervosnetwork/ckb/wiki/Public-JSON-RPC-nodes
+ */
+export const PUBLIC_CKB_TESTNET_RPC = "https://testnet.ckb.dev";
+
+/**
  * The URL for the FIBER RPC server. Defaults to "http://localhost:58227" if the
  * environment variable "FIBER_RPC_URL" is not set.
  */
