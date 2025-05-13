@@ -2,6 +2,12 @@ name: Test
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      image:
+        required: false
+        type: string
+        description: 'The Fiber Docker image to test'
   workflow_call:
     inputs:
       image:
@@ -32,6 +38,10 @@ jobs:
           echo "Uncommenting the line for testnet.key in docker-compose.yml"
           sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/plain_key|' docker-compose.yml
         fi
+
+    - name: Setup tmate session for debugging (tmp)
+      if: ${{ always }}
+      uses: mxschmitt/action-tmate@v3
 
     - name: Start Fiber testnet node
       run: |
@@ -118,7 +128,7 @@ jobs:
         fi
 
     - name: Setup tmate session for debugging
-      if: always()
+      if: ${{ failure() || github.event_name == 'workflow_dispatch' }}
       uses: mxschmitt/action-tmate@v3
 
     - name: Fetch Public Fiber Nodes from https://testnet.explorer.nervos.org/fiber/graph/nodes
