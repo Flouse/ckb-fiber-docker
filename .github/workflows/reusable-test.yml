@@ -24,22 +24,32 @@ jobs:
     - uses: oven-sh/setup-bun@v2
     - run: bun install
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Check if the testnet.key is available in GitHub secrets
+      run: |
+        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
+          echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
+          chmod 600 testnet.key
+          echo "Uncommenting the line for testnet.key in docker-compose.yml"
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
+        fi
+
+    - name: Setup tmate session for debugging
+      uses: mxschmitt/action-tmate@v3
+
+    - name: Get Testnet Address
+      run: |
+        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
+        TESTNET_ADDRESS=$(echo -e "\n" \
+          | docker compose run --rm fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
+          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
+        echo "Testnet address: $TESTNET_ADDRESS"
+        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
 
     - name: Start Fiber testnet node
       run: |
         # Modify docker-compose to use the provided image tag
         if [[ -n "${{ inputs.image }}" ]]; then
           sed -i "s|image: .*|image: ${{ inputs.image }}|" docker-compose.yml
-        fi
-
-        # Check if the testnet.key is available in GitHub secrets
-        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
-          echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
-          chmod 600 testnet.key
-          echo "Uncommenting the line for testnet.key in docker-compose.yml"
-          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
         fi
 
         # Setup envs
@@ -87,15 +97,6 @@ jobs:
         ckb_rpc_url=$(yq eval '.ckb.rpc_url' testnet-config.yml)
         echo "CKB_RPC_URL: $ckb_rpc_url"
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
-
-    - name: Get Testnet Address
-      run: |
-        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
-        TESTNET_ADDRESS=$(echo -e "\n" \
-          | docker compose exec fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
-          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
-        echo "Testnet address: $TESTNET_ADDRESS"
-        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
 
     - name: Get Balance and get faucet if the balance is less than 10000 CKB
       env:
