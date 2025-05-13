@@ -26,24 +26,12 @@ jobs:
 
     - name: Check if the testnet.key is available in GitHub secrets
       run: |
-        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
+        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" && ! -f testnet.key ]]; then
           echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
           chmod 600 testnet.key
           echo "Uncommenting the line for testnet.key in docker-compose.yml"
-          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/plain_key|' docker-compose.yml
         fi
-
-    - name: Setup tmate session for debugging
-      uses: mxschmitt/action-tmate@v3
-
-    - name: Get Testnet Address
-      run: |
-        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
-        TESTNET_ADDRESS=$(echo -e "\n" \
-          | docker compose run --rm fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
-          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
-        echo "Testnet address: $TESTNET_ADDRESS"
-        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
 
     - name: Start Fiber testnet node
       run: |
@@ -98,6 +86,17 @@ jobs:
         echo "CKB_RPC_URL: $ckb_rpc_url"
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
 
+    # TODO:
+    - name: Get Testnet Address
+      run: |
+        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
+        TESTNET_ADDRESS=$(echo -e "\n" \
+          | docker compose run --rm fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
+          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
+        echo "Testnet address: $TESTNET_ADDRESS"
+        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
+
+    # TODO: get CKB_TESTNET_ADDRESS
     - name: Get Balance and get faucet if the balance is less than 10000 CKB
       env:
         MINIMUM_CKB: 10000
@@ -117,6 +116,10 @@ jobs:
         else
           echo "Balance $balance_ckb CKB is sufficient."
         fi
+
+    - name: Setup tmate session for debugging
+      if: always()
+      uses: mxschmitt/action-tmate@v3
 
     - name: Fetch Public Fiber Nodes from https://testnet.explorer.nervos.org/fiber/graph/nodes
       run: |

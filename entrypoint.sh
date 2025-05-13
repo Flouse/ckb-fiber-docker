@@ -33,19 +33,17 @@ if [ "$(umask)" = '0022' ]; then
 fi
 
 # Initialize CKB wallet if it doesn't exist
-if [ ! -f "${BASE_DIR}/ckb/key" ]; then
+if [ ! -f "${BASE_DIR}/ckb/key" && ! -f "${BASE_DIR}/ckb/plain_key" ]; then
   echo "Initializing new CKB wallet..."
   mkdir --mode=700 -p ${BASE_DIR}/ckb
-  gpg --gen-random 2 32 | od -An -tx1 | tr -d ' \n' > ${BASE_DIR}/ckb/key
-  chmod 600 ${BASE_DIR}/ckb/key
+  gpg --gen-random 2 32 | od -An -tx1 | tr -d ' \n' > ${BASE_DIR}/ckb/plain_key
+  chmod 600 ${BASE_DIR}/ckb/plain_key
 fi
 
 echo "Current working directory: $(pwd), umask: $(umask)"
-echo "Starting as user fiber $(id -u):$(id -g)... "
 
 # Export selected environment variables if they exist
 [ -n "${BASE_DIR}" ] && export BASE_DIR
-
 if [ -n "${FIBER_SECRET_KEY_PASSWORD}" ]; then
   export FIBER_SECRET_KEY_PASSWORD
 else
@@ -53,4 +51,24 @@ else
   exit 1
 fi
 
+echo "Import the account to ckb-cli before the key is encrypted"
+if [ -f "${BASE_DIR}/ckb/plain_key" ]; then
+  CKB_TESTNET_ADDRESS=$(echo -e "\n" \
+  | ckb-cli account import --privkey-path ${BASE_DIR}/ckb/plain_key \
+  | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
+
+  echo "Imported testnet address: $CKB_TESTNET_ADDRESS"
+  export CKB_TESTNET_ADDRESS
+
+  # remove the plain key after importing
+  if [ ! -f "${BASE_DIR}/ckb/key" ]; then
+    # ${BASE_DIR}/ckb/key will be encrypted after the first fiber run
+    mv ${BASE_DIR}/ckb/plain_key ${BASE_DIR}/ckb/key
+  else
+    # remove the plain key for security reasons
+    rm -f ${BASE_DIR}/ckb/plain_key
+  fi
+fi
+
+echo "Starting as user fiber $(id -u):$(id -g)... "
 exec "$@"
