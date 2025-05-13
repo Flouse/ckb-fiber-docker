@@ -92,33 +92,6 @@ jobs:
         echo "CKB_RPC_URL: $ckb_rpc_url"
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
 
-    # TODO: test
-    # - name: Get Testnet Address
-    #   run: |
-    #     TESTNET_ADDRESS=$(docker compose exec --user fiber fiber echo $CKB_TESTNET_ADDRESS)
-    #     echo "Testnet address: $TESTNET_ADDRESS"
-    #     echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
-
-    # - name: Get Balance and get faucet if the balance is less than 10000 CKB
-    #   env:
-    #     MINIMUM_CKB: 10000
-    #   run: |
-    #     balance=$(docker compose exec --user fiber fiber ckb-cli --url "${{ env.CKB_RPC_URL }}" \
-    #       wallet get-capacity --address "${{ env.CKB_TESTNET_ADDRESS }}")
-    #     echo "Balance of ${{ env.CKB_TESTNET_ADDRESS }}: $balance"
-
-    #     # Extract the numeric part of the balance
-    #     balance_ckb=$(echo "$balance" | grep -oP '\d+\.\d+' | awk '{print int($1)}')
-    #     echo "Balance in CKB: $balance_ckb"
-
-    #     if [[ "$balance_ckb" -lt ${{ env.MINIMUM_CKB }} ]]; then
-    #       echo "Balance $balance_ckb CKB is less than ${{ env.MINIMUM_CKB }} CKB, requesting faucet"
-    #       response=$(curl -s "https://nervos-functions.vercel.app/api/faucet?target_ckt_address=${{ env.CKB_TESTNET_ADDRESS }}")
-    #       echo "$response" | jq .
-    #     else
-    #       echo "Balance $balance_ckb CKB is sufficient."
-    #     fi
-
     - name: Fetch Public Fiber Nodes from https://testnet.explorer.nervos.org/fiber/graph/nodes
       run: |
         node_list=$(curl -s https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes)

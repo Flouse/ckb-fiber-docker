@@ -1,7 +1,8 @@
+import { config, hd, helpers, RPC } from '@ckb-lumos/lumos';
 import { multiaddr } from '@multiformats/multiaddr';
 import { readFileSync } from 'fs';
-import { hd, helpers, config, RPC } from '@ckb-lumos/lumos';
 import { PUBLIC_CKB_TESTNET_RPC } from '../common/constants';
+import logger from "./logger";
 
 export const parsePeerId = (addr: string): string => {
   const ma = multiaddr(addr);
@@ -23,7 +24,7 @@ export const parsePeerId = (addr: string): string => {
  * @throws {Error} If the key file cannot be read or the address cannot be derived.
  */
 export const getTestnetAddress = (keyPath: string = 'plain.key'): string => {
-  // Initialize config for testnet (AGGRON4)
+  // Initialize config for testnet
   config.initializeConfig(config.TESTNET);
 
   const privateKey = readFileSync(keyPath, 'utf-8').trim();
@@ -74,17 +75,17 @@ export const ensureEnoughCapacity = async (address: string, minimumCKB: bigint =
     const balanceShannons = await getCapacity(address);
 
     if (balanceShannons > minimumCKB * 100000000n) {
-      console.log(`Balance of ${address}: ${balanceShannons} shannons is sufficient.`);
+      logger.info(`Balance of ${address}: ${balanceShannons} shannons is sufficient.`);
       return;
     }
 
-    console.log(`Balance ${balanceShannons} shannons is less than ${minimumCKB} CKB, requesting faucet`);
+    logger.warn(`Balance ${balanceShannons} shannons is less than ${minimumCKB} CKB, requesting faucet`);
     const faucetUrl = `https://nervos-functions.vercel.app/api/faucet?target_ckt_address=${address}`;
     const response = await fetch(faucetUrl);
     const responseBody = await response.text();
-    console.log(`Faucet response: ${responseBody}`);
+    logger.info(`Faucet response: ${responseBody}`);
   } catch (error: any) {
-    console.error(`Error checking balance or requesting faucet: ${error.message}`);
+    logger.error(`Error checking balance or requesting faucet: ${error.message}`);
     process.exit(1);
   }
 };
