@@ -42,10 +42,10 @@ curl -s -X POST http://localhost:58227 \
 
 
 ## RPC docs of Fiber Network Node
-See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
+See https://github.com/nervosnetwork/fiber/tree/develop/crates/fiber-lib/src/rpc
 
 
-### TODO
+## TODO
 
 #### Faucet Testing
 
