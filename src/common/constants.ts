@@ -1,4 +1,10 @@
 /**
+ * Public JSON RPC nodes
+ * See https://github.com/nervosnetwork/ckb/wiki/Public-JSON-RPC-nodes
+ */
+export const PUBLIC_CKB_TESTNET_RPC = "https://testnet.ckb.dev";
+
+/**
  * The URL for the FIBER RPC server. Defaults to "http://localhost:58227" if the
  * environment variable "FIBER_RPC_URL" is not set.
  */
@@ -15,8 +21,8 @@ export const TESTNET_KNOWN_PEERS: string[] = [
   "/ip4/18.162.235.225/tcp/8119/p2p/QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo",
   "/ip4/18.163.221.211/tcp/8119/p2p/QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89",
   
-  // FTN20250416
-  "/ip4/52.45.221.66/tcp/50001/p2p/QmRn7zHWwFk9AeU2zLmc4TsaxJfeni1frLNPPYnZ9znxHp",
+  // FTN20250512
+  "/ip4/52.45.221.66/tcp/50001/p2p/QmcWUnFXVikZh4sz14N9P729j5m9k8PTNiUacNBxjLw6VH",
 
   // utxostack-hub peers
   "/ip4/52.45.221.66/tcp/18228/p2p/QmapgHFsZ6k8mk9gzzSxZekYUbneicrnafwTZZbydbfSYe",

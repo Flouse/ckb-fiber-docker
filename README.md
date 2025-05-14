@@ -8,14 +8,14 @@ Docker image that contains the CKB [Fiber Network Node (FNN)](https://github.com
 
 ## Check the version
 ```bash
-# https://github.com/nervosnetwork/fiber/releases/tag/v0.5.0
-export FIBER_IMAGE=ghcr.io/flouse/ckb-fiber:v0.5.0
+# https://github.com/nervosnetwork/fiber/releases/tag/v0.5.1
+export FIBER_IMAGE=ghcr.io/flouse/ckb-fiber:v0.5.1
 
 docker run --rm ${FIBER_IMAGE} ckb-cli --version
 # Output: ckb-cli 1.12.0 (278c7be 2024-09-20)
 
 docker run --rm ${FIBER_IMAGE}
-# Ouptut: fnn 0.5.0
+# Ouptut: fnn 0.5.1
 ```
 
 ## Usage
@@ -24,11 +24,15 @@ docker run --rm ${FIBER_IMAGE}
 # Fiber Help
 docker run --rm ${FIBER_IMAGE} fnn --help
 
-# Start a fiber node with ./testnet-config.yml
+# Copy the example environment file and set your password
+cp example.env .env
+# Edit .env to set `FIBER_SECRET_KEY_PASSWORD` etc.
+
+# Start a Fiber node with custom configuration (./testnet-config.yml)
 docker compose up -d
 
 # Watch logs
-docker compose logs -f
+docker compose logs -f --tail 10
 
 # Get node info
 curl -s -X POST http://localhost:58227 \
@@ -38,10 +42,10 @@ curl -s -X POST http://localhost:58227 \
 
 
 ## RPC docs of Fiber Network Node
-See https://github.com/nervosnetwork/fiber/blob/main/src/rpc/README.md
+See https://github.com/nervosnetwork/fiber/tree/develop/crates/fiber-lib/src/rpc
 
 
-### TODO
+## TODO
 
 #### Faucet Testing
 

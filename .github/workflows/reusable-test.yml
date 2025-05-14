@@ -2,6 +2,12 @@ name: Test
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      image:
+        required: false
+        type: string
+        description: 'The Fiber Docker image to test'
   workflow_call:
     inputs:
       image:
@@ -24,8 +30,14 @@ jobs:
     - uses: oven-sh/setup-bun@v2
     - run: bun install
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Check if the testnet.key is available in GitHub secrets
+      run: |
+        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" && ! -f testnet.key ]]; then
+          echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
+          chmod 600 testnet.key
+          echo "Uncommenting the line for testnet.key in docker-compose.yml"
+          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
+        fi
 
     - name: Start Fiber testnet node
       run: |
@@ -34,13 +46,8 @@ jobs:
           sed -i "s|image: .*|image: ${{ inputs.image }}|" docker-compose.yml
         fi
 
-        # Check if the testnet.key is available in GitHub secrets
-        if [[ -n "${{ secrets.CKB_TESTNET_KEY }}" ]]; then
-          echo "${{ secrets.CKB_TESTNET_KEY }}" > testnet.key
-          chmod 400 testnet.key
-          echo "Uncommenting the line for testnet.key in docker-compose.yml"
-          sed -i 's|# - ./testnet.key:/fiber/.fiber-node/ckb/key|- ./testnet.key:/fiber/.fiber-node/ckb/key|' docker-compose.yml
-        fi
+        # Setup envs
+        echo "FIBER_SECRET_KEY_PASSWORD=${{ secrets.FIBER_SECRET_KEY_PASSWORD }}" >> .env
 
         # Start the Docker containers in detached mode
         docker compose up -d
@@ -85,35 +92,6 @@ jobs:
         echo "CKB_RPC_URL: $ckb_rpc_url"
         echo "CKB_RPC_URL=$ckb_rpc_url" >> $GITHUB_ENV
 
-    - name: Get Testnet Address
-      run: |
-        # import the key into https://github.com/nervosnetwork/ckb-cli and extract the address
-        TESTNET_ADDRESS=$(echo -e "\n" \
-          | docker compose exec fiber ckb-cli account import --privkey-path /fiber/.fiber-node/ckb/key \
-          | grep -A 1 'testnet:' | grep 'ckt1' | awk '{print $2}' | head --lines=1)
-        echo "Testnet address: $TESTNET_ADDRESS"
-        echo "CKB_TESTNET_ADDRESS=$TESTNET_ADDRESS" >> $GITHUB_ENV
-
-    - name: Get Balance and get faucet if the balance is less than 10000 CKB
-      env:
-        MINIMUM_CKB: 10000
-      run: |
-        balance=$(docker compose exec fiber ckb-cli --url "${{ env.CKB_RPC_URL }}" \
-          wallet get-capacity --address "${{ env.CKB_TESTNET_ADDRESS }}")
-        echo "Balance of ${{ env.CKB_TESTNET_ADDRESS }}: $balance"
-
-        # Extract the numeric part of the balance
-        balance_ckb=$(echo "$balance" | grep -oP '\d+\.\d+' | awk '{print int($1)}')
-        echo "Balance in CKB: $balance_ckb"
-
-        if [[ "$balance_ckb" -lt ${{ env.MINIMUM_CKB }} ]]; then
-          echo "Balance $balance_ckb CKB is less than ${{ env.MINIMUM_CKB }} CKB, requesting faucet"
-          response=$(curl -s "https://nervos-functions.vercel.app/api/faucet?target_ckt_address=${{ env.CKB_TESTNET_ADDRESS }}")
-          echo "$response" | jq .
-        else
-          echo "Balance $balance_ckb CKB is sufficient."
-        fi
-
     - name: Fetch Public Fiber Nodes from https://testnet.explorer.nervos.org/fiber/graph/nodes
       run: |
         node_list=$(curl -s https://testnet-api.explorer.nervos.org/api/v2/fiber/graph_nodes)
@@ -123,16 +101,8 @@ jobs:
     - run: bun test
     - run: bun start
 
-    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
-      run: |
-        bun run script/open-channel.ts \
-          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
-      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
-      # bun run script/open-channel.ts \
-      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
-
-    - name: Open channel to FTN20250416
-      run: bun run script/open-channel.ts --peer_id QmRn7zHWwFk9AeU2zLmc4TsaxJfeni1frLNPPYnZ9znxHp
+    - name: Open channel to FTN20250512
+      run: bun run script/open-channel.ts --peer_id QmcWUnFXVikZh4sz14N9P729j5m9k8PTNiUacNBxjLw6VH
 
     - name: Open channel to utxostack-hub-1
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/18228/p2p/QmapgHFsZ6k8mk9gzzSxZekYUbneicrnafwTZZbydbfSYe
@@ -143,23 +113,38 @@ jobs:
     - name: Open channel to utxostack-hub-4
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/48228/p2p/QmYRNjy1sZVYiVotFBZUvvth9JH2kyNAabK2KBGYLFkhkD
 
-    - name: Open channel to cipher_fiber
-      run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
+    # TODO: Peer PeerId(QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6) pubkey not found
+    # - name: Open channel to cipher_fiber
+    #   run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
+
+    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
+      run: |
+        bun run script/open-channel.ts \
+          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
+      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
+      # bun run script/open-channel.ts \
+      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
 
     - name: Close all channels
       if: always()
       run: bun close-all
 
-    - name: Monitor memory usage
-      if: always()
-      run: |
-        echo "Monitoring memory usage every minute"
-        end=$((SECONDS+100))
-        while [ $SECONDS -lt $end ]; do
-          echo "Memory usage:"
-          docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
-          sleep 60
-        done
+    - name: Setup tmate session for debugging
+      if: ${{ failure() || github.event_name == 'workflow_dispatch' }}
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: 30
+
+    # TODO: Uncomment this section if you want to monitor memory usage
+    # - name: Monitor memory usage
+    #   if: always()
+    #   run: |
+    #     echo "Monitoring memory usage every minute"
+    #     end=$((SECONDS+62))
+    #     while [ $SECONDS -lt $end ]; do
+    #       echo "Memory usage:"
+    #       docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
+    #       sleep 30
+    #     done
 
     - name: Save container logs before shutdown
       if: always()

@@ -11,6 +11,7 @@
     "@types/bun": "^1.2.5"
   },
   "dependencies": {
+    "@ckb-lumos/lumos": "^0.23.0",
     "@multiformats/multiaddr": "^12.4.0",
     "figlet": "^1.8.0",
     "pino": "^9.6.0",

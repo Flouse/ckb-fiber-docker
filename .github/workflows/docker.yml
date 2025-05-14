@@ -11,7 +11,7 @@ on:
       FIBER_VERSION:
         description: 'Version of Fiber to build'
         required: false
-        default: 'v0.5.0'
+        default: 'v0.5.1'
 
 env:
   REGISTRY: ghcr.io
@@ -145,7 +145,7 @@ jobs:
           CKB_CLI_VERSION=${{ env.CKB_CLI_VERSION }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        push: ${{ github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/tags/v') }}
+        push: ${{ github.ref == 'refs/heads/dev' || github.event_name == 'workflow_dispatch' }}
         load: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -161,17 +161,16 @@ jobs:
       metadata: ${{ steps.build.outputs.metadata }}
 
 
-  #24: FIXME
   call-reusable-test:
     needs: build-and-push-docker
     uses: ./.github/workflows/reusable-test.yml
     with:
       # TODO: use ${{ github.repository_owner }}
       image: ghcr.io/flouse/ckb-fiber:latest
-  #24: FIXME
-  call-reusable-test-digest:
-    needs: build-and-push-docker
-    uses: ./.github/workflows/reusable-test.yml
-    with:
-      # TODO: use ${{ github.repository_owner }}
-      image: ghcr.io/flouse/ckb-fiber@${{ needs.build-and-push-docker.outputs.digest}}
+  #24: FIXME Conflict: an artifact with this name already exists on the workflow run
+  # call-reusable-test-digest:
+  #   needs: build-and-push-docker
+  #   uses: ./.github/workflows/reusable-test.yml
+  #   with:
+  #     # TODO: use ${{ github.repository_owner }}
+  #     image: ghcr.io/flouse/ckb-fiber@${{ needs.build-and-push-docker.outputs.digest}}
