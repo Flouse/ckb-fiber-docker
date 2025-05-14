@@ -101,6 +101,21 @@ jobs:
     - run: bun test
     - run: bun start
 
+    - name: Open channel to the explorer node
+      run: bun run script/open-channel.ts --address /ip4/16.163.184.85/tcp/8228/p2p/QmSqSsbjkQG6aMBNEkG6hMLKQpMjLW3eaBmUdCghpRWqwJ
+
+    # TODO
+    # - name: Open channel to cipher_fiber
+    #   run: bun run script/open-channel.ts --address /ip4/121.7.67.162/tcp/8228/p2p/QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
+
+    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
+      run: |
+        bun run script/open-channel.ts \
+          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
+        bun run script/open-channel.ts \
+          --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x1C59862000
+      # TODO: https://github.com/nervosnetwork/fiber/issues/664
+
     - name: Open channel to FTN20250512
       run: bun run script/open-channel.ts --peer_id QmcWUnFXVikZh4sz14N9P729j5m9k8PTNiUacNBxjLw6VH
 
@@ -112,18 +127,6 @@ jobs:
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/38228/p2p/QmUjVWuqF7r3sh88izUtta8y4LUc3FgsGPBLJMZ4Co9Nxa
     - name: Open channel to utxostack-hub-4
       run: bun run script/open-channel.ts --address /ip4/52.45.221.66/tcp/48228/p2p/QmYRNjy1sZVYiVotFBZUvvth9JH2kyNAabK2KBGYLFkhkD
-
-    # TODO: Peer PeerId(QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6) pubkey not found
-    # - name: Open channel to cipher_fiber
-    #   run: bun run script/open-channel.ts --peer_id QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
-
-    - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
-      run: |
-        bun run script/open-channel.ts \
-          --peer_id QmXen3eUHhywmutEzydCsW4hXBoeVmdET2FJvMX69XJ1Eo --funding_amount 0x1C59862000
-      # TODO: issue: https://github.com/nervosnetwork/fiber/issues/664
-      # bun run script/open-channel.ts \
-      #   --peer_id QmbKyzq9qUmymW2Gi8Zq7kKVpPiNA1XUJ6uMvsUC4F3p89 --funding_amount 0x174876E800
 
     - name: Close all channels
       if: always()
