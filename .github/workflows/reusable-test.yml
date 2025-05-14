@@ -104,8 +104,9 @@ jobs:
     - name: Open channel to the explorer node
       run: bun run script/open-channel.ts --address /ip4/16.163.184.85/tcp/8228/p2p/QmSqSsbjkQG6aMBNEkG6hMLKQpMjLW3eaBmUdCghpRWqwJ
 
-    - name: Open channel to cipher_fiber
-      run: bun run script/open-channel.ts --address /ip4/121.7.67.162/tcp/8228/p2p/QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
+    # TODO
+    # - name: Open channel to cipher_fiber
+    #   run: bun run script/open-channel.ts --address /ip4/121.7.67.162/tcp/8228/p2p/QmTNTYkdrjRPy3Et7Xd8eofEN7WC7Vm49MCZUYXYXvpiN6
 
     - name: Open channel to public testnet nodes in https://github.com/nervosnetwork/fiber/blob/develop/docs/testnet-nodes.md
       run: |
