@@ -135,19 +135,18 @@ jobs:
     - name: Setup tmate session for debugging
       if: ${{ failure() || github.event_name == 'workflow_dispatch' }}
       uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 30
+      timeout-minutes: 15
 
-    # TODO: Uncomment this section if you want to monitor memory usage
-    # - name: Monitor memory usage
-    #   if: always()
-    #   run: |
-    #     echo "Monitoring memory usage every minute"
-    #     end=$((SECONDS+62))
-    #     while [ $SECONDS -lt $end ]; do
-    #       echo "Memory usage:"
-    #       docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
-    #       sleep 30
-    #     done
+    - name: Monitor memory usage
+      if: always()
+      run: |
+        echo "Monitoring memory usage every minute"
+        end=$((SECONDS+62))
+        while [ $SECONDS -lt $end ]; do
+          echo "Memory usage:"
+          docker stats --no-stream fiber-testnet-node --format "{{.MemUsage}}"
+          sleep 30
+        done
 
     - name: Save container logs before shutdown
       if: always()
