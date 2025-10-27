@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - uses: oven-sh/setup-bun@v2
     - run: bun install
@@ -165,7 +165,7 @@ jobs:
 
     - name: Upload logs
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: docker-compose-logs
         path: docker-compose.log
